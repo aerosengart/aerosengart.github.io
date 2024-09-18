@@ -1,7 +1,7 @@
 ---
-layout: page
+layout: category_index
 title: Research
 permalink: /research/
+category_name: research
 ---
 
-The page for my recent work and publications.
