@@ -1,0 +1,13 @@
+_site/
+.sass-cache/
+.DS_Store
+*.lock
+
+## Latex build files
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.synctex.gz
+*.out
+*.xdv
