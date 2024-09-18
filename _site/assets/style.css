@@ -59,7 +59,7 @@ code { color: #DC3918; font-size: 16px; padding: 1px 0px; }
 
 /* Type utilities */
 .h0 { font-size: 64px; line-height: 1.0125; margin-top: 0.85em; word-wrap: break-word; }
-@media (min-width: 52em) { .h0 { font-size: 128px; } }
+@media (min-width: 52em) { .h0 { font-size: 82px; } }
 
 .text-right { text-align: right; }
 
@@ -103,7 +103,11 @@ code { color: #DC3918; font-size: 16px; padding: 1px 0px; }
 .text-accent { color: #E74727; }
 
 /* Layout utilities */
-.container { max-width: 64em; }
+.container { max-width: 80em; }
+
+.container h1 { position: relative; }
+
+.headshot { float: right; border: 1px solid #fff; }
 
 .col-1 { width: calc(1 / 12 * 100%); }
 
@@ -129,7 +133,9 @@ code { color: #DC3918; font-size: 16px; padding: 1px 0px; }
 
 .col-12 { width: 100%; }
 
-@media (max-width: 52em) { .sm-width-full { width: 100% !important; } }
+@media (max-width: 52em) { .sm-width-full { width: 100% !important; }
+  .sm-width-most { width: 75% !important; }
+  .sm-width-least { width: 25% !important; } }
 .block { display: block !important; }
 
 .inline-block { display: inline-block !important; }

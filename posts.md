@@ -1,6 +1,6 @@
 ---
 layout: category_index
-title: My Posts
+title: Posts
 permalink: /posts/
 category_name: posts
 ---

@@ -50,6 +50,11 @@
 
 /* Layout utilities */
 .container { max-width: $container-width; }
+.container h1 { position: relative; } // for text in black box on home page
+.headshot {
+  float: right; 
+  border: 1px solid $color-foreground;
+}
 
 .col-1 { width: calc(1 / 12 * 100%); }
 .col-2 { width: calc(2 / 12 * 100%); }
@@ -66,6 +71,8 @@
 
 @media (max-width: $breakpoint-lg) {
   .sm-width-full { width: 100% !important; }
+  .sm-width-most { width: 75% !important; }
+  .sm-width-least { width: 25% !important; }
 }
 
 .block        { display: block !important; }
