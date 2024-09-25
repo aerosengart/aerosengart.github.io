@@ -1,7 +1,10 @@
 _site/
 .sass-cache/
 .DS_Store
+*.DS_Store
 *.lock
+*.Rhistory
+
 
 ## Latex build files
 *.aux

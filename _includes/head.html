@@ -14,4 +14,10 @@
   <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ "/feed.xml" | prepend: site.baseurl | prepend: site.url }}">
 
   <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  {% if page.include_scripts %}
+    {% for include_script in page.include_scripts %}
+      <script type='text/javascript' src='{{ include_script }}'></script>
+    {% endfor %}
+  {% endif %}
 </head>
