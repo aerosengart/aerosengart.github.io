@@ -35,6 +35,7 @@ where $\tau^2$ is a variance parameter, $\Sigma_Z$ is an $q \times q$ covariance
 
 Our interest lies in testing whether the columns of $\beta$ are $\vec{0}$ (i.e. $\beta_1 = \beta_2 = \dots = \beta_k = \vec{0}$). Equivalently, we can just test whether $\tau = 0$. If $\tau = 0$, then $\text{vec}(\beta)$ has $0$ variance, and all of the random effects are $0$. Thus, our null hypothesis will be $H_0: \tau = 0$. 
 
+---
 
 ## Score Test
 
@@ -51,6 +52,8 @@ S(\tau_0) = U^\top(\hat{\tau}_0) \mathcal{I}^{-1}(\hat{\tau}_0) U(\hat{\tau}_0)
 $$
 
 where $\hat{\tau}_0$ is the maximum likelihood estimate of $\tau$ under $H_0$.
+
+---
 
 ## Case 1
 
@@ -180,7 +183,7 @@ f(\beta) &= f(\tilde{\beta}) + (\beta - \tilde{\beta})^\top \frac{\partial}{\par
 &\hspace{6mm} -\frac{1}{2}
 \sum_{j = 1}^k
 \beta_j^2 \left[ \sum_{i = 1}^n \exp(x_i \alpha_j + z_i \tilde{\beta}_j)z_i^2\right]
-- \frac{1}{2} \sum_{j = 1}^k \left[ \tilde{\beta}_j^2 \sum_{i = 1}^n \exp(x_i \alpha_j + z_i \tilde{\beta}_j)z_i^2 \right]
+- \frac{1}{2} \sum_{j = 1}^k \tilde{\beta}_j^2 \left[ \sum_{i = 1}^n \exp(x_i \alpha_j + z_i \tilde{\beta}_j)z_i^2 \right]
 - \frac{1}{2}\beta^\top  (\tau^2 \Sigma_T)^{-1} \beta + R
 \end{aligned}
 $$
@@ -245,7 +248,7 @@ f(\beta) &= f(\tilde{\beta}) + (\beta - \tilde{\beta})^\top \frac{\partial}{\par
 &\hspace{6mm} -\frac{1}{2}
 \sum_{j = 1}^k
 \beta_j^2 \left[ \sum_{i = 1}^n \exp(x_i \alpha_j + z_i \tilde{\beta}_j)z_i^2\right]
-- \frac{1}{2} \sum_{j = 1}^k \left[ \tilde{\beta}_j^2 \sum_{i = 1}^n \exp(x_i \alpha_j + z_i \tilde{\beta}_j)z_i^2 \right]
+- \frac{1}{2} \sum_{j = 1}^k \tilde{\beta}_j^2 \left[ \sum_{i = 1}^n \exp(x_i \alpha_j + z_i \tilde{\beta}_j)z_i^2 \right]
 - \frac{1}{2}\beta^\top  (\tau^2 \Sigma_T)^{-1} \beta + R
 \end{aligned}
 $$
@@ -265,15 +268,116 @@ $$
 &\hspace{6mm} - \frac{1}{2\sqrt{(2\pi)^k \rvert \tau^2 \Sigma_T \rvert}} 
 \sum_{j = 1}^k
 \beta_j^2 \left[ \sum_{i = 1}^n \exp(x_i \alpha_j + z_i \tilde{\beta}_j)z_i^2\right] \\
-&\hspace{6mm} -\frac{1}{2\sqrt{(2\pi)^k \rvert \tau^2 \Sigma_T \rvert}} \sum_{j = 1}^k \left[ \tilde{\beta}_j^2 \sum_{i = 1}^n \exp(x_i \alpha_j + z_i \tilde{\beta}_j)z_i^2 \right] \\
+&\hspace{6mm} -\frac{1}{2\sqrt{(2\pi)^k \rvert \tau^2 \Sigma_T \rvert}} \sum_{j = 1}^k \tilde{\beta}_j^2 \left[ \sum_{i = 1}^n \exp(x_i \alpha_j + z_i \tilde{\beta}_j)z_i^2 \right] \\
 &\hspace{6mm} -\frac{1}{2\sqrt{(2\pi)^k \rvert \tau^2 \Sigma_T \rvert}}\beta^\top  (\tau^2 \Sigma_T)^{-1} \beta 
 \end{aligned}
 $$
 
 
+#### Score
 
+Now that we have the (approximate) likelihood $\mathcal{L}(\alpha, \tau; Y, X, Z)$, we can take the first derivative with respect to $\tau$ to get the score. Let $A(\tau) = \sqrt{(2\pi)^k \rvert \tau^2 \Sigma_T \rvert}$.
 
+$$
+\begin{aligned}
+U(\tau) &= \frac{d}{d \tau} \left[ \mathcal{L}(\alpha, \tau; Y, X, Z) \right] \\
+&\approx \frac{d}{d \tau} \left[ 
+\frac{1}{A(\tau)} 
+\sum_{i = 1}^n \sum_{j = 1}^k \left[ y_{i,j}(x_i \alpha_j + z_i \tilde{\beta_j}) - \exp(x_i \alpha_j + z_i \tilde{\beta}_j) - \log(y_{i,j}!)\right] \right] \\
+&\hspace{6mm} - \frac{d}{d \tau} \left[\frac{1}{A(\tau)}  
+\sum_{j = 1}^k
+\beta_j^2 \left[ \sum_{i = 1}^n \exp(x_i \alpha_j + z_i \tilde{\beta}_j)z_i^2\right] \right] \\
+&\hspace{6mm} - \frac{d}{d \tau} \left[ \frac{1}{A(\tau)} \sum_{j = 1}^k \tilde{\beta}_j^2 \left[ \sum_{i = 1}^n \exp(x_i \alpha_j + z_i \tilde{\beta}_j)z_i^2 \right] \right]\\
+&\hspace{6mm} - \frac{d}{d \tau} \left[ \frac{1}{A(\tau)} \beta^\top  (\tau^2 \Sigma_T)^{-1} \beta \right] \\
 
+&= -\frac{k}{\tau}
+\sum_{i = 1}^n \sum_{j = 1}^k \left[ y_{i,j}(x_i \alpha_j + z_i \tilde{\beta_j}) - \exp(x_i \alpha_j + z_i \tilde{\beta}_j) - \log(y_{i,j}!)\right]  \\
+&\hspace{6mm} + \frac{k}{\tau} \sum_{j = 1}^k
+\beta_j^2 \left[ \sum_{i = 1}^n \exp(x_i \alpha_j + z_i \tilde{\beta}_j)z_i^2\right]  \\
+&\hspace{6mm} + \frac{k}{\tau} \sum_{j = 1}^k \tilde{\beta}_j^2 \left[ \sum_{i = 1}^n \exp(x_i \alpha_j + z_i \tilde{\beta}_j)z_i^2 \right] \\
+&\hspace{6mm} - \frac{d}{d \tau} \left[ \frac{1}{A(\tau)} \right] \beta^\top  (\tau^2 \Sigma_T)^{-1} \beta - \frac{1}{A(\tau)} \frac{d}{d \tau} \left[ \beta^\top  (\tau^2 \Sigma_T)^{-1} \beta \right] \\
+
+&= -\frac{k}{\tau}
+\sum_{i = 1}^n \sum_{j = 1}^k \left[ y_{i,j}(x_i \alpha_j + z_i \tilde{\beta_j}) - \exp(x_i \alpha_j + z_i \tilde{\beta}_j) - \log(y_{i,j}!)\right]  \\
+&\hspace{6mm} + \frac{k}{\tau} \sum_{j = 1}^k
+\beta_j^2 \left[ \sum_{i = 1}^n \exp(x_i \alpha_j + z_i \tilde{\beta}_j)z_i^2\right]  \\
+&\hspace{6mm} + \frac{k}{\tau} \sum_{j = 1}^k \tilde{\beta}_j^2 \left[ \sum_{i = 1}^n \exp(x_i \alpha_j + z_i \tilde{\beta}_j)z_i^2 \right] \\
+&\hspace{6mm} + \frac{k}{\tau} \beta^\top  (\tau^2 \Sigma_T)^{-1} \beta - \frac{1}{\sqrt{(2\pi)^k \rvert \tau^2 \Sigma_T \rvert}} \times \frac{1}{\tau^3} \beta^\top (\Sigma_T)^{-1} \beta \\ 
+
+&\overset{(i)}{=} \frac{k}{\tau}
+\sum_{i = 1}^n \sum_{j = 1}^k \left[ y_{i,j}(x_i \alpha_j + z_i \tilde{\beta_j}) - \exp(x_i \alpha_j + z_i \tilde{\beta}_j) - \log(y_{i,j}!)\right]  \\
+&\hspace{6mm} + \frac{k}{\tau} \sum_{j = 1}^k
+\beta_j^2 \left[ \sum_{i = 1}^n \exp(x_i \alpha_j + z_i \tilde{\beta}_j)z_i^2\right]  \\
+&\hspace{6mm} + \frac{k}{\tau} \sum_{j = 1}^k \tilde{\beta}_j^2 \left[ \sum_{i = 1}^n \exp(x_i \alpha_j + z_i \tilde{\beta}_j)z_i^2 \right] \\
+&\hspace{6mm} + \frac{k}{\tau^3} \beta^\top  (\Sigma_T)^{-1} \beta - \frac{1}{\sqrt{(2\pi)^k \rvert \tau^2 \Sigma_T \rvert}} \times \frac{1}{\tau^3} \beta^\top (\Sigma_T)^{-1} \beta \\ 
+
+&\overset{(i)}{=} \frac{k}{\tau}
+\sum_{i = 1}^n \sum_{j = 1}^k \left[ y_{i,j}(x_i \alpha_j + z_i \tilde{\beta_j}) - \exp(x_i \alpha_j + z_i \tilde{\beta}_j) - \log(y_{i,j}!) +  (\beta_j^2 + \tilde{\beta}_j^2) \exp(x_i \alpha_j + z_i \tilde{\beta}_j)z_i^2  \right] + \frac{k}{\tau^3} \beta^\top  (\Sigma_T)^{-1} \beta \left( 1 - \frac{1}{\sqrt{(2\pi)^k \rvert \tau^2 \Sigma_T \rvert}} \right) \\ 
+\end{aligned}
+$$
+
+where $(i)$ follows from the fact that for a constant $c$ and invertible, $k \times k$ matrix $M$:
+
+$$
+(cM)^{-1} = (c \mathbb{I}_{k \times k} M)^{-1} = M^{-1}(c \mathbb{I}_{k \times k})^{-1} = \frac{1}{c}M^{-1}
+$$
+
+---
+<details>
+<summary>Derivation of $\frac{d}{d\tau} (A(\tau))^{-1}$.</summary>
+Recall the following fact for matrices. Let $c$ be some constant, and let $M$ be a $k \times k$ matrix.
+
+$$
+\begin{aligned}
+\rvert cM \rvert &= \rvert c \mathbb{I}_{k \times k} M \rvert \\
+&= \rvert c \mathbb{I}_{k \times k} \rvert \rvert M \rvert \\
+&= c^k \rvert M \rvert
+\end{aligned}
+$$
+
+Thus, the derivative of $A(\tau)$ is given by:
+
+$$
+\begin{aligned}
+\frac{d}{d\tau} A(\tau) &= \frac{d}{d\tau} \sqrt{(2\pi)^k \rvert \tau^2 \Sigma_T \rvert} \\
+&= \frac{d}{d\tau} \sqrt{(2\pi)^k \tau^{2k}\rvert  \Sigma_T \rvert} \\
+&= \frac{1}{2} \left( (2\pi)^k \tau^{2k}\rvert \Sigma_T \rvert) \right)^{-1/2} \frac{d}{d\tau} \left[ (2\pi)^k \tau^{2k}\rvert  \Sigma_T \rvert \right] \\
+&= \frac{1}{2} \left( (2\pi)^k \tau^{2k}\rvert \Sigma_T \rvert) \right)^{-1/2}\left( 2k (2\pi)^k \tau^{2k - 1} \rvert \Sigma_T \rvert\right) \\
+&=  ((2\pi)^{-k/2} \tau^{-k}\rvert \Sigma_T \rvert^{-1/2})\left(k (2\pi)^k \tau^{2k - 1} \rvert \Sigma_T \rvert\right) \\ 
+&= k (2 \pi)^{k/2}\tau^{k - 1}\rvert \Sigma_T \rvert^{1/2}
+\end{aligned}
+$$
+
+Using standard derivative rules yields:
+
+$$
+\begin{aligned}
+\frac{d}{d \tau} (A(\tau))^{-1} &= -\frac{1}{A(\tau)^2}\frac{d}{d \tau} \left[ A(\tau) \right] \\
+&= -\frac{1}{\sqrt{(2\pi)^k \rvert \tau^2 \Sigma_T \rvert}}\left( k (2 \pi)^{k/2}\tau^{k - 1}\rvert \Sigma_T \rvert^{1/2} \right) \\
+&= -\frac{k (2 \pi)^{k/2}\tau^{k - 1}\rvert \Sigma_T \rvert^{1/2}}{(2\pi)^{k/2} \tau^{k} \rvert  \Sigma_T \rvert^{1/2}} \\
+&= -\frac{k}{\tau}
+\end{aligned}
+$$
+</details>
+---
+<details>
+<summary>Derivation of $\frac{d}{d\tau} [\beta^\top (\tau^2 \Sigma_T)^{-1} \beta]$.</summary>
+Note that $\tau^2 \Sigma_T = \tau^2 \mathbb{I}_{k \times k} \Sigma_T$. Assuming that $\Sigma_T$ is invertible, we have that:
+
+$$
+(\tau^2 \mathbb{I}_{k \times k} \Sigma_T)^{-1} = (\Sigma_T)^{-1} (\tau^2 \mathbb{I}_{k \times k})^{-1} = (\Sigma_T)^{-1}\left(\frac{1}{\tau^2} \mathbb{I}_{k \times k}\right)
+$$
+
+The derivative is then:
+
+$$
+\begin{aligned}
+\frac{d}{d\tau} [\beta^\top (\tau^2 \Sigma_T)^{-1} \beta] &= \beta^\top \frac{d}{d\tau} \left[ (\Sigma_T)^{-1}\left(\frac{1}{\tau^2} \mathbb{I}_{k \times k}\right) \right]  \beta \\
+&= \beta^\top (\Sigma_T)^{-1} \left(-2 \frac{1}{\tau^3}\right) \mathbb{I}_{k \times k} \beta \\
+&= \frac{1}{\tau^3} \beta^\top (\Sigma_T)^{-1} \beta
+\end{aligned}
+$$
+</details>
 
 
 ---
