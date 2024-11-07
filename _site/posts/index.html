@@ -80,6 +80,7 @@
 </header>
 
 
+
     <div>
       <article class="container mx-auto px-2 mt2 mb4">
   <header>
@@ -91,6 +92,16 @@
     
 
 <div class="container mx-auto">
+  
+    <!-- Renders post date, title, and snippet of text. -->
+<div class="py-2 mb-2 prose">
+  <a class="no-underline h5 bold text-accent" title="/posts/2024/11/06/derive-score-test-poisson.html" href="/posts/2024/11/06/derive-score-test-poisson.html">Nov 6, 2024</a>
+  <h2 class="h1 lh-condensed col-9 mt-0">
+    <a class="link-primary" title="/posts/2024/11/06/derive-score-test-poisson.html" href="/posts/2024/11/06/derive-score-test-poisson.html">Deriving A Variance Component Score Test - Poisson</a>
+  </h2>
+  <p>Set-Up The set-up is the standard generalized linear mixed model setting. Suppose we have $n$ samples and $k$ targets (or phenotypes, if you’re dealing with GWAS). Our data will include...</p>
+</div>
+
   
 </div>
 
@@ -114,6 +125,56 @@
   </div>
 </div>
 
+
+
+    <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        macros: {
+          RR: "{\\bf R}",
+          bold: ["{\\bf #1}", 1],
+          indep: "{\\perp \\!\\!\\! \\perp}",
+        }
+      },
+      svg: {
+      fontCache: 'global'
+      },
+    };
+  </script>
+  
+  <!-- load MathJax -->
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      TeX: {
+        equationNumbers: { autoNumber: "all" },
+        tagSide: "right"
+      },
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+        processEscapes: false
+      }
+    });
+    MathJax.Hub.Register.StartupHook("TeX AMSmath Ready", function () {
+      MathJax.InputJax.TeX.Stack.Item.AMSarray.Augment({
+        clearTag() {
+          if (!this.global.notags) {
+            this.super(arguments).clearTag.call(this);
+          }
+        }
+      });
+    });
+  </script>
+  
+  <script type="text/javascript" charset="utf-8"
+    src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS_CHTML">
+  </script>
+  
+
+
+
+  
 
   </body>
 
