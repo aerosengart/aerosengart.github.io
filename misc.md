@@ -7,6 +7,13 @@ permalink: misc
 In my free time, I like to play and write music!
 
 ---
+Here's a clip of a recent arrangement I did of _Just In Time_ by Styne, Comden, and Green.
+<p align="center">
+<video width="560" height = "315" controls="controls">
+    <source src="img/JustInTime_F.mov" type="video/mp4"></source>
+</video>
+</p>
+---
 In 2019, I was a musician in a holiday video for the School of Music, Theatre, & Dance at the University of Michigan!
 <p align="center">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/g4NSubNtjHA?si=0yInuiIlbJXZ8w0A" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
