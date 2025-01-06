@@ -9,9 +9,12 @@
 ;
 
 // Import components
-@import 
-        "./components/snackbar.scss"
-;
-@import 
-        "./components/popup.scss"
+@import
+        "./components/alert.scss",
+        "./components/collapsible.scss",
+        "./components/example.scss",
+        "./components/hover.scss",
+        "./components/popup.scss",
+        "./components/snackbar.scss",
+        "./components/toc.scss"
 ;

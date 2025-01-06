@@ -1,0 +1,10 @@
+//* Code from: https://www.w3schools.com/howto/howto_css_display_element_hover.asp *//
+
+.hide {
+  display: none;
+}
+
+.hovdiv:hover + .hide {
+  display: block;
+  color: navy;
+}

@@ -5,8 +5,9 @@
     position: relative;
     display: inline-block;
     cursor: pointer;
-    font-size: $prose-font-size;
-    margin-bottom: 1em;
+    font-size: $body-font-size;
+    color: maroon;
+    //margin-bottom: 1em;
   }
   
   /* The actual popup (appears on top) */

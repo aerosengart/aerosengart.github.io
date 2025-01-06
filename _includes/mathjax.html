@@ -1,5 +1,5 @@
 <script>
-    MathJax = {
+    var MathJax = {
       tex: {
         inlineMath: [['$', '$'], ['\\(', '\\)']],
         macros: {
@@ -9,7 +9,14 @@
         }
       },
       svg: {
-      fontCache: 'global'
+        fontCache: 'global',
+        scale: 0.8,
+      },
+      "HTML-CSS": {
+        scale: 200,
+        linebreaks: {
+          automatic: true,
+        },
       },
     };
   </script>
@@ -17,6 +24,12 @@
   <!-- load MathJax -->
   <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
+      "HTML-CSS": { 
+        scale: 200,
+        linebreaks: {
+          automatic: true,
+        }
+      },
       TeX: {
         equationNumbers: { autoNumber: "all" },
         tagSide: "right"

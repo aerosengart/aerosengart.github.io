@@ -1,7 +1,7 @@
 ---
 layout: category_index
 title: Research
-permalink: /research/
+permalink: research
 category_name: research
 ---
 

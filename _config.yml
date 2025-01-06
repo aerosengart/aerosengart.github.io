@@ -22,9 +22,9 @@ title: Anna Rosengart
 email: arosenga@andrew.cmu.edu
 description: >- # this means to ignore newlines until "baseurl:"
   An academic and research website.
-baseurl: "/" # the subpath of your site, e.g. /blog
+baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://aerosengart.github.io"
-root: "/"
+root: ""
 github_username: aerosengart
 
 # Build settings
@@ -33,7 +33,12 @@ github_username: aerosengart
 remote_theme: broccolini/swiss
 plugins:
   - jekyll-feed
+  #- jekyll-toc
 markdown: kramdown
+
+# toc: 
+#   min_level: 2
+#   ordered_list: true
 
 # Exclude from processing.
 # The following items will not be processed, by default.

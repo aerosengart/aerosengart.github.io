@@ -17,10 +17,11 @@
     {% include mathjax.html %}
 
 
-
+  {% assign user_url = site.url | append: site.baseurl %}
+  {% assign full_base_url = user_url | default: site.github.url %}
   {% if page.include_scripts %}
     {% for include_script in page.include_scripts %}
-      <script type='text/javascript' src='{{ include_script }}'></script>
+      <script type='text/javascript' src='{{ include_script | prepend: full_base_url }}'></script>
     {% endfor %}
   {% endif %}
 

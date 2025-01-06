@@ -1,7 +1,7 @@
 ---
 layout: page
 title: About Me
-permalink: /about/
+permalink: about
 ---
 
 I am a third year Ph.D. student in statistics at Carnegie Mellon University advised by [F. William Townes](https://www.cmu.edu/dietrich/statistics-datascience/research/members/will-townes.html).

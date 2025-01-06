@@ -1,6 +1,6 @@
 ---
 layout: category_index
 title: Posts
-permalink: /posts/
+permalink: posts
 category_name: posts
 ---
