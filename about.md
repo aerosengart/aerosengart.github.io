@@ -12,3 +12,4 @@ My past research interests include analysis of multi-omics data and compartment 
 
 Most recently, I was a summer researcher in the [Das Lab](https://www.jishnulab.org) where I worked on adapting large language models for protein-protein interaction prediction.
 
+
