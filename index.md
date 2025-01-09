@@ -1,13 +1,13 @@
 ---
 layout: home
-permalink: home
 ---
 
-<!-- Set title in config.yml -->
-Hello and welcome to my site!
+I am a third year Ph.D. student in statistics at Carnegie Mellon University advised by [F. William Townes](https://www.cmu.edu/dietrich/statistics-datascience/research/members/will-townes.html).
 
-I am a third year Statistics & Data Science Ph.D. student at Carnegie Mellon University.
+I am a member of the [Delphi Research Group](https://delphi.cmu.edu) at Carnegie Mellon in which I focus on applying and developing statistical methods for wastewater-based epidemiology. 
 
-Check out my recent publications with the _Research_ tab or my recent thoughts and ramblings under _Posts_!
+My past research interests include analysis of multi-omics data and compartment modeling for disease transmission.
+
+Most recently, I was a summer researcher in the [Das Lab](https://www.jishnulab.org) where I worked on adapting large language models for protein-protein interaction prediction.
 
 
