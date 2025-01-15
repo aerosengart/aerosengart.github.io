@@ -194,3 +194,20 @@
   color: darkred;
   border: none;
 }
+
+// Details and Summary
+details {
+  transition: 0.2s background linear;
+  padding: 4px; 
+  border-top: 2px solid;
+  border-bottom: 2px solid;
+  margin-bottom: 6px;
+  margin-top: 10px;
+}
+
+summary:hover,
+summary:focus {
+  text-decoration: none;
+  cursor: pointer;
+  color: black;
+}

@@ -6,6 +6,10 @@ layout: default
   <div class="col-12 sm-width-full mt-1 border-top-thin ">
     <p class="mb-3 py-2 bold h4"><time datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">{{ page.date | date: "%b %-d, %Y" }}</time></p>
   </div>
+  <div class="alert">
+    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+    These are my own notes, so errors and typos are bound to appear!
+  </div>
   <div>
     <div class="prose" itemprop="articleBody">
         {{ content }}
