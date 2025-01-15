@@ -211,27 +211,3 @@ summary:focus {
   cursor: pointer;
   color: black;
 }
-
-// Links
-a:link {
-  color: #0000EE;
-  background-color: transparent;
-  text-decoration: none;
-}
-
-a:visited {
-  color: #551A8B;
-  background-color: transparent;
-  text-decoration: none;
-}
-
-a:hover {
-  background-color: transparent;
-  text-decoration: underline;
-}
-
-a:active {
-  color: #FF0000;
-  background-color: transparent;
-  text-decoration: underline;
-}
