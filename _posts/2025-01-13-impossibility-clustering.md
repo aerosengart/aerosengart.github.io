@@ -3,6 +3,7 @@ layout: post
 title:  "Clustering: An Axiomatic Approach"
 date: 14 January 2025
 categories: posts
+tags: ["clustering"]
 use_math: true
 include_scripts: [
     "/assets/js/snackbar.js",
