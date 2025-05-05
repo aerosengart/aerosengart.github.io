@@ -30,68 +30,118 @@ I'll be following the notation in Ben-David, von Luxburg, and Pál fairly closel
 
 Our observations $S = \{x_1, \dots, x_n\}$ will be assumed to be i.i.d. from some sample space, $X$, with probability measure $P$. If $X$ is a metric space, its metric will be denoted by $\ell$. $P_S$ denotes the uniform distribution over the finite sample $S$.
 
-#### Clustering
-
-**Clustering.** Formally, a _clustering_, $\mathcal{C}: X \rightarrow \mathbb{N}$, of a set, $X$, is a finite partition. _Clusters_ are the sets of data points in $X$ that are in the same group, and we denote these by $C_i := \{ x \in X; \mathcal{C}(x) = i \}$. A _clustering algorithm_ is a function $A$ that outputs a clustering of $X$ given a finite sample $S \subset X$.
+<div id="clustering"></div>
+<div class="definition">
+  <body>
+  <strong>Definition (Clustering).</strong>
+  <br>
+  Formally, a <i>clustering</i>, $\mathcal{C}: X \rightarrow \mathbb{N}$, of a set, $X$, is a finite partition. _Clusters_ are the sets of data points in $X$ that are in the same group, and we denote these by $C_i := \{ x \in X; \mathcal{C}(x) = i \}$. A <i>clustering algorithm</i> is a function $A$ that outputs a clustering of $X$ given a finite sample $S \subset X$.
+  </body>
+</div>
 
 We'll denote the cluster of point $x$ with $C(x)$. If $C(x) = C(y)$, then we write $x \underset{\mathcal{C}}{\sim} y$. 
 
-**Clustering Distance.** For family of probability distributions $\mathcal{P}$ over some data space, $X$, and family of clusterings of $X$, $\mathcal{S}$, a _clustering distance_ will be a function $d: \mathcal{P} \times \mathcal{S} \times \mathcal{S} \rightarrow [0, 1]$ that satisfies the following properties for any $P \in \mathcal{P}$ and $\mathcal{C}_1, \mathcal{C}_2, \mathcal{C}_3 \in \mathcal{S}$:
 
-- $d_P(\mathcal{C}_1, \mathcal{C}_1) = 0$
-- $d_P(\mathcal{C}_1, \mathcal{C}_2) = d_P(\mathcal{C}_2, \mathcal{C}_1)$
-- $d_P(\mathcal{C}_1, \mathcal{C}_3) \leq d_P(\mathcal{C}_1, \mathcal{C}_2) + d_P(\mathcal{C}_2, \mathcal{C}_3)$
+<div id="clustering-distance"></div>
+<div class="definition">
+  <body>
+  <strong>Definition (Clustering Distance).</strong>
+  <br>
+  For family of probability distributions $\mathcal{P}$ over some data space, $X$, and family of clusterings of $X$, $\mathcal{S}$, a <i>clustering distance</i> will be a function $d: \mathcal{P} \times \mathcal{S} \times \mathcal{S} \rightarrow [0, 1]$ that satisfies the following properties for any $P \in \mathcal{P}$ and $\mathcal{C}_1, \mathcal{C}_2, \mathcal{C}_3 \in \mathcal{S}$:
+  <ul>
+    <li>$d_P(\mathcal{C}_1, \mathcal{C}_1) = 0$</li>
+    <li>$d_P(\mathcal{C}_1, \mathcal{C}_2) = d_P(\mathcal{C}_2, \mathcal{C}_1)$</li>
+    <li>$d_P(\mathcal{C}_1, \mathcal{C}_3) \leq d_P(\mathcal{C}_1, \mathcal{C}_2) + d_P(\mathcal{C}_2, \mathcal{C}_3)$</li>
+  </ul>
+  </body>
+</div>
 
 Note that the above definition differs from the traditional definition of a distance metric in that it is not required that if $d_P(\mathcal{C}_1, \mathcal{C}_2) = 0$ then $\mathcal{C}_1 = \mathcal{C}_2$.
 
 
-#### Stability
 With these definitions out of the way, we can finally define stability formally.
 
-**Stability**. For probability distribution $P$ over data space $X$, clustering distance $d$, and clustering algorithm $A$, the _stability_ of $A$ for a sample of size $n$ with respect to $P$ is:
+<div id="stability"></div>
+<div class="definition">
+  <body>
+  <strong>Definition (Stability).</strong>
+  <br>
+  For probability distribution $P$ over data space $X$, clustering distance $d$, and clustering algorithm $A$, the <i>stability of $A$ for a sample of size $n$ with respect to $P$</i> is:
+  $$
+  stab(A, P, n) = \underset{S_1 \sim P^n; S_2 \sim P^n}{\mathbb{E}} \left[ d_P(A(S_1), A(S_2)) \right]\nonumber
+  $$
 
-$$
-stab(A, P, n) = \underset{S_1 \sim P^n; S_2 \sim P^n}{\mathbb{E}} \left[ d_P(A(S_1), A(S_2)) \right]\nonumber
-$$
+  In words, $stab(A, P, n)$ is the expected distance between the clusterings output by $A$ whe given two i.i.d. samples of size $n$ drawn from $P$. The <i>stability of $A$ with respect to $P$</i> is:
 
-In words, $stab(A, P, n)$ is the expected distance between the clusterings output by $A$ whe given two i.i.d. samples of size $n$ drawn from $P$. The _stability_ of $A$ with respect to $P$ is:
+  $$
+  stab(A, P) = \underset{n \rightarrow \infty}{\lim \sup} \left[ stab(A, P, n) \right]
+  \nonumber
+  $$
 
-$$
-stab(A, P) = \underset{n \rightarrow \infty}{\lim \sup} \left[ stab(A, P, n) \right]
-\nonumber
-$$
+  where $\underset{n \rightarrow \infty}{\lim \sup} := \underset{n \rightarrow \infty}{\lim} \left[ \underset{m \geq n}{\sup} stab(A, P, n) \right]$.
+  </body>
+</div>
 
-where $\underset{n \rightarrow \infty}{\lim \sup} := \underset{n \rightarrow \infty}{\lim} \left[ \underset{m \geq n}{\sup} stab(A, P, n) \right]$.
+<div id="r-minimizing"></div>
+<div class="definition">
+  <body>
+  <strong>Definition ($R$-Minimizing).</strong>
+  <br>
+  Let $opt(P) := \underset{\mathcal{C} \in \mathcal{S}}{\inf} \left[ R(P, \mathcal{C}) \right]$, the optimal risk achieved by clusterings in $\mathcal{S}$ for distribution $P$. For a sample $S \subseteq X$, the <i>empirical risk</i> is the risk over the empirical data distribution, $R(P_S, \mathcal{C})$. A clustering algorithm, $A$, is then called <i>$R$-minimizing</i> if $R(P_S, \mathcal{C}) = opt(P_S)$ for any $S \subseteq X$.
+  </body>
+</div>
 
-**Risk Optimizing**. For some domain set, $X$, some set of clusterings of $X$, $\mathcal{S}$, some set of probability distributions on $X$, $\mathcal{P}$, a clustering algorithm is said to be _risk optimizing_ if its output clustering is chosen to minimize (or maximize if you switch the signs) an objective function (or risk function), $R: \mathcal{P} \times \mathcal{S} \rightarrow \mathbb{R}^+_0$. 
 
-**$R$-Minimizing.** Let $$opt(P) := \underset{\mathcal{C} \in \mathcal{S}}{\inf} \left[ R(P, \mathcal{C}) \right]$$, the optimal risk achieved by clusterings in $\mathcal{S}$ for distribution $P$. For a sample $S \subseteq X$, the _empirical risk_ is the risk over the empirical data distribution, $R(P_S, \mathcal{C})$. A clustering algorithm, $A$, is then called _$R$-minimizing_ if $R(P_S, \mathcal{C}) = opt(P_S)$ for any $S \subseteq X$.
+<div id="risk-optimizing-converging"></div>
+<div class="definition">
+  <body>
+  <strong>Definition (Risk Optimizing and Risk Converging).</strong>
+  <br>
+  For some domain set, $X$, some set of clusterings of $X$, $\mathcal{S}$, some set of probability distributions on $X$, $\mathcal{P}$, a clustering algorithm is said to be _risk optimizing_ if its output clustering is chosen to minimize (or maximize if you switch the signs) an objective function (or risk function), $R: \mathcal{P} \times \mathcal{S} \rightarrow \mathbb{R}^+_0$. 
+  <br>
+  An $R$-minimizing algorithm $A$ is called <i>risk converging</i> if, for every $\epsilon > 0$ and every $\delta \in (0, 1)$, $\exists n_0$ such that $\forall n > n_0$:
 
-**Risk Converging.** An $R$-minimizing algorithm $A$ is called _risk converging_ if, for every $\epsilon > 0$ and every $\delta \in (0, 1)$, $\exists n_0$ such that $\forall n > n_0$:
+  $$
+  \underset{S \sim P^n}{\mathbb{P}}\left( R(P, A(S)) < opt(P) + \epsilon \right) > 1 - \delta
+  \nonumber
+  $$
 
-$$
-\underset{S \sim P^n}{\mathbb{P}}\left( R(P, A(S)) < opt(P) + \epsilon \right) > 1 - \delta
-\nonumber
-$$
+  Essentially, a risk converging clustering algorithm will achieve risk within $\epsilon$ of the optimal risk with high probability for a large enough sample size.
+  </body>
+</div>
 
-Essentially, a risk converging clustering algorithm will achieve risk within $\epsilon$ of the optimal risk with high probability for a large enough sample size.
-
-**Unique Minimizer.** For clustering distance, $d$, a probability distribution, $P$, has a _unique minimizer_, $$\mathcal{C}^*$$ if for any $\eta > 0$, there exists $$\epsilon > 0$$ such that if $$R(P, \mathcal{C}) < opt(P) + \epsilon$$, then $$d_P(\mathcal{C}^*, \mathcal{C}) < \eta$$. In words, this means that any clustering with risk that is within some $\epsilon$ of the risk achieved by the unique minimizer should be very close (by $\eta$) to the unique minimizer. 
+For clustering distance, $d$, a probability distribution, $P$, has a <i>unique minimizer</i>, $$\mathcal{C}^*$$ if for any $\eta > 0$, there exists $$\epsilon > 0$$ such that if $$R(P, \mathcal{C}) < opt(P) + \epsilon$$, then $$d_P(\mathcal{C}^*, \mathcal{C}) < \eta$$. In words, this means that any clustering with risk that is within some $\epsilon$ of the risk achieved by the unique minimizer should be very close (by $\eta$) to the unique minimizer. 
 
 $P$ is said to have $m$ distinct minimizers if there are $$\mathcal{C}^*_1, \dots, \mathcal{C}^*_m$$ such that $$d_P(\mathcal{C}^*_i, \mathcal{C}^*_j) > 0$$ for all $$i \neq j$$ such that for all $$\eta > 0$$, there exists $$\epsilon > 0$$ such that if $$R(P, \mathcal{C}) < opt(P) + \epsilon$$, then there exists $$1 \leq i \leq m$$ such that $$d_P(\mathcal{C}^*_i, \mathcal{C}) < \eta$$. 
 
-#### Symmetry 
-**Measure-Preserving Symmetry.** For probability distribution, $P$, over $(X, \ell)$, a function $g: X \rightarrow X$ is a _$P$-preserving symmetry_ of $(X, \ell)$ if:
 
-1) $\mathbb{P}(A) = \mathbb{P}(g(A))$ for any $P$-measurable set $A \subseteq X$
+<div id="measure-preserving-symmetry"></div>
+<div class="definition">
+  <body>
+  <strong>Definition (Measure-Preserving Symmetry).</strong>
+  <br>
+  For probability distribution, $P$, over $(X, \ell)$, a function $g: X \rightarrow X$ is a <i>$P$-preserving symmetry</i> of $(X, \ell)$ if:
+  <ul>
+    <li>$\mathbb{P}(A) = \mathbb{P}(g(A))$ for any $P$-measurable set $A \subseteq X$</li>
+    <li>$\underset{x,y \sim P}{\mathbb{P}}(\ell(x,y) = \ell(g(x), g(y))) = 1$</li>
+  </ul>
+  </body>
+</div>
 
-2) $\underset{x,y \sim P}{\mathbb{P}}(\ell(x,y) = \ell(g(x), g(y))) = 1$
+The above distribution gives us a way to characterize risk functions and clustering distances.
 
-**Distance-Distribution Dependent (ODD) Risk.** A risk function, $R$ is called _ODD_ if, for every distribution $P$, every $P$-preserving symmetry $g$, and every clustering $\mathcal{C}$, we have that $R(P, \mathcal{C}) = R(P, g(\mathcal{C}))$.
-
-**Distance-Distribution Dependent (ODD) Clustering Distance.** A clustering distance, $d$, is called _ODD_ if, for every distribution $P$, every $P$-preserving symmetry $g$, and any clusterings $\mathcal{C}_1, \mathcal{C}_2$, we have that $d_P(\mathcal{C}_1, \mathcal{C}_2) = d_P(g(\mathcal{C}_1), g(\mathcal{C}_2))$. 
-
-Intuitively, the above state that ODD risks and distances only depend on distances and distributions. That is, transforming the points in ways that do not affect their probabilities or distances will not affect the risk or distance between the points. All common distances are ODD. 
+<div id="odd"></div>
+<div class="definition">
+  <body>
+  <strong>Definition (Distance-Distribution Dependent Risk and Clustering Distance).</strong>
+  <br>
+   A risk function, $R$ is called <i>ODD</i> if, for every distribution $P$, every $P$-preserving symmetry $g$, and every clustering $\mathcal{C}$, we have that $R(P, \mathcal{C}) = R(P, g(\mathcal{C}))$.
+   <br>
+   A clustering distance, $d$, is called <i>ODD</i> if, for every distribution $P$, every $P$-preserving symmetry $g$, and any clusterings $\mathcal{C}_1, \mathcal{C}_2$, we have that $d_P(\mathcal{C}_1, \mathcal{C}_2) = d_P(g(\mathcal{C}_1), g(\mathcal{C}_2))$. 
+   <br>
+  Intuitively, the above state that ODD risks and distances only depend on distances and distributions. That is, transforming the points in ways that do not affect their probabilities or distances will not affect the risk or distance between the points. All common distances are ODD. 
+  </body>
+</div>
 
 
 ----
@@ -101,7 +151,7 @@ Intuitively, the above state that ODD risks and distances only depend on distanc
 Ben-David et al. present their first theorem as follows:
 
 <div class="theorem">
-  <strong>Ben-David et al. (2006). Theorem 10 (Stability).</strong>
+  <strong>Theorem 10 (Ben-David et al. (2006)).</strong>
   <br>
   Any risk converging, $R$-minimizing clustering algorithm will be stable on distribution $P$ if $P$ has a unique minimizer.
 
@@ -154,14 +204,15 @@ Ben-David et al. present their first theorem as follows:
 
 The authors emphasize a couple points (see the paper for illustrations):
 
-1) Algorithms (such as $k$-means and $k$-medians) can be stable for _any_ choice of $k$
-
-2) A stable algorithm does not mean the choice of number of clusters is correct
+<ul>
+  <li> Algorithms (such as $k$-means and $k$-medians) can be stable for <i>any</i> choice of $k$ </li>
+  <li> A stable algorithm does not mean the choice of number of clusters is correct </li>
+</ul>
 
 With these points in mind, the authors prove a related theorem.
 
 <div class="theorem">
-  <strong>Ben-David et al. (2006). Theorem 15 (Instability from symmetry).</strong>
+  <strong>Theorem 15 (Ben-David et al. (2006).</strong>
   <br>
   Suppose we have an ODD risk function, $R$, an ODD clustering distance $d$, a probability distribution, $P$, with some number $n$ distinct minimizers, and $P$-symmetry, $g$, such that $d_P(\mathcal{C}^*, g(\mathcal{C}^*)) > 0$ for every $R$-minimizer $\mathcal{C}^*$. Any risk convergent, $R$-minimizing clustering algorithm is <i>unstable</i> on $P$.
 

@@ -50,11 +50,10 @@ In geometry, if we assume that $S$ is closed and convex, then the _solid tangent
 
 
 ---
-## Shapiro
+## Shapiro (1988)
 
 As an introduction into the theoretical/geometric setting we are interested in, I will cover some of the background and results in Shapiro (1988). This will give us a better foundation for what's to come.
 
-#### Cones
 Shapiro restricts his attention to 
 <span class="popup" onclick="PopupFunc('pop1')">
     closed
@@ -73,7 +72,14 @@ cones, so I'll do the same for the rest of this section.
 
 Shapiro denotes the orthogonal projection of a point onto $C$ with $$P(\mathbf{x}, C) = \underset{\eta \in C}{\min} \left\{ (\mathbf{x} - \eta)^\top \mathbf{U} (\mathbf{x} - \eta) \right\}$$ where $\mathbf{U}$ is any positive-definite matrix. We'll use $\rvert \rvert \mathbf{x} \rvert \rvert = \sqrt{\mathbf{x}^\top \mathbf{U} \mathbf{x}}$ to denote the norm of $\mathbf{x}$ associated with $\mathbf{U}$, and we'll use $\langle\mathbf{x}, \mathbf{y}\rangle = \mathbf{x}^\top \mathbf{U}\mathbf{y}$ to denote the inner product of $\mathbf{x}$ and $\mathbf{y}$ associated with $\mathbf{U}$.
 
-Let $C^0$ denote the _dual_ or _polar cone_ defined by $$C^0= \{ \mathbf{y} \rvert \langle \mathbf{x}, \mathbf{y} \rangle \leq 0 \hspace{2mm} \forall \mathbf{x} \in C \}$$. If $C$ is a vector subspace, then $C^0$ is the orthogonal complement of $C$, and if $C$ is closed and convex, then $(C^0)^0 = C$. 
+<div id="dual-cone"></div>
+<div class="definition">
+  <body>
+  <strong>Definition (Dual Cone).</strong>
+  <br>
+ The <i>dual</i> or <i>polar cone</i> is the set $C^0= \{ \mathbf{y} \rvert \langle \mathbf{x}, \mathbf{y} \rangle \leq 0 \hspace{2mm} \forall \mathbf{x} \in C \}$. If $C$ is a vector subspace, then $C^0$ is the orthogonal complement of $C$, and if $C$ is closed and convex, then $(C^0)^0 = C$. 
+  </body>
+</div>
 
 If we have another convex cone $K$, then:
 
@@ -84,21 +90,29 @@ $$
 
 if $C$ or $K$ is a vector space. Furthermore, if $C$ is a vector subspace, then $\mathbf{x} - P(\mathbf{x}, C) = P(\mathbf{x}, C^0)$. That is, the difference between $\mathbf{x}$ and the orthogonal projection of $\mathbf{x}$ onto $C$ is equivalent to its orthogonal projection onto the dual cone $C^0$.
 
-#### Chi-Bar-Squared Statistics
 
-Suppose we have a Gaussian random vector, $\mathbf{y} \sim \mathcal{N}(\mathbf{0}, \mathbf{V})$, of $m$ dimensions with some covariance matrix, $\mathbf{V}$, and a convex cone, $C$. A chi-bar-squared statistic is the following:
+<div id="chi-bar-squared"></div>
+<div class="definition">
+  <body>
+  <strong>Definition ($\bar{\chi}^2$-Statistic).</strong>
+  <br>
+  Let $\mathbf{y} \sim \mathcal{N}(\mathbf{0}, \mathbf{V})$ be a Gaussian random vector of $m$ dimensions with some covariance matrix, $\mathbf{V}$, and let $C$ be a convex cone. A <i>$\bar{\chi}^2$-statistic</i> is given by the following:
 
-$$
-\begin{aligned}
-\bar{\chi}^2 &= \mathbf{y}^\top \mathbf{V}^{-1} \mathbf{y} - \underset{\eta \in C}{\min} \left\{ (\mathbf{y} - \eta)^\top \mathbf{V}^{-1}(\mathbf{y} - \eta) \right\} \\
-&= \mathbf{y}^\top \mathbf{V}^{-1} \mathbf{y} - (\mathbf{y} - P(\mathbf{y}, C))^\top \mathbf{V}^{-1}(\mathbf{y} - P(\mathbf{y}, C)) \\
-&= (\mathbf{y} - \mathbf{y} + P(\mathbf{y}, C))^\top \mathbf{V}^{-1}(\mathbf{y} - \mathbf{y} + P(\mathbf{y}, C)) \\
-&= \rvert \rvert P(\mathbf{y}, C) \rvert \rvert^2
-\end{aligned}
-\nonumber
-$$
+    $$
+    \begin{aligned}
+    \bar{\chi}^2 &= \mathbf{y}^\top \mathbf{V}^{-1} \mathbf{y} - \underset{\eta \in C}{\min} \left\{ (\mathbf{y} - \eta)^\top \mathbf{V}^{-1}(\mathbf{y} - \eta) \right\} \\
+    &= \mathbf{y}^\top \mathbf{V}^{-1} \mathbf{y} - (\mathbf{y} - P(\mathbf{y}, C))^\top \mathbf{V}^{-1}(\mathbf{y} - P(\mathbf{y}, C)) \\
+    &= (\mathbf{y} - \mathbf{y} + P(\mathbf{y}, C))^\top \mathbf{V}^{-1}(\mathbf{y} - \mathbf{y} + P(\mathbf{y}, C)) \\
+    &= \rvert \rvert P(\mathbf{y}, C) \rvert \rvert^2
+    \end{aligned}
+    \nonumber
+    $$
 
-where in the above, the inner products/norms are taken using the matrix $\mathbf{V}^{-1}$. The chi-bar-squared statistic follows a mixture of $\chi^2$ distributions:
+    where in the above, the inner products/norms are taken using the matrix $\mathbf{V}^{-1}$.
+  </body>
+</div>
+
+The chi-bar-squared statistic follows a mixture of $\chi^2$ distributions:
 
 $$
 \mathbb{P}(\bar{\chi}^2 \geq c) = \sum_{i = 1}^m w_i \mathbb{P}(\chi_i^2 \geq c)
@@ -206,7 +220,7 @@ $$
 
 where $\tilde{\mathbf{G}}^{\psi, \psi}$ is a consistent estimator for $\mathbf{G}^{\psi, \psi}$, and $\tilde{\mathbf{Z}}_n$ is $\mathbf{Z}_n$ found using $\tilde{\theta}_0$, $\tilde{\mathbf{G}}$, and $\tilde{\mathbf{V}}$.
 
-Let's partition $\mathbf{A}(\theta)$ in the same way that we did with $\mathbf{V}(\theta)$ and $\mathbf{G}(\theta)$. With some work, we can see that for a fixed $\delta \in \mathcal{C}$, $\mathbf{U} \rightsquigarrow \mathcal{N}(\delta, \mathbf{A}_{\psi, \psi}(\theta_0))$ under the sequence of alternatives $H_n: \psi = n^{-1/2} \delta$ as we take $n \rightarrow \infty$. (PROOF?)
+Let's partition $\mathbf{A}(\theta)$ in the same way that we did with $\mathbf{V}(\theta)$ and $\mathbf{G}(\theta)$. With some work, we can see that for a fixed $\delta \in \mathcal{C}$, $\mathbf{U} \rightsquigarrow \mathcal{N}(\delta, \mathbf{A}_{\psi, \psi}(\theta_0))$ under the sequence of alternatives $H_n: \psi = n^{-1/2} \delta$ as we take $n \rightarrow \infty$. 
 
 The test statistic for one-sided alternatives is then:
 
@@ -217,7 +231,7 @@ $$
 
 <div class="theorem">
   <body>
-  <strong>Lemma 1.</strong>
+  <strong>Lemma 1 (Silvapulle and Silvapulle (1995)).</strong>
   <br>
   Let $\hat{\theta}$ be an estimator of $\theta$ using the entire parameter space (no restrictions imposed). Let $\mathcal{P}$ denote a closed and convex cone with its vertex at the origin. Let $\mathbf{B}$ be a positive definite matrix independent of $\theta$, and let $\mathbf{B}_{\psi, \psi \cdot \lambda} = \mathbf{B}_{\psi, \psi} - \mathbf{B}_{\psi, \lambda} \mathbf{B}_{\lambda, \lambda}^{-1} \mathbf{B}_{\lambda, \psi}$. 
   <br>
@@ -391,7 +405,7 @@ With the above lemma, we can prove the following theorem.
 
 <div class="theorem">
   <body>
-  <strong>Theorem 1.</strong>
+  <strong>Theorem 1 (Silvapulle and Silvapulle (1995)).</strong>
   <br>
   Define $\mathbf{S}_n(\theta) = \frac{\partial}{\partial \theta} \left[ \ell(\theta) \right]$ as the score function (the derivative of the log-likelihood), and assume that it satisfies Condition \eqref{eq:condition-a}. Suppose we are testing $H_0: \psi = \mathbf{0}$  against $H_A: \psi \in \mathcal{C}$ for $\mathcal{C}$ as defined above. As $n \rightarrow \infty$, the likelihood ratio test statistic, $LR = -2 \left(\ell(\theta_0) - \ell(\hat{\theta}) \right)$ where $\hat{\theta}$ is the MLE of $\theta$ over the entire parameter space, satisfies:
 

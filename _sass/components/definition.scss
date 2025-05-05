@@ -1,7 +1,7 @@
 // Code from: https://www.w3schools.com/howto/howto_css_notes.asp
-.example {
-    background-color: #ffdddd;
-    border-left: 6px solid #f44336;
+.definition {
+    background-color: #c6dbc5;
+    border-left: 6px solid #159911;
     padding-left: 10px;
     padding-right: 10px;
     padding-top: 5px;
@@ -11,6 +11,6 @@
     margin-bottom: 15px;
 }
 
-.example > ul, li {
+.definition > ul, li {
     font-size: $body-font-size;
 }

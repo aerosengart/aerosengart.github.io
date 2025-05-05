@@ -20,68 +20,123 @@ Though the journey to this point is a bit confusing, I have recently become inte
 
 First, let's more rigorously define what we mean by _clustering_ and our problem setting as defined by Kleinberg.
 
-Suppose we have a set $S$ of $n \geq 2$ observations, which we notate as $S = \{ 1, 2, \dots, n\}$. We'll define a _distance function_ $d: S \times S \rightarrow \mathbb{R}$ as a function satisfying, for all $i,j,k \in S$:
+<div id="clustering"></div>
+<div class="definition">
+  <body>
+  <strong>Definition (Clustering).</strong>
+  <br>
+  Suppose we have a set $S$ of $n \geq 2$ observations, which we notate as $S = \{ 1, 2, \dots, n\}$. We'll define a <i>distance function</i> $d: S \times S \rightarrow \mathbb{R}$ as a function satisfying, for all $i,j,k \in S$:
 
-- Non-Negativity: $d(i,j) \geq 0$
-- Symmetry: $d(i,j) = d(j,i)$ 
-- Identity of Indiscernibles: $d(i,j) = 0$ if, and only if, $i = j$
-- Triangle Inequality: $d(i,k) \leq d(i,j) + d(j,k)$
+  <ul>
+    <li>Non-Negativity: $d(i,j) \geq 0$</li>
+    <li>Symmetry: $d(i,j) = d(j,i)$</li>
+    <li>Identity of Indiscernibles: $d(i,j) = 0$ if, and only if, $i = j$</li>
+    <li>Triangle Inequality: $d(i,k) \leq d(i,j) + d(j,k)$</li>
+  </ul>
 
-The last condition (Triangle Inequality) is not necessary for the following discussion, but it is a nice property and requiring it makes a choice of $d$ a metric. 
+  The last condition (Triangle Inequality) is not necessary for the following discussion, but it is a nice property and requiring it makes a choice of $d$ a metric. 
+  <br>
+  A <i>clustering function</i>, $f$, is a function operating on a distance function $d$ on $S$ that outputs a partition $\Gamma$ of $S$. A partition is called <i>trivial</i> if each cluster contains one point or if it has only one cluster.
+  </body>
+</div>
 
-A _clustering function_, $f$, is a function operating on a distance function $d$ on $S$ that outputs a partition $\Gamma$ of $S$. A partition is called _trivial_ if each cluster contains one point or if it has only one cluster.
+We can evaluate a clustering function with what the author terms a <i>clustering quality metric</i>.
 
-A _clustering-quality measure (CQM)_ is a function operating on a partition $\Gamma$ of a set $S$ with respect to distance $d$ that outputs a non-negative real number which represents the "goodness" of the clustering $\Gamma$. That is, a CQM $m$ is the function $m: (\Gamma, S, d) \rightarrow \mathbb{R}^+_0$. 
+<div id="cqm"></div>
+<div class="definition">
+  <body>
+  <strong>Definition (Clustering Quality Metric).</strong>
+  <br>
+  A <i>clustering-quality measure (CQM)</i> is a function operating on a partition $\Gamma$ of a set $S$ with respect to distance $d$ that outputs a non-negative real number which represents the "goodness" of the clustering $\Gamma$. That is, a CQM $m$ is the function $m: (\Gamma, S, d) \rightarrow \mathbb{R}^+_0$. 
+  </body>
+</div>
 
-Finally, we'll define some helpful terms and quantities that will be used later.
 
-Let $\alpha \cdot d$ denote scaling the distance function $d$ by $\alpha$. That is $\alpha \cdot d$ is the distance function who assigns distance $\alpha d(i,j)$ between points $i$ and $j$. We'll denote all possible output partitions of $f$ as $\text{Range}(f)$. We denote the fact points $i$ and $j$ are in the same cluster in partition $\Gamma$ with $i \underset{\Gamma}{\sim} j$, and we use the notation $i \underset{\Gamma}{\not \sim} j$ if they are not in the same cluster. 
-
-#### Representative Set
-We call a set $G$ a _representative set_ of $\Gamma$ if it contains a single observation from each cluster in $\Gamma$. That is, for $\Gamma = \{ \gamma_1, \dots, \gamma_g\}$, $G$ is a representative set of $\Gamma$ if $\rvert G \rvert = g$ and $G\cap \gamma_i \neq \emptyset$ \forall i$. 
+Finally, we'll define some helpful terms and quantities that will be used later. Let $\alpha \cdot d$ denote scaling the distance function $d$ by $\alpha$. That is $\alpha \cdot d$ is the distance function who assigns distance $\alpha d(i,j)$ between points $i$ and $j$. We'll denote all possible output partitions of $f$ as $\text{Range}(f)$. We denote the fact points $i$ and $j$ are in the same cluster in partition $\Gamma$ with $i \underset{\Gamma}{\sim} j$, and we use the notation $i \underset{\Gamma}{\not \sim} j$ if they are not in the same cluster. 
 
 
-#### Isomorphism
-Let $\Gamma$ and $\Gamma'$ be partitions of $S$ with $d$. We call $\Gamma$ and $\Gamma'$ _isomorphic_, denoted by $\Gamma \underset{d}{\approx} \Gamma'$ if there is a
-<span class="popup" onclick="PopupFunc('pop4')">
-  distance-preserving isomorphism
-  <span class="popuptext" id="pop4">
-    We can think of this as a mapping between our source set, $S$, and some target set $\phi(S)$ such that for any $i \in S$, there exists $\phi(i) \in \phi(S)$; for any $i, j \in S$, $d(i, j) = d(\phi(i), \phi(j))$; and there exists an inverse mapping, $\phi'$, such that $\phi'(\phi(i)) = i$. 
+<div id="rep-set"></div>
+<div class="definition">
+  <body>
+  <strong>Definition (Representative Set).</strong>
+  <br>
+  We call a set $G$ a <i>representative set</i> of $\Gamma$ if it contains a single observation from each cluster in $\Gamma$. That is, for $\Gamma = \{ \gamma_1, \dots, \gamma_g\}$, $G$ is a representative set of $\Gamma$ if $\rvert G \rvert = g$ and $G\cap \gamma_i \neq \emptyset$ \forall i$. 
+  </body>
+</div>
+
+<div id="isomorphism"></div>
+<div class="definition">
+  <body>
+  <strong>Definition (Isomorphism).</strong>
+  <br>
+  Let $\Gamma$ and $\Gamma'$ be partitions of $S$ with $d$. We call $\Gamma$ and $\Gamma'$ <i>isomorphic</i>, denoted by $\Gamma \underset{d}{\approx} \Gamma'$ if there is a
+  <span class="popup" onclick="PopupFunc('pop4')">
+    <i>distance-preserving isomorphism</i>
+    <span class="popuptext" id="pop4">
+      We can think of this as a mapping between our source set, $S$, and some target set $\phi(S)$ such that for any $i \in S$, there exists $\phi(i) \in \phi(S)$; for any $i, j \in S$, $d(i, j) = d(\phi(i), \phi(j))$; and there exists an inverse mapping, $\phi'$, such that $\phi'(\phi(i)) = i$. 
+    </span>
   </span>
-</span>
  $\phi: S \rightarrow S$ such that $\forall i,j \in S$, we have $i \underset{\Gamma}{\sim} j$ if, and only if, $\phi(i) \underset{\Gamma'}{\sim} \phi(j)$. 
+  </body>
+</div>
+
+<div id="gamma-transformation"></div>
+<div class="definition">
+  <body>
+  <strong>Definition ($\Gamma$-Transformation).</strong>
+  <br>
+  Let $d$ and $d'$ be distance functions on $S$, and let $\Gamma$ be some partition of $S$. We call $d'$ a <i>$\Gamma$-transformation</i> of $d$ if:
+  <ul>
+    <li>$d'(i,j) \leq d(i,j)$ for all $i,j \in S$ such that $i \underset{\Gamma}{\sim} j$</li>
+    <li>$d'(i,j) \geq d(i,j)$ for all $i,j \in S$ such that $i \underset{\Gamma}{\not \sim} j$</li>
+  </ul>
+  In words, a $\Gamma$-transformation of a distance function $d$ will assigns smaller distances to points in the same cluster and larger distances to points in different clusters. 
+  </body>
+</div>
+
+<div id="refinement"></div>
+<div class="definition">
+  <body>
+  <strong>Definition (Refinement).</strong>
+  <br>
+  Let $\Gamma$ be some partition of $S$. We call another partition $\Gamma'$ of $S$ a <i>refinement</i> of $\Gamma$ if, for every cluster $C' \in \Gamma'$, there is a cluster $C \in \Gamma$ such that $C' \subseteq C$. 
+  <br>
+  More intuitively, a refinement is just a finer partition, which means each cluster in $\Gamma$ is either also in $\Gamma'$ or is split into multiple smaller clusters in $\Gamma'$.
+  We can define the partial order $\Gamma' \preccurlyeq \Gamma$ if $\Gamma'$ is a refinement of $\Gamma$.
+  </body>
+</div>
+
+<div id="antichain"></div>
+<div class="definition">
+  <body>
+  <strong>Definition (Antichain).</strong>
+  <br>
+  An <i>antichain</i> is a collection $\mathcal{A}$ of partitions of $S$ such that for all $\Gamma, \Gamma' \in \mathcal{A}$ where neither $\Gamma$ is a refinement of $\Gamma'$ nor is $\Gamma'$ a refinement of $\Gamma$. We also require that $\Gamma$ and $\Gamma'$ be different partitions. 
+  </body>
+</div>
+
+<div id="ab-conforming"></div>
+<div class="definition">
+  <body>
+  <strong>Definition ($(a,b)$-Conforming).</strong>
+  <br>
+  Let $\Gamma$ be a partition of $S$. A distance function $d$ is said to <i>$(a,b)$-conform</i> to $\Gamma$ if:
+  <ul>
+    <li>$d(i,j) \leq a$ for all $i,j \in S$ such that $i \underset{\Gamma}{\sim} j$</li>
+    <li>$d(i,j) \geq b$ for all $i,j \in S$ such that $i \underset{\Gamma}{\not \sim} j$</li>
+  </ul>
+  </body>
+</div>
 
 
-#### $\Gamma$-transformation
-Let $d$ and $d'$ be distance functions on $S$, and let $\Gamma$ be some partition of $S$. We call $d'$ a $\Gamma$-_transformation_ of $d$ if:
-
-- $d'(i,j) \leq d(i,j)$ for all $i,j \in S$ such that $i \underset{\Gamma}{\sim} j$
-- $d'(i,j) \geq d(i,j)$ for all $i,j \in S$ such that $i \underset{\Gamma}{\not \sim} j$
-
-In words, a $\Gamma$-transformation of a distance function $d$ will assigns smaller distances to points in the same cluster and larger distances to points in different clusters. 
-
-
-#### Refinement
-Let $\Gamma$ be some partition of $S$. We call another partition $\Gamma'$ of $S$ a _refinement_ of $\Gamma$ if, for every cluster $C' \in \Gamma'$, there is a cluster $C \in \Gamma$ such that $C' \subseteq C$. 
-
-More intuitively, a refinement is just a finer partition, which means each cluster in $\Gamma$ is either also in $\Gamma'$ or is split into multiple smaller clusters in $\Gamma'$.
-
-We can define the partial order $\Gamma' \preccurlyeq \Gamma$ if $\Gamma'$ is a refinement of $\Gamma$.
-
-
-#### Antichain
-An _antichain_ is a collection $\mathcal{A}$ of partitions of $S$ such that for all $\Gamma, \Gamma' \in \mathcal{A}$ where neither $\Gamma$ is a refinement of $\Gamma'$ nor is $\Gamma'$ a refinement of $\Gamma$. We also require that $\Gamma$ and $\Gamma'$ be different partitions. 
-
-
-#### $(a,b)$-conforming
-Let $\Gamma$ be a partition of $S$. A distance function $d$ is said to $(a,b)$-_conform_ to $\Gamma$ if:
-
-- $d(i,j) \leq a$ for all $i,j \in S$ such that $i \underset{\Gamma}{\sim} j$
-- $d(i,j) \geq b$ for all $i,j \in S$ such that $i \underset{\Gamma}{\not \sim} j$
-
-
-#### $\Gamma$-forcing
-For a partition $\Gamma$ of $S$ and clustering function $f$, a pair of real numbers $(a, b)$ is called $\Gamma$-_forcing_ with respect to $f$ if $f(d) = \Gamma$ for all distance functions that are $(a,b)$-conforming to $\Gamma$.
+<div id="gamma-forcing"></div>
+<div class="definition">
+  <body>
+  <strong>Definition ($\Gamma$-Forcing).</strong>
+  <br>
+  For a partition $\Gamma$ of $S$ and clustering function $f$, a pair of real numbers $(a, b)$ is called <i>$\Gamma$-forcing</i> with respect to $f$ if $f(d) = \Gamma$ for all distance functions that are $(a,b)$-conforming to $\Gamma$.
+  </body>
+</div>
 
 ---
 
@@ -89,24 +144,23 @@ For a partition $\Gamma$ of $S$ and clustering function $f$, a pair of real numb
 
 Kleinberg's impossibility theorem is based upon a set of three axioms that characterize a "good" clustering function, $f$.
 
-#### Scale-Invariance
-For any distance function $d$ and positive real $\alpha > 0$, $f(d) = f(\alpha \cdot d)$. 
+<div id="axioms"></div>
+<div class="definition">
+  <body>
+  <strong>Definition (Kleinberg's Axioms).</strong>
+  <ul>
+    <li><i>Scale Invariance:</i> For any distance function $d$ and positive real $\alpha > 0$, $f(d) = f(\alpha \cdot d)$. A scale-invariant clustering function should not change its output when all distances between points are changed by some factor. </li>
+    <li><i>Richness:</i> $\text{Range}(f)$ should be all possible paritions of $S$. Richness implies that our clustering function is flexible enough that any partition of $S$ can be achieved if we find the right distance function.</li>
+    <li><i>Consistency:</i> For any two distance functions $d$ and $d'$ such that $f(d) = \Gamma$ and $d'$ is a $\Gamma$-transformation of $d$, $f(d') = \Gamma$. A consistent clustering function will output the same partition if we make points within the same cluster closer together and make points in different clusters farther apart.</li>
+  </ul>
+  </body>
+</div>
 
-A scale-invariant clustering function should not change its output when all distances between points are changed by some factor. 
+Kleinberg goes on to show that these axioms imply a semi-surprising result.
 
-#### Richness
-$\text{Range}(f)$ should be all possible paritions of $S$.
-
-Richness implies that our clustering function is flexible enough that any partition of $S$ can be achieved if we find the right distance function.
-
-#### Consistency
-For any two distance functions $d$ and $d'$ such that $f(d) = \Gamma$ and $d'$ is a $\Gamma$-transformation of $d$, $f(d') = \Gamma$.
-
-A consistent clustering function will output the same partition if we make points within the same cluster closer together and make points in different clusters farther apart.
-
-
+<div id="theorem2.1"></div>
 <div class="theorem">
-  <strong>Kleinberg (2002). Theorem 2.1 (Impossibility).</strong>
+  <strong>Theorem 2.1 (Kleinberg (2002)).</strong>
   <br>
   For $n \geq 2$, there does not exists a clustering function $f$ that is scale-invariant, rich, and consistent.
 
@@ -140,10 +194,11 @@ A consistent clustering function will output the same partition if we make point
 
 ## Characterization Theorem
 
-Kleinberg goes on to prove an additional theorem that describes the partitions achievable by scale-invariant, consistent clustering functions $f$.
+Kleinberg proves an additional theorem that describes the partitions achievable by scale-invariant, consistent clustering functions $f$.
 
+<div id="theorem3.2"></div>
 <div class="theorem">
-  <strong>Kleinberg (2002). Theorem 3.2 (Characterization).</strong>
+  <strong>Theorem 3.2 (Kleinberg (2002)).</strong>
   <br>
   Let $\mathcal{A}$ be any antichain of partitions. There exists a scale-invariant, consistent clustering function $f$ such that $\text{Range}(f) = \mathcal{A}$. 
 
@@ -195,13 +250,13 @@ Due to the impossibility theorem, it might be worthwhile to look into easing up 
 
 
 #### Relaxing Richness
-Theorem 3.2 (Characterization) is an example of a relaxation of the richness property. If we were satisfied with a clustering function that is scale-invariant, consistent, but only achieves an antichain as its range, then the sum-of-pairs method will work. 
+<a href="#theorem3.2">Theorem 3.2</a> is an example of a relaxation of the richness property. If we were satisfied with a clustering function that is scale-invariant, consistent, but only achieves an antichain as its range, then the sum-of-pairs method will work. 
 
 
 #### Relaxing Consistency
-Kleinberg proposes _Refinement-Consistency_, in which a $\Gamma$-transformation should output a refinement of $\Gamma$. Unfortunately, this is not yet enough; a scale-invariant, rich, and refinement-consistent clustering function does not exist. However, if one also relaxes richness to say that all but one (trivial) partition can be achieved by $f$ — termed _Near-Richness_ —, then Theorem 2.1 does not hold. 
+Kleinberg proposes <i>Refinement-Consistency</i>, in which a $\Gamma$-transformation should output a refinement of $\Gamma$. Unfortunately, this is not yet enough; a scale-invariant, rich, and refinement-consistent clustering function does not exist. However, if one also relaxes richness to say that all but one (trivial) partition can be achieved by $f$ — termed _Near-Richness_ —, then Theorem 2.1 does not hold. 
 
-An alternative is to relax consistency to something I'll call _Weak Consistency_, which is where if $d'$ is a $f(d)$-transformation of $d$, then either $f(d')$ is a refinement of $f(d)$ or $f(d)$ is a refinement of $f(d')$. There do exist clustering functions that satisfy all three of scale-invariance, richness, and weak consistency. 
+An alternative is to relax consistency to something I'll call <i>Weak Consistency</i>, which is where if $d'$ is a $f(d)$-transformation of $d$, then either $f(d')$ is a refinement of $f(d)$ or $f(d)$ is a refinement of $f(d')$. There do exist clustering functions that satisfy all three of scale-invariance, richness, and weak consistency. 
 
 In some ways, this relaxation may be more reasonable. For example, consider some partition that results in four clusters arranged in a square. Now, construct a distance function that just puts more distance between the left clusters and the right clusters. Although this new distance function is a $\Gamma$-transformation, it might be better to combine the left clusters and right clusters to have a partition with two groups. Ackerman and Ben-David provide this example as an illustration in Figure 1 of their paper.  
 
@@ -224,23 +279,26 @@ Kleinberg's main result is a theorem (and its proof) stating that there does not
 
 Ackerman and Ben-David push back against this interpretation and state that the way in which Kleinberg axiomatized clustering was part of the reason for the impossibility result. They provide a slightly different perspective and provide a set of axioms for the function used to assess clustering quality rather than the clustering function itself.
 
-Ackerman and Ben-David adjust Steinberg's work to apply to CQMs rather than clustering functions, which results in a consistent set of axioms. They also add one additional property in order to make their set of axioms satisfy two properties (_soundness_ and _completeness_, which I won't go into here) that make it more useful for defining what methods should be used for clustering.
+Ackerman and Ben-David adjust Steinberg's work to apply to CQMs rather than clustering functions, which results in a consistent set of axioms. They also add one additional property in order to make their set of axioms satisfy two properties (<i>soundness</i> and <i>completeness</i>, which I won't go into here) that make it more useful for defining what methods should be used for clustering.
 
-#### Scale-Invariance
-A CQM $m$ is called _scale-invariant_ if for every partition $\Gamma$ of set $S$ with respect to distance $d$ and ever $\alpha > 0$, we have $m(\Gamma, S, d) = m(\Gamma, S, \alpha \cdot d)$. 
 
-#### Richness
-A CQM $m$ is called _rich_ if for each non-trivial partitions $\Gamma$ of $S$, there exists distance function $d$ such that $\Gamma = \underset{\Gamma'}{\arg \max} \left[ m(\Gamma', S, d) \right]$. A CQM will satisfy the richness property if, for each non-trivial $\Gamma$, we have $m(\Gamma, S, d) \geq m(\Gamma', S, d)$ for all possible partitions $\Gamma'$ of $S$ with $d$ (which may be chosen for each $\Gamma$). The $\max$ becomes a $\min$, and the inequality is reversed for CQMs that assign lower values to better clusterings.
+<div id="axioms2"></div>
+<div class="definition">
+  <body>
+  <strong>Definition (Ackerman and Ben-David Axioms).</strong>
+  <ul>
+    <li><i>Scale Invariance:</i>A CQM $m$ is called <i>scale-invariant</i> if for every partition $\Gamma$ of set $S$ with respect to distance $d$ and ever $\alpha > 0$, we have $m(\Gamma, S, d) = m(\Gamma, S, \alpha \cdot d)$. </li>
+    <li><i>Richness:</i>A CQM $m$ is called _rich_ if for each non-trivial partitions $\Gamma$ of $S$, there exists distance function $d$ such that $\Gamma = \underset{\Gamma'}{\arg \max} \left[ m(\Gamma', S, d) \right]$. A CQM will satisfy the richness property if, for each non-trivial $\Gamma$, we have $m(\Gamma, S, d) \geq m(\Gamma', S, d)$ for all possible partitions $\Gamma'$ of $S$ with $d$ (which may be chosen for each $\Gamma$). The $\max$ becomes a $\min$, and the inequality is reversed for CQMs that assign lower values to better clusterings.</li>
+    <li><i>Consistency:</i>A CQM $m$ is called <i>consistent</i> if for every $\Gamma$ of $S$ with $d$, $m(\Gamma, X, d') \geq m(\Gamma, S, d)$ for any $\Gamma$-transformation, $d'$, of $d$. This condition is weaker than the consistency defined by Kleinberg as it does not penalize clustering functions that are only weakly consistent (recall that this means $f(d)$ and $f(d')$ are permitted to be refinements of each other).</li>
+    <li><i>Isomorphism Invariance:</i>A CQM $m$ is called <i>isomorphism-invariant</i> if, for all $\Gamma$, $\Gamma'$ of $S$ with $d$ such that $\Gamma$ and $\Gamma'$ are isomorphic, we have $m(\Gamma, S, d) = m(\Gamma', S, d)$. This condition basically states that if we have two clusterings that would be the same if we swapped the points around (in a special way...), they should have the same score according to the CQM.</li>
+  </ul>
+  </body>
+</div>
 
-#### Consistency
-A CQM $m$ is called _consistent_ if for every $\Gamma$ of $S$ with $d$, $m(\Gamma, X, d') \geq m(\Gamma, S, d)$ for any $\Gamma$-transformation, $d'$, of $d$. This condition is weaker than the consistency defined by Kleinberg as it does not penalize clustering functions that are only weakly consistent (recall that this means $f(d)$ and $f(d')$ are permitted to be refinements of each other).
-
-#### Isomorphism Invariance
-A CQM $m$ is called _isomorphism-invariant_ if, for all $\Gamma$, $\Gamma'$ of $S$ with $d$ such that $\Gamma$ and $\Gamma'$ are isomorphic, we have $m(\Gamma, S, d) = m(\Gamma', S, d)$. This condition basically states that if we have two clusterings that would be the same if we swapped the points around (in a special way...), they should have the same score according to the CQM.
-
+Ackerman and Ben-David then prove that consistent CQMs exist.
 
 <div class="theorem">
-  <strong>Ackerman and Ben-David (2008). Theorem 2/3 (Consistency).</strong>
+  <strong>Theorem 2 & 3 (Ackerman and Ben-David (2008)).</strong>
   <br>
   There exists a clustering quality measure that satisfies all four of scale-invariance, richness, consistency. and isomorphism invariance. That is, the four properties comprise a consistent set of axioms.
 
