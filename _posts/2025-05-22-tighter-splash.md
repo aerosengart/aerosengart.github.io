@@ -13,7 +13,7 @@ include_scripts: [
 ---
 
 
-This post builds off my <a href="/posts/2025/02/02/concentration-inequalities.html">earlier post</a> on concentration inequalities and empirical Bernstein bounds. Here, I'm going to try to apply those ideas to get a better bound on the $p$-values from SPLASH[^fn-chaung] and OASIS[^fn-baharav].
+This post builds off my <a href="/posts/2025/02/02/concentration.html">earlier post</a> on concentration inequalities and empirical Bernstein bounds. Here, I'm going to try to apply those ideas to get a better bound on the $p$-values from SPLASH[^fn-chaung] and OASIS[^fn-baharav].
 
 The $p$-value bound in SPLASH/OASIS are based on an application of Hoeffding's inequality. However, the authors mention that it may be possible to do better through a Bernstein inequality. The issue is that we do not know the variances of the summands in the test statistic. This is where empirical Bernstein bounds come into play. Here I will try to apply the ideas explained above in Maurer and Pontil (2009)[^fn-maurer] to the SPLASH setting.
 
@@ -110,7 +110,7 @@ $$
 \mathbb{P}\left( \bigg\rvert \sum_{i = 1}^n \left[X_i - \mathbb{E}[X_i] \right]\bigg\rvert \geq t\right) \leq 4\exp\left(- 2\left(\sqrt{\frac{3(n-1)t}{7 (b-a) n} + \left(\frac{3(n-1)\sqrt{\frac{V_n(\mathbf{X})}{2n}}}{7 (b-a) }\right)^2}  - \frac{3(n-1)\sqrt{V_n(\mathbf{X})}}{2n} \right)\right)
 $$
 
-See my <a href="/posts/2025/02/02/concentration-inequalities.html">concentration inequalities post</a> for details.
+See my <a href="/posts/2025/02/02/concentration.html">concentration inequalities post</a> for details.
 
 
 ### Application To SPLASH
@@ -165,7 +165,7 @@ As we go from Figure A to C, the variance increases, and we clearly see good per
 ## Betting Bounds
 In all three figures, we see that the Hoeffding-derived $p$-value bound is still quite far from the true $p$-value. This begs the question: can we do any better? Luckily, results from game theoretic statistics say yes (in a way).
 
-A recent paper from Waudby-Smith and Ramdas[^fn-waudby-smith] introduces methods for tight confidence intervals and sequences for estimating the means of bounded random variables. I have <a href="/posts/2025/05/21/wsr.html">another post</a> about the nitty gritty details of this paper, but I'll briefly introduce the pertinent result here. Before we dive in, it might be useful to review some of the concepts in my <a href="/posts/2025/04/30/measure-theory.html">post on measure theory</a> and my <a href="/posts/2025/05/20/martingales.html">post on martingales</a>.
+A recent paper from Waudby-Smith and Ramdas[^fn-waudby-smith] introduces methods for tight confidence intervals and sequences for estimating the means of bounded random variables. I have <a href="/posts/2025/05/21/betting-bounds.html">another post</a> about the nitty gritty details of this paper, but I'll briefly introduce the pertinent result here. Before we dive in, it might be useful to review some of the concepts in my <a href="/posts/2025/04/30/measure-theory.html">post on measure theory</a> and my <a href="/posts/2025/05/20/martingales.html">post on martingales</a>.
 
 Suppose we have a sequence of random variables $$(X_t)_{t=1}^\infty$$ from some distribution $P \in \mathcal{P}^\mu$ where $\mathcal{P}^\mu$ is the set of distributions on $[0, 1]^\infty$ such that $$\mathbb{E}_P[X_t \rvert \mathcal{F}_{t-1}] = \mu$$ for each $t$ where $$\mathcal{F} = (\mathcal{F}_t)_{t=0}^\infty$$ is the canonical filtration of $$(X_t)_{t=1}^\infty$$.
 
