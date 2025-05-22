@@ -61,3 +61,18 @@ a {
 a:hover {
   text-decoration: underline;
 }
+
+.row {
+  display: flex;
+}
+
+.column {
+  text-align: center;
+  flex: 33.33%;
+  width: 33.33%;
+}
+
+.column img {
+  flex: 100%;
+  width: 100%;
+}

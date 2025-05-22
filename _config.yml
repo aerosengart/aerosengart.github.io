@@ -33,8 +33,29 @@ github_username: aerosengart
 remote_theme: broccolini/swiss
 plugins:
   - jekyll-feed
+  #- jekyll-scholar
   #- jekyll-toc
 markdown: kramdown
+
+# scholar:
+#   style: apa
+#   locale: en
+
+#   sort_by: none
+#   order: ascending
+
+#   source: ./_bibliography
+#   bibliography: references.bib
+#   bibliography_template: "{{reference}}"
+
+#   replace_strings: true
+#   join_strings:    true
+
+#   details_dir:    bibliography
+#   details_layout: bibtex.html
+#   details_link:   Details
+
+#   query: "@*"
 
 # toc: 
 #   min_level: 2

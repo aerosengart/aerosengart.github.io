@@ -25,9 +25,9 @@ code {
     }
   }
 
-  p, ol, ul {
+  p {
     font-size: $prose-font-size;
-    margin-bottom: 1em;
+    margin-bottom: 0.5em;
     width: 100%;
 
     @media (min-width: $breakpoint-lg) {
@@ -36,9 +36,16 @@ code {
 
   }
 
-  ul, ol {
+  ul, ol {    
+    font-size: $prose-font-size;
     padding-left: 40px;
-    margin-bottom: 0;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    width: 100%;
+
+    @media (min-width: $breakpoint-lg) {
+      width: 100%; // matches col-1
+    }
   }
 
   li {

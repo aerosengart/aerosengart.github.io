@@ -12,7 +12,7 @@ include_scripts: [
 ]
 ---
 
-Though the journey to this point is a bit confusing, I have recently become interesting in clustering metrics and evaluation. In this post, I'll work through a couple papers on describing how good a clustering function is based upon a set of axioms. These include Jon Kleinberg's "An Impossibility Theorem for Clustering" and Margareta Ackerman and Shai Ben-David's "Measures of Clustering Quality: A Working Set of Axioms for Clustering".
+Though the journey to this point is a bit confusing, I have recently become interesting in clustering metrics and evaluation. In this post, I'll work through a couple papers on describing how good a clustering function is based upon a set of axioms. These include Jon Kleinberg's "An Impossibility Theorem for Clustering"[^fn-kleinberg] and Margareta Ackerman and Shai Ben-David's "Measures of Clustering Quality: A Working Set of Axioms for Clustering"[^fn-ackerman].
 
 ---
 
@@ -147,7 +147,7 @@ Kleinberg's impossibility theorem is based upon a set of three axioms that chara
 <div id="axioms"></div>
 <div class="definition">
   <body>
-  <strong>Definition (Kleinberg's Axioms).</strong>
+  <strong>Definition (Kleinberg's Axioms<span markdown="1">[^fn-kleinberg]</span>).</strong>
   <ul>
     <li><i>Scale Invariance:</i> For any distance function $d$ and positive real $\alpha > 0$, $f(d) = f(\alpha \cdot d)$. A scale-invariant clustering function should not change its output when all distances between points are changed by some factor. </li>
     <li><i>Richness:</i> $\text{Range}(f)$ should be all possible paritions of $S$. Richness implies that our clustering function is flexible enough that any partition of $S$ can be achieved if we find the right distance function.</li>
@@ -160,7 +160,7 @@ Kleinberg goes on to show that these axioms imply a semi-surprising result.
 
 <div id="theorem2.1"></div>
 <div class="theorem">
-  <strong>Theorem 2.1 (Kleinberg (2002)).</strong>
+  <strong>Theorem 2.1 (Kleinberg<span markdown="1">[^fn-kleinberg]</span>).</strong>
   <br>
   For $n \geq 2$, there does not exists a clustering function $f$ that is scale-invariant, rich, and consistent.
 
@@ -198,7 +198,7 @@ Kleinberg proves an additional theorem that describes the partitions achievable 
 
 <div id="theorem3.2"></div>
 <div class="theorem">
-  <strong>Theorem 3.2 (Kleinberg (2002)).</strong>
+  <strong>Theorem 3.2 (Kleinberg<span markdown="1">[^fn-kleinberg]</span>).</strong>
   <br>
   Let $\mathcal{A}$ be any antichain of partitions. There exists a scale-invariant, consistent clustering function $f$ such that $\text{Range}(f) = \mathcal{A}$. 
 
@@ -285,7 +285,7 @@ Ackerman and Ben-David adjust Steinberg's work to apply to CQMs rather than clus
 <div id="axioms2"></div>
 <div class="definition">
   <body>
-  <strong>Definition (Ackerman and Ben-David Axioms).</strong>
+  <strong>Definition (Ackerman and Ben-David Axioms<span markdown="1">[^fn-ackerman]</span>).</strong>
   <ul>
     <li><i>Scale Invariance:</i>A CQM $m$ is called <i>scale-invariant</i> if for every partition $\Gamma$ of set $S$ with respect to distance $d$ and ever $\alpha > 0$, we have $m(\Gamma, S, d) = m(\Gamma, S, \alpha \cdot d)$. </li>
     <li><i>Richness:</i>A CQM $m$ is called _rich_ if for each non-trivial partitions $\Gamma$ of $S$, there exists distance function $d$ such that $\Gamma = \underset{\Gamma'}{\arg \max} \left[ m(\Gamma', S, d) \right]$. A CQM will satisfy the richness property if, for each non-trivial $\Gamma$, we have $m(\Gamma, S, d) \geq m(\Gamma', S, d)$ for all possible partitions $\Gamma'$ of $S$ with $d$ (which may be chosen for each $\Gamma$). The $\max$ becomes a $\min$, and the inequality is reversed for CQMs that assign lower values to better clusterings.</li>
@@ -298,7 +298,7 @@ Ackerman and Ben-David adjust Steinberg's work to apply to CQMs rather than clus
 Ackerman and Ben-David then prove that consistent CQMs exist.
 
 <div class="theorem">
-  <strong>Theorem 2 & 3 (Ackerman and Ben-David (2008)).</strong>
+  <strong>Theorem 2 & 3 (Ackerman and Ben-David<span markdown="1">[^fn-ackerman]</span>).</strong>
   <br>
   There exists a clustering quality measure that satisfies all four of scale-invariance, richness, consistency. and isomorphism invariance. That is, the four properties comprise a consistent set of axioms.
 
@@ -424,8 +424,8 @@ In order to make these CQMs compliant with the scale-invariance property, the qu
 Loss-based clustering functions also tend to either reward or punish more clusters. Ackerman and Ben-David term CQMs based on a loss function that "prefers" more clusters as _refinement-preferring_ and those based on losses that prefer fewer clusters as _coarsening-preferring_. More explicitly, a refinement-preferring CQM will assign a better quality score to refinements of $\Gamma$ than to $\Gamma$, and a coarsening-preferring CQM will assign better quality scores to $\Gamma$ than to its refinements. These CQMs do not satisfy the richness property.
 
 ---
-# References
 
-Margareta Ackerman and Shai Ben-David. 2008. Measures of clustering quality: a working set of axioms for clustering. In Proceedings of the 22nd International Conference on Neural Information Processing Systems (NIPS'08). Curran Associates Inc., Red Hook, NY, USA, 121–128.
+## References
+[^fn-ackerman]: Ackerman, M. and Ben-David, S. (2008). Measures of clustering quality: a working set of axioms for clustering. In Proceedings of the 22nd International Conference on Neural Information Processing Systems (NIPS'08). Curran Associates Inc., Red Hook, NY, USA, 121–128.
 
-Jon Kleinberg. 2002. An impossibility theorem for clustering. In Proceedings of the 16th International Conference on Neural Information Processing Systems (NIPS'02). MIT Press, Cambridge, MA, USA, 463–470.
+[^fn-kleinberg]: Kleinberg, J. (n.d.). An Impossibility Theorem for Clustering. In Proceedings of the 16th International Conference on Neural Information Processing Systems (NIPS'02). MIT Press, Cambridge, MA, USA, 463–470.

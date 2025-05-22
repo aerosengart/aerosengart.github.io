@@ -151,7 +151,7 @@ The above distribution gives us a way to characterize risk functions and cluster
 Ben-David et al. present their first theorem as follows:
 
 <div class="theorem">
-  <strong>Theorem 10 (Ben-David et al. (2006)).</strong>
+  <strong>Theorem 10 (Ben-David et al.<span markdown="1">[^fn-ben-david]</span>).</strong>
   <br>
   Any risk converging, $R$-minimizing clustering algorithm will be stable on distribution $P$ if $P$ has a unique minimizer.
 
@@ -212,7 +212,7 @@ The authors emphasize a couple points (see the paper for illustrations):
 With these points in mind, the authors prove a related theorem.
 
 <div class="theorem">
-  <strong>Theorem 15 (Ben-David et al. (2006).</strong>
+  <strong>Theorem 15 (Ben-David et al.<span markdown="1">[^fn-ben-david]</span>).</strong>
   <br>
   Suppose we have an ODD risk function, $R$, an ODD clustering distance $d$, a probability distribution, $P$, with some number $n$ distinct minimizers, and $P$-symmetry, $g$, such that $d_P(\mathcal{C}^*, g(\mathcal{C}^*)) > 0$ for every $R$-minimizer $\mathcal{C}^*$. Any risk convergent, $R$-minimizing clustering algorithm is <i>unstable</i> on $P$.
 
@@ -258,7 +258,6 @@ With these points in mind, the authors prove a related theorem.
 ---
 
 ## References
-
-Ben-David, S., Von Luxburg, U., & Pál, D. (2006). A Sober Look at Clustering Stability. In G. Lugosi & H. U. Simon (Eds.), Learning Theory (Vol. 4005, pp. 5–19). Springer Berlin Heidelberg. https://doi.org/10.1007/11776420_4
+[^fn-ben-david]: Ben-David, S., Von Luxburg, U., & Pál, D. (2006). A Sober Look at Clustering Stability. In G. Lugosi & H. U. Simon (Eds.), Learning Theory (Vol. 4005, pp. 5–19). Springer Berlin Heidelberg. https://doi.org/10.1007/11776420_4
 
 

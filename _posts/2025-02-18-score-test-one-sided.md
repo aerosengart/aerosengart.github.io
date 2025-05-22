@@ -16,18 +16,15 @@ For some reason, I have not been able to exactly identify what has been going on
 
 Instead of trying to derive the score test statistic again (for the umpteenth time...), I'm going to try a different angle. This post will cover comments and results related to one-sided score-type tests.
 
+Note: Not all of the proofs are finished/included. I am hoping to find the time to return to thist post and complete them.
+
+
 <!-- ---
 ## All About Cones (and some linear algebra)
 
 A _cone_, $C$, in $\mathbb{R}^m$ is defined as the set $$C := \{ t\mathbf{x} \in C \rvert \mathbf{x} \in C \}$$ for any $t > 0$. $C$ is called a _pointed cone_ if $\mathbf{x} \in C$ and $-\mathbf{x} \in C$ implies $\mathbf{x} = \mathbf{0}$, the zero vector. 
 
 The _cone generated_ by $S$ for non-empty subset, $S$, of some real vector space, $X$, is defined as $$\text{cone}(S) := \{ a \mathbf{x} \rvert a \geq 0, \mathbf{x} \in S \}$$. We'll denote the _closure_ of $S$ with $\text{cl}(S)$, which is the set of all points in $S$ together with all of the limit points of $S$.
-
-
-
-
-
-
 
 
 Let $$\bar{\mathbf{x}} \in \text{cl}(S)$$. A _tangent vector_ to $S$ at $\bar{\mathbf{x}}$ is any vector $\mathbf{h} \in X$ such that there exists a sequence $$(\mathbf{x}_n)_{n \in \mathbb{N}}$$ with $$\mathbf{x}_n \in S$$ and a sequence $$(a_n)_{n \in \mathbf{N}}$$ with $$a_n > 0$$ satisfying:
@@ -52,7 +49,7 @@ In geometry, if we assume that $S$ is closed and convex, then the _solid tangent
 ---
 ## Shapiro (1988)
 
-As an introduction into the theoretical/geometric setting we are interested in, I will cover some of the background and results in Shapiro (1988). This will give us a better foundation for what's to come.
+As an introduction into the theoretical/geometric setting we are interested in, I will cover some of the background and results in Shapiro[^fn-shapiro] This will give us a better foundation for what's to come.
 
 Shapiro restricts his attention to 
 <span class="popup" onclick="PopupFunc('pop1')">
@@ -155,7 +152,7 @@ $$ -->
 ---
 ## Silvapulle And Silvapulle
 
-I'll first dip into the work of Silvapulle and Silvapulle (1995), who present a score-type test statistic for one-side alternative hypotheses based upon estimating functions instead of the true score function.
+I'll next dip into the work of Silvapulle and Silvapulle[^fn-silvapulle], who present a score-type test statistic for one-side alternative hypotheses based upon estimating functions instead of the true score function.
 
 #### Set-Up
 The authors present a fairly general setting where we do not assume we know the exact form of the distribution of the observations, only that they depend on some $k \times 1$-dimensional vector-valued parameter, $\theta$, that is partitioned into the nuisance parameters, $\lambda$, and the components of interest, $\psi$. We'll write the partitioned parameter vector as $(\lambda : \psi) = (\lambda^\top, \psi^\top)^\top$ where $\lambda$ is $(k - q) \times 1$ and $\psi$ is $q \times 1$.
@@ -231,7 +228,7 @@ $$
 
 <div class="theorem">
   <body>
-  <strong>Lemma 1 (Silvapulle and Silvapulle (1995)).</strong>
+  <strong>Lemma 1 (Silvapulle and Silvapulle<span markdown="1">[^fn-silvapulle]</span>).</strong>
   <br>
   Let $\hat{\theta}$ be an estimator of $\theta$ using the entire parameter space (no restrictions imposed). Let $\mathcal{P}$ denote a closed and convex cone with its vertex at the origin. Let $\mathbf{B}$ be a positive definite matrix independent of $\theta$, and let $\mathbf{B}_{\psi, \psi \cdot \lambda} = \mathbf{B}_{\psi, \psi} - \mathbf{B}_{\psi, \lambda} \mathbf{B}_{\lambda, \lambda}^{-1} \mathbf{B}_{\lambda, \psi}$. 
   <br>
@@ -405,7 +402,7 @@ With the above lemma, we can prove the following theorem.
 
 <div class="theorem">
   <body>
-  <strong>Theorem 1 (Silvapulle and Silvapulle (1995)).</strong>
+  <strong>Theorem 1 (Silvapulle and Silvapulle<span markdown="1">[^fn-silvapulle]</span>).</strong>
   <br>
   Define $\mathbf{S}_n(\theta) = \frac{\partial}{\partial \theta} \left[ \ell(\theta) \right]$ as the score function (the derivative of the log-likelihood), and assume that it satisfies Condition \eqref{eq:condition-a}. Suppose we are testing $H_0: \psi = \mathbf{0}$  against $H_A: \psi \in \mathcal{C}$ for $\mathcal{C}$ as defined above. As $n \rightarrow \infty$, the likelihood ratio test statistic, $LR = -2 \left(\ell(\theta_0) - \ell(\hat{\theta}) \right)$ where $\hat{\theta}$ is the MLE of $\theta$ over the entire parameter space, satisfies:
 
@@ -459,8 +456,8 @@ $$
 
 ---
 ## References
-AlephZero. “Does This Special Case of Convex Quadratic Programming Have a Partially-Unique Solution?” Mathematics Stack Exchange, February 12, 2019. https://math.stackexchange.com/questions/3108304/does-this-special-case-of-convex-quadratic-programming-have-a-partially-unique-s. 
+[^fn-aleph]: AlephZero. “Does This Special Case of Convex Quadratic Programming Have a Partially-Unique Solution?” Mathematics Stack Exchange, February 12, 2019. https://math.stackexchange.com/questions/3108304/does-this-special-case-of-convex-quadratic-programming-have-a-partially-unique-s. 
 
-Shapiro, A. (1988). Towards a Unified Theory of Inequality Constrained Testing in Multivariate Analysis. International Statistical Review / Revue Internationale de Statistique, 56(1), 49. https://doi.org/10.2307/1403361
+[^fn-shapiro]: Shapiro, A. (1988). Towards a Unified Theory of Inequality Constrained Testing in Multivariate Analysis. International Statistical Review / Revue Internationale de Statistique, 56(1), 49. https://doi.org/10.2307/1403361
 
-Silvapulle, M. J., & Silvapulle, P. (1995). A Score Test Against One-Sided Alternatives.
+[^fn-silvapulle]: Silvapulle, M. J., & Silvapulle, P. (1995). A Score Test Against One-Sided Alternatives.
