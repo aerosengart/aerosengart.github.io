@@ -396,7 +396,7 @@ Random variables map each element in the sample space to an element in $H$, whic
 <div id="theorem-1-3-567"></div>
 <div class="theorem">
 <body>
-<strong>Theorem (Theorems 1.3.5, 1.3.6, 1.3.7 (Durrett, 2019)).</strong>
+<strong>Theorem (Theorems 1.3.5, 1.3.6, 1.3.7<span markdown='1'>[^fn-durrett]</span>).</strong>
 <br>
 Let $X_1, X_2, \dots$ be random variables, and let $f: (\mathbb{R}^n, \mathcal{B}^n) \rightarrow (\mathbb{R}, \mathcal{B})$ be a measurable function. Then the following are also random variables:
 <ul>
