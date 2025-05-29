@@ -267,6 +267,8 @@ Since the problem thus reduces to one of testing the mean of bounded random vari
 
 However, from some elementary simulations, it looks like the betting-based confidence intervals are always less wide than the OASIS ones! Instead of looking at anchors that have $p$-values less than some designated $\delta$, we could look at the anchors whose associated confidence intervals exclude $0$. And instead of ranking the statistically significant anchors by their $p$-values, we could rank them by confidence interval width. 
 
+Unfortunately, in practice, this method does not improve the power that significantly. In addition, it appears to loose the robustness property against biologically uninteresting alternatives that is a large strength of OASIS.
+
 
 ---
 ## References
