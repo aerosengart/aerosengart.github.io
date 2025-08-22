@@ -16,7 +16,7 @@ For some reason, I have not been able to exactly identify what has been going on
 
 Instead of trying to derive the score test statistic again (for the umpteenth time...), I'm going to try a different angle. This post will cover comments and results related to one-sided score-type tests.
 
-Note: Not all of the proofs are finished/included. I am hoping to find the time to return to thist post and complete them.
+Note: Not all of the proofs are finished/included. I am hoping to find the time to return to this post and complete them.
 
 
 <!-- ---
@@ -47,7 +47,8 @@ In geometry, if we assume that $S$ is closed and convex, then the _solid tangent
 
 
 ---
-## Shapiro (1988)
+
+## Introduction
 
 As an introduction into the theoretical/geometric setting we are interested in, I will cover some of the background and results in Shapiro[^fn-shapiro] This will give us a better foundation for what's to come.
 
@@ -67,14 +68,24 @@ and
 </span>
 cones, so I'll do the same for the rest of this section.
 
-Shapiro denotes the orthogonal projection of a point onto $C$ with $$P(\mathbf{x}, C) = \underset{\eta \in C}{\min} \left\{ (\mathbf{x} - \eta)^\top \mathbf{U} (\mathbf{x} - \eta) \right\}$$ where $\mathbf{U}$ is any positive-definite matrix. We'll use $\rvert \rvert \mathbf{x} \rvert \rvert = \sqrt{\mathbf{x}^\top \mathbf{U} \mathbf{x}}$ to denote the norm of $\mathbf{x}$ associated with $\mathbf{U}$, and we'll use $\langle\mathbf{x}, \mathbf{y}\rangle = \mathbf{x}^\top \mathbf{U}\mathbf{y}$ to denote the inner product of $\mathbf{x}$ and $\mathbf{y}$ associated with $\mathbf{U}$.
+A _cone_, $C$, in $\mathbb{R}^m$ is defined as the set $$C := \{ t\mathbf{x} \in C \rvert \mathbf{x} \in C \}$$ for any $t > 0$. $C$ is called a _pointed cone_ if $\mathbf{x} \in C$ and $-\mathbf{x} \in C$ implies $\mathbf{x} = \mathbf{0}$, the zero vector. 
+
+Shapiro denotes the orthogonal projection of a point onto $C$ with 
+
+$$
+P(\mathbf{x}, C) = \underset{\eta \in C}{\arg\min} \left\{ (\mathbf{x} - \eta)^\top \mathbf{U} (\mathbf{x} - \eta) \right\}
+$$ 
+
+where $\mathbf{U}$ is any positive-definite matrix. This orthogonal projection maps the input point, $\mathbf{x}$, to the closest point on $C$, $\eta$, where closeness is defined by the norm associated with the matrix $\mathbf{U}$. We'll denote this norm with $\rvert \rvert \mathbf{x} \rvert \rvert = \sqrt{\mathbf{x}^\top \mathbf{U} \mathbf{x}}$, and we'll use $\langle\mathbf{x}, \mathbf{y}\rangle = \mathbf{x}^\top \mathbf{U}\mathbf{y}$ to denote the inner product of $\mathbf{x}$ and $\mathbf{y}$ associated with $\mathbf{U}$.
+
+This brings us to the <i>dual</i> cone, which I have very little intuition...
 
 <div id="dual-cone"></div>
 <div class="definition">
   <body>
   <strong>Definition (Dual Cone).</strong>
   <br>
- The <i>dual</i> or <i>polar cone</i> is the set $C^0= \{ \mathbf{y} \rvert \langle \mathbf{x}, \mathbf{y} \rangle \leq 0 \hspace{2mm} \forall \mathbf{x} \in C \}$. If $C$ is a vector subspace, then $C^0$ is the orthogonal complement of $C$, and if $C$ is closed and convex, then $(C^0)^0 = C$. 
+ The <i>dual cone</i> is the set $C^0= \{ \mathbf{y} \rvert \langle \mathbf{x}, \mathbf{y} \rangle \leq 0 \hspace{2mm} \forall \mathbf{x} \in C \}$. If $C$ is a vector subspace, then $C^0$ is the orthogonal complement of $C$, and if $C$ is closed and convex, then $(C^0)^0 = C$. 
   </body>
 </div>
 
@@ -85,8 +96,9 @@ $$
 \nonumber
 $$
 
-if $C$ or $K$ is a vector space. Furthermore, if $C$ is a vector subspace, then $\mathbf{x} - P(\mathbf{x}, C) = P(\mathbf{x}, C^0)$. That is, the difference between $\mathbf{x}$ and the orthogonal projection of $\mathbf{x}$ onto $C$ is equivalent to its orthogonal projection onto the dual cone $C^0$.
+if $C$ or $K$ is a lienar space and $C \subset K$. 
 
+Furthermore, if $C$ is a vector subspace, then $\mathbf{x} - P(\mathbf{x}, C) = P(\mathbf{x}, C^0)$. That is, the difference between $\mathbf{x}$ and the orthogonal projection of $\mathbf{x}$ onto $C$ is equivalent to its orthogonal projection onto the dual cone $C^0$.
 
 <div id="chi-bar-squared"></div>
 <div class="definition">
@@ -94,18 +106,16 @@ if $C$ or $K$ is a vector space. Furthermore, if $C$ is a vector subspace, then 
   <strong>Definition ($\bar{\chi}^2$-Statistic).</strong>
   <br>
   Let $\mathbf{y} \sim \mathcal{N}(\mathbf{0}, \mathbf{V})$ be a Gaussian random vector of $m$ dimensions with some covariance matrix, $\mathbf{V}$, and let $C$ be a convex cone. A <i>$\bar{\chi}^2$-statistic</i> is given by the following:
-
-    $$
-    \begin{aligned}
-    \bar{\chi}^2 &= \mathbf{y}^\top \mathbf{V}^{-1} \mathbf{y} - \underset{\eta \in C}{\min} \left\{ (\mathbf{y} - \eta)^\top \mathbf{V}^{-1}(\mathbf{y} - \eta) \right\} \\
-    &= \mathbf{y}^\top \mathbf{V}^{-1} \mathbf{y} - (\mathbf{y} - P(\mathbf{y}, C))^\top \mathbf{V}^{-1}(\mathbf{y} - P(\mathbf{y}, C)) \\
-    &= (\mathbf{y} - \mathbf{y} + P(\mathbf{y}, C))^\top \mathbf{V}^{-1}(\mathbf{y} - \mathbf{y} + P(\mathbf{y}, C)) \\
-    &= \rvert \rvert P(\mathbf{y}, C) \rvert \rvert^2
-    \end{aligned}
-    \nonumber
-    $$
-
-    where in the above, the inner products/norms are taken using the matrix $\mathbf{V}^{-1}$.
+  $$
+  \begin{aligned}
+  \bar{\chi}^2 &= \mathbf{y}^\top \mathbf{V}^{-1} \mathbf{y} - \underset{\eta \in C}{\min} \left\{ (\mathbf{y} - \eta)^\top \mathbf{V}^{-1}(\mathbf{y} - \eta) \right\} \\
+  &= \mathbf{y}^\top \mathbf{V}^{-1} \mathbf{y} - (\mathbf{y} - P(\mathbf{y}, C))^\top \mathbf{V}^{-1}(\mathbf{y} - P(\mathbf{y}, C)) \\
+  &= (\mathbf{y} - \mathbf{y} + P(\mathbf{y}, C))^\top \mathbf{V}^{-1}(\mathbf{y} - \mathbf{y} + P(\mathbf{y}, C)) \\
+  &= \rvert \rvert P(\mathbf{y}, C) \rvert \rvert^2
+  \end{aligned}
+  \nonumber
+  $$
+  where in the above, the inner products/norms are taken using the matrix $\mathbf{V}^{-1}$.
   </body>
 </div>
 
@@ -116,7 +126,7 @@ $$
 \nonumber
 $$
 
-where $\chi_i^2$ is a $\chi^2$ random variable with $i$ degrees of freedom, and $w_i$ are individuals wegiths that sum to $0$. As is standard, we let $\chi^2_0$ be a point mass at $0$. We'll denote this mixture distribution as $\mathcal{\bar{X}}^2(\mathbf{V}, C)$, since it depends on both $\mathbf{V}$ and the cone, $C$.
+where $\chi_i^2$ is a $\chi^2$ random variable with $i$ degrees of freedom, and $w_i$ are individuals weights that sum to $1$. As is standard, we let $\chi^2_0$ be a point mass at $0$. We'll denote this mixture distribution as $\mathcal{\bar{X}}^2(\mathbf{V}, C)$, since it depends on both $\mathbf{V}$ and the cone, $C$.
 
 Note that, if we have the dual cone to $C$, then we can ignore the first term in the test statistic equation to get:
 
@@ -148,43 +158,61 @@ $$
 \nonumber
 $$ -->
 
-
 ---
-## Silvapulle And Silvapulle
 
+## A One-Sided Test
 I'll next dip into the work of Silvapulle and Silvapulle[^fn-silvapulle], who present a score-type test statistic for one-side alternative hypotheses based upon estimating functions instead of the true score function.
 
-#### Set-Up
+### Set-Up
 The authors present a fairly general setting where we do not assume we know the exact form of the distribution of the observations, only that they depend on some $k \times 1$-dimensional vector-valued parameter, $\theta$, that is partitioned into the nuisance parameters, $\lambda$, and the components of interest, $\psi$. We'll write the partitioned parameter vector as $(\lambda : \psi) = (\lambda^\top, \psi^\top)^\top$ where $\lambda$ is $(k - q) \times 1$ and $\psi$ is $q \times 1$.
 
 We're interested in testing hypotheses of the form:
 
 $$
-H_0: \psi = 0 \hspace{10mm} H_A: \psi \in \mathcal{C}
+H_0: \psi = \mathbf{0}_q \hspace{10mm} H_A: \psi \in \mathcal{C}
 \nonumber
 $$
 
-where $\mathcal{C}$ is some $q$-dimensional Euclidean space, or a closed, convex cone with its vertex at the origin. Define the $q \times 1$ vector, $\mathbf{U}_0$, as some function of the data satisfying, under the sequence of alternatives $K_n: \psi = n^{-1/2}\delta$, $U_0 \rightsquigarrow \mathcal{N}(\delta, \mathbf{D})$ as our sample size $n \rightarrow \infty$. In the previous, $\mathbf{D} = \mathbf{D}(\lambda)$ is some (fixed) matrix-valued function of the nuisance parameters.
+where $\mathbf{0}_q$ is a $q$-dimensional vector of zeros and $\mathcal{C}$ is the $q$-dimensional Euclidean space, or a closed, convex cone in $q$-dimensional Euclidean space with its vertex at the origin. The latter case encompasses alternatives of the form $\psi \geq \mathbf{0}_q$, which is the alternative hypothesis I am interested in for variance component testing.
 
-Notice that testing the alternative hypothesis that $\psi \geq 0$ is equivalent to testing $\delta \geq 0$, which implies that the null hypothesis is equivalent to $\delta = 0$. We will keep this in mind in the followign steps.
+Define $\mathbf{D}(\lambda)$ as some (fixed) matrix-valued function of the nuisance parameter, $\lambda$, that is independent of some (potentially vector-valued) random variable, $\delta$. Also define the $q \times 1$ vector, $\mathbf{U}_0$, as some function of the data. 
 
-The authors define an intermediate test statistic with:
-
-$$
-T = \mathbf{U}_0^\top \tilde{\mathbf{D}}^{-1}\mathbf{U}_0 - \underset{\mathbf{b} \in \mathcal{C}}{\inf} \left\{ (\mathbf{U}_0 - \mathbf{b})^\top \tilde{\mathbf{D}}^{-1}(\mathbf{U}_0 - \mathbf{b})\right\}
-\label{eq:test-stat-1}
-$$
-
-where $\tilde{\mathbf{D}}$ is any consistent estimator of $\mathbf{D}$ under the null hypothesis.
-
-A $p$-value for large sample sizes can be found by defining $\mathbf{Z} \sim \mathcal{N}(\mathbf{0}, \mathcal{D})$ and:
+Suppose under the sequence of alternatives $K_n: \psi = n^{-1/2}\delta$, $\mathbf{U}_0$ satisfies:
 
 $$
-\xi(t, \mathbf{D}, \mathcal{C}) = \mathbb{P}\left( \left[ \mathbf{Z}^\top \mathbf{D}^{-1} \mathbf{Z} - \underset{\mathbf{b} \in \mathcal{C}}{\inf} \left\{ (\mathbf{Z} - \mathbf{b})^\top \mathbf{D}^{-1}(\mathbf{Z} - \mathbf{b}) \right\} \right] \geq t \right)
-\nonumber
+\mathbf{U}_0 \rightsquigarrow \mathcal{N}(\delta, \mathbf{D}(\lambda))
+\label{eq:U-condition}
+$$ 
+
+as our sample size $n \rightarrow \infty$. Notice that testing the alternative hypothesis that $\psi \geq 0$ is equivalent to testing $\delta \geq \mathbf{0}_q$, which implies that the null hypothesis is equivalent to $\delta = \mathbf{0}_q$. 
+
+---
+
+### A General Test Statistic
+The authors define a very general test statistic as the following.
+
+<div class="definition">
+  <body>
+  <strong>Test Statistic.</strong>
+  <br>
+  Let $\tilde{\mathbf{D}}(\lambda)$ be any consistent estimator under the null hypothesis of $\mathbf{D}(\lambda)$, the asymptotic covariance matrix of $\mathbf{U}_0$. 
+  <br>
+  The test statistic for $H_0: \psi = \mathbf{0}$ against $H_A: \psi \in \mathcal{C}$ has the form:
+  $$
+  T = \mathbf{U}_0^\top \tilde{\mathbf{D}}(\lambda)^{-1}\mathbf{U}_0 - \underset{\mathbf{b} \in \mathcal{C}}{\inf} \left\{ (\mathbf{U}_0 - \mathbf{b})^\top \tilde{\mathbf{D}}(\lambda)^{-1}(\mathbf{U}_0 - \mathbf{b})\right\}
+  \label{eq:test-stat-1}
+  $$
+  </body>
+</div>
+
+A $p$-value for large sample sizes can be found by defining $\mathbf{Z} \sim \mathcal{N}(\mathbf{0}, \mathbf{D}(\lambda))$ and:
+
+$$
+\xi(t, \mathbf{D}(\lambda), \mathcal{C}) = \mathbb{P}\left( \left[ \mathbf{Z}^\top \mathbf{D}(\lambda)^{-1} \mathbf{Z} - \underset{\mathbf{b} \in \mathcal{C}}{\inf} \left\{ (\mathbf{Z} - \mathbf{b})^\top \mathbf{D}(\lambda)^{-1}(\mathbf{Z} - \mathbf{b}) \right\} \right] \geq t \right)
+\label{eq:xi-defn}
 $$
 
-The quantity $1 - \xi(t, \mathbf{D}, \mathcal{C})$ follows a chi-bar-squared distribution; that is, a mixture of chi-squared distributions as we introduced in the previous section (Shapiro, 1988). The weights for the mixture can be hard to find, but we can get around this using the fact that, for large enough $n$ and under $H_0$ (i.e. $\delta = 0$), $\mathbf{U}_0$ is approximately $\mathcal{N}(\mathbf{0}, \mathbf{D}(\lambda))$. Thus, $\mathbb{P}(T \geq t; \lambda) \approx \xi(t, \mathbf{D}(\lambda), \mathcal{C})$. 
+The quantity $1 - \xi(t, \mathbf{D}(\lambda), \mathcal{C})$ follows a chi-bar-squared distribution; that is, a mixture of chi-squared distributions as we introduced in the previous section.[^fn-shapiro] The weights for the mixture can be hard to find, but we can get around this using the fact that, for large enough $n$ and under $H_0$ (i.e. $\delta = \mathbf{0}$), $\mathbf{U}_0$ is approximately $\mathcal{N}(\mathbf{0}, \mathbf{D}(\lambda))$. Thus, $\mathbb{P}(T \geq t; \lambda) \approx \xi(t, \mathbf{D}(\lambda), \mathcal{C})$. 
 
 Suppose we observe a value of $T$, $t^*$. Define $$\mathbf{D}^*(\lambda)$$ as a consistent estimator of $\mathbf{D}(\lambda)$ for any $\lambda$. Then it follows that:
 
@@ -195,36 +223,1083 @@ $$
 
 for large enough $n$ because $\lambda$ is a nuisance parameter, so we can take the "best" probability over all of its values. 
 
+---
+
+### Example
+Let's try going through a simple example situation where we can apply this one-sided test statistic. We'll do a random intercepts model.
+
+#### Main Ideas
+Our goal is to test:
+
+$$
+H_0: \tau^2 = 0 
+\hspace{5mm} \text{vs.} \hspace{5mm} 
+H_A: \tau^2 > 0
+$$
+
+Since $\tau^2$ is a scalar, the alternative hypothesis is equivalent to $\tau^2 \in \mathcal{C}$ where $\mathcal{C}$ is the non-negative ray in $\mathbb{R}$. We will choose $\mathbf{S}_n(\theta)$ to be the score, so we need to do some derivations.
+
+We will use the maximum likelihood estimator (assuming $H_0$ is true) to get our estimates for the nuisance parameters. Let $\theta_0$ denote our parameter vector under the null hypothesis, and let $\tilde{\theta}_0$ denote this same vector with the nuisance parameters replaced with their MLEs. The influence function for a maximum likelihood estimator is the score function, and I am pretty sure that maximum likelihood estimators are regular, so we should have that:
+
+$$
+\mathbf{S}(\theta_0) \rightsquigarrow \mathcal{N}\left(\mathbf{0}, \mathcal{I}^{-1}(\theta) \right)
+$$
+
+where $$\mathbf{S}(\theta_0)$$ is the gradient of the log-likelihood of $\theta$ given $\mathbf{y}$ (the score) evaluated under the null, and $\mathcal{I}(\theta) = \mathbb{E}_{\theta_0}\left[ \mathbf{S}(\theta_0) \mathbf{S}^\top(\theta_0) \right]$, the Fisher information. For some more explanation, see my <a href="/posts/2025/06/17/estimation-theory.html">estimation theory post</a>. 
+
+To match the notation in the previous sections, we have $\mathbf{D}(\lambda) = \mathcal{I}^{-1}(\theta_0)$, and $\mathbf{U}_0 = \mathbf{S}(\tilde{\theta}_0)$. Since we don't know the true values of the other components  We can then use a consistent estimate of the Fisher information, denote it by $\tilde{\mathcal{I}}(\tilde{\theta}_0)$, for $\tilde{\mathbf{D}}(\tilde{\theta}_0)$.
+
+<!-- 
+<div class="example">
+  <body>
+  <strong>Example (Set-Up).</strong>
+  <br>
+  We will have $N$ total observations divided into $k$ different clusters with each clustering having $n_i$ observations in it (i.e. $\sum_{i=1}^k n_i = N$).
+  <br>
+  Let $\mathbf{y}_i \in \mathbb{R}^{n_i}$ denote the vector of responses for cluster $i$, let $\alpha$ be our fixed intercept, and let $\beta \in \mathbb{R}^{k \times 1}$ denote the random intercepts vector. We will use $\mathbf{y}_{i,j}$ to denote the $j$-th response in cluster $i$. 
+  <br>
+  We assume that the random effects are i.i.d. Gaussian with mean zero and variance $\tau^2$. 
+  $$
+  \beta_{i} \overset{iid}{\sim} \mathcal{N}\left(0, \tau^2 \right), \hspace{2mm} \forall i \in [k]
+  $$
+  Define the linear predictors and means as follows:
+  $$
+  \eta_{i,j} = \alpha + \beta_i, \hspace{5mm} \mu_{i,j} = \exp(\eta_{i,j})
+  $$
+  We assume that the data are drawn:
+  $$
+  \mathbf{y}_{i,j} \rvert \beta_i \overset{iid}{\sim} \text{Poi}(\mu_{i,j})
+  $$
+  The (total) conditional log-likelihood can be written as:
+  $$
+  \ell(\alpha, \tau^2; \mathbf{y} \rvert \beta) = \sum_{i = 1}^k \sum_{j = 1}^{n_i} \left( \mathbf{y}_{i,j} \log(\mu_{i,j}) - \mu_{i,j} - \log(\mathbf{y}_{i,j}!) \right)
+  $$
+  However, this can cause some issues down the road, so we'll use the log quasi-likelihood instead:
+  $$
+  \ell_q(\mathbf{y}; \alpha, \tau^2 \rvert \beta) = \sum_{i = 1}^k \sum_{j =1}^{n_i} \left( \mathbf{y}_{i,j} \log(\mu_{i,j}) - \mathbf{y}_{i,j} \log(\mathbf{y}_{i,j}) - \mu_{i,j} + \mathbf{y}_{i,j} \right)
+  $$
+  </body>
+</div> -->
+
+#### Set-Up
+We assume to have $N$ total observations coming from $k$ different clusters. The $i$-th cluster will have $n_i$ observations, and we'll later assume that $n_i = n$ for all $i \in [k]$. We will assume independent clusters and that observations from the same cluster are i.i.d. Gaussian with mean $(\alpha + \beta_i)\mathbf{1}_{n_i}$ and variance $\sigma^2$:
+
+$$
+\mathbf{y}_i \rvert \beta_i \sim \mathcal{N}\left( (\alpha + \beta_i)\mathbf{1}_{n_i}, \sigma^2 \mathbb{I}_{n_i \times n_i}\right)
+$$
+
+Integrating out the random effects, which we assume to be i.i.d. Gaussian with mean zero and variance $\tau^2$, we get the marginal distribution of the observations as:
+
+$$
+\mathbf{y}_i \sim \mathcal{N}\left( (\alpha + \beta_i)\mathbf{1}_{n_i}, \sigma^2 \mathbb{I}_{n_i \times n_i} + \tau^2 \mathbf{1}_{n_i}\mathbf{1}_{n_i}^\top \right)
+$$
+
+
+<!-- #### Marginal Likelihood
+We need the <i>marginal</i> log-likelihood, which means we need to integrate out the random effects. This can be kind of difficult, so instead we will take the expectation (with respect to the random effects distribution) of a Taylor approximation of the conditional log-likelihood. For a deeper discussion, see <a href="/posts/2025/06/04/glmm">this post</a>. -->
+
+<!-- 
+<div class="example">
+  <body>
+  <strong>Example (Marginal Likelihood).</strong>
+  <br>
+  The Taylor expansion of the conditional log-likelihood centered at $\beta_0$ is:
+  $$
+  \mathcal{L}_q(\alpha, \tau^2; \mathbf{y} \rvert \beta) \approx \left[ \mathcal{L}_q(\alpha, \tau^2; \mathbf{y} \rvert \beta) \right]\rvert_{\beta = \beta_0} + (\beta - \beta_0)^\top \left[ \frac{\partial \mathcal{L}_q(\alpha, \tau^2; \mathbf{y} \rvert \beta)}{\partial \beta } \right] \bigg\rvert_{\beta = \beta_0} + \frac{1}{2} (\beta - \beta_0)^\top \left[ \frac{\partial^2 \mathcal{L}_q(\alpha, \tau^2; \mathbf{y} \rvert \beta)}{\partial \beta \partial \beta^\top} \right] \bigg\rvert_{\beta = \beta_0} (\beta - \beta_0)
+  $$
+  <details>
+  <summary>First Derivatives.</summary>
+  $$
+  \begin{aligned}
+  \frac{\partial \mathcal{L}_q(\alpha, \tau^2; \mathbf{y} \rvert \beta)}{\partial \beta_h}
+  &= \frac{\partial}{\partial \beta_h} \left[ \exp\left( \sum_{i = 1}^k \sum_{j = 1}^{n_i} \left( \mathbf{y}_{i,j} \log(\mu_{i,j}) - \mu_{i,j} - \log(\mathbf{y}_{i,j}!) \right) \right) \right] \\
+  &= \mathcal{L}_q(\alpha, \tau^2; \mathbf{y} \rvert \beta) \frac{\partial}{\partial \beta_h} \left[ \sum_{i = 1}^k \sum_{j = 1}^{n_i} \left( \mathbf{y}_{i,j} \log(\mu_{i,j}) - \mu_{i,j} - \log(\mathbf{y}_{i,j}!) \right)\right] \\
+  &= \mathcal{L}_q(\alpha, \tau^2; \mathbf{y} \rvert \beta) \sum_{j = 1}^{n_h} \left( \mathbf{y}_{h,j} \frac{\partial}{\partial \beta_h} \left[ \alpha + \beta_h \right]  - \frac{\partial}{\partial \beta_h} \left[ \exp(\alpha + \beta_h) \right]\right) \\
+  &= \mathcal{L}_q(\alpha, \tau^2; \mathbf{y} \rvert \beta) \sum_{j = 1}^{n_h} \left(\mathbf{y}_{h,j} - \exp(\alpha + \beta_h) \right) \\
+  &= \mathcal{L}_q(\alpha, \tau^2; \mathbf{y} \rvert \beta) \sum_{j = 1}^{n_h} \left( \mathbf{y}_{h,j} - \mu_{h,j} \right)
+  \end{aligned}
+  \nonumber
+  $$
+  Thus, the gradient is:
+  $$
+  \frac{\partial \mathcal{L}_q(\alpha, \tau^2; \mathbf{y} \rvert \beta)}{\partial \beta} 
+  = \begin{bmatrix}
+  \mathcal{L}_q(\alpha, \tau^2; \mathbf{y} \rvert \beta)\sum_{j = 1}^{n_1} \left( \mathbf{y}_{1,j} - \mu_{1,j} \right)\\
+  \vdots \\
+  \mathcal{L}_q(\alpha, \tau^2; \mathbf{y} \rvert \beta)\sum_{j = 1}^{n_k} \left( \mathbf{y}_{k,j} - \mu_{k,j} \right)
+  \end{bmatrix}
+  \nonumber
+  $$
+  </details>
+  <details>
+  <summary>Second Derivatives.</summary>
+  First, the diagonal terms:
+  $$
+  \begin{aligned}
+  \frac{\partial^2 \mathcal{L}_q(\alpha, \tau^2; \mathbf{y} \rvert \beta)}{\partial \beta_h^2} 
+  &= \frac{\partial}{\partial \beta_h} \left[  \mathcal{L}_q(\alpha, \tau^2; \mathbf{y} \rvert \beta) \sum_{j = 1}^{n_h} \left( \mathbf{y}_{h,j} - \mu_{h,j} \right) \right] \\
+  &=  \frac{\partial \mathcal{L}_q(\alpha, \tau^2; \mathbf{y} \rvert \beta)}{\partial \beta_h} \sum_{j = 1}^{n_h} \left( \mathbf{y}_{h,j} - \mu_{h,j} \right) + \mathcal{L}_q(\alpha, \tau^2; \mathbf{y} \rvert \beta) \frac{\partial}{\partial \beta_h} \left[ \sum_{j = 1}^{n_h} \left( \mathbf{y}_{h,j} - \mu_{h,j} \right) \right] \\
+  &= \mathcal{L}_q(\alpha, \tau^2; \mathbf{y} \rvert \beta) \left(\sum_{j = 1}^{n_h} \left(\mathbf{y}_{h, j} - \mu_{h, j} \right) \right)^2 + \mathcal{L}_q(\alpha, \tau^2; \mathbf{y} \rvert \beta) \sum_{j = 1}^{n_h} \frac{\partial}{\partial \beta_h} \left[ \mathbf{y}_{h, j} - \exp(\alpha + \beta_h) \right] \\
+  &= \mathcal{L}_q(\alpha, \tau^2; \mathbf{y} \rvert \beta) \left(\sum_{j = 1}^{n_h} \left(\mathbf{y}_{h, j} - \mu_{h, j} \right) \right)^2
+  - \mathcal{L}_q(\alpha, \tau^2; \mathbf{y} \rvert \beta) \sum_{j = 1}^{n_h} \exp(\alpha + \beta_h)  \\
+  &= \mathcal{L}_q(\alpha, \tau^2; \mathbf{y} \rvert \beta) \left[ \left(\sum_{j = 1}^{n_h} \left(\mathbf{y}_{h, j} - \mu_{h, j} \right) \right)^2
+  -\sum_{j = 1}^{n_h} \mu_{h,j} \right] 
+  \end{aligned} 
+  \nonumber
+  $$
+  Next we do the off-diagonal terms:
+  $$
+  \begin{aligned}
+  \frac{\partial^2 \mathcal{L}_q(\alpha, \tau^2; \mathbf{y} \rvert \beta)}{\partial \beta_h \partial \beta_{h'}} 
+  &= \frac{\partial}{\partial \beta_{h'}} \left[ \mathcal{L}_q(\alpha, \tau^2; \mathbf{y} \rvert \beta)\left(\sum_{j = 1}^{n_h} \left(\mathbf{y}_{h, j} - \mu_{h, j} \right) \right) \right] \\
+  &=  \mathcal{L}_q(\alpha, \tau^2; \mathbf{y} \rvert \beta) \left(\sum_{j = 1}^{n_{h'}} \left(\mathbf{y}_{h', j} - \mu_{h', j} \right) \right)\left(\sum_{j = 1}^{n_h} \left(\mathbf{y}_{h, j} - \mu_{h, j} \right) \right)
+  \end{aligned}
+  \nonumber
+  $$
+  Putting the two pieces together:
+  $$
+  \frac{\partial^2 \mathcal{L}_q(\alpha, \tau^2; \mathbf{y} \rvert \beta)}{\partial \beta \partial \beta^\top}
+  = \begin{bmatrix}
+  \mathcal{L}_q(\alpha, \tau^2; \mathbf{y} \rvert \beta) \left[ \left(\sum_{j = 1}^{n_1} \left(\mathbf{y}_{1, j} - \mu_{1, j} \right) \right)^2
+  -\sum_{j = 1}^{n_1} \mu_{1,j} \right] 
+  & \dots &  
+  \mathcal{L}_q(\alpha, \tau^2; \mathbf{y} \rvert \beta) \left(\sum_{j = 1}^{n_{1}} \left(\mathbf{y}_{1, j} - \mu_{1, j} \right) \right)\left(\sum_{j = 1}^{n_k} \left(\mathbf{y}_{k, j} - \mu_{k, j} \right) \right) \\
+  \vdots & \ddots & \vdots \\
+  \mathcal{L}_q(\alpha, \tau^2; \mathbf{y} \rvert \beta) \left(\sum_{j = 1}^{n_{k}} \left(\mathbf{y}_{k, j} - \mu_{k, j} \right) \right)\left(\sum_{j = 1}^{n_1} \left(\mathbf{y}_{1, j} - \mu_{h, j} \right) \right) 
+  & \dots & 
+  \mathcal{L}_q(\alpha, \tau^2; \mathbf{y} \rvert \beta) \left[ \left(\sum_{j = 1}^{n_k} \left(\mathbf{y}_{k, j} - \mu_{k, j} \right) \right)^2
+  -\sum_{j = 1}^{n_k} \mu_{k,j} \right] 
+  \end{bmatrix}
+  \nonumber
+  $$
+  </details>
+  We will do our expansion about $\beta_0 = \mathbf{0}$, the value under the null hypothesis. 
+  $$
+  \begin{aligned}
+  \mathcal{L}_q(\alpha, \tau^2; \mathbf{y} \rvert \beta)
+  &\approx 
+  \left[ \mathcal{L}_q(\alpha, \tau^2; \mathbf{y} \rvert \beta) \right]\bigg\rvert_{\beta = \mathbf{0}}
+  + \left[ \mathcal{L}_q(\alpha, \tau^2; \mathbf{y} \rvert \beta) \right]\bigg\rvert_{\beta = \mathbf{0}} \sum_{i = 1}^k \beta_i \left(\sum_{j = 1}^{n_i} \left(\mathbf{y}_{i, j} - \mu_{i,j}^0 \right) \right) \\
+  &\hspace{5mm} + \frac{1}{2} \left[ \mathcal{L}_q(\alpha, \tau^2; \mathbf{y} \rvert \beta) \right]\bigg\rvert_{\beta = \mathbf{0}} \sum_{i = 1}^k \left[ \beta_i^2  \left[\left( \sum_{j = 1}^{n_i} \left(\mathbf{y}_{i, j} - \mu^0_{i,j} \right) \right)^2 - \sum_{j = 1}^{n_i} \mu^0_{i, j} \right] + \sum_{i' \neq i} \beta_i \beta_{i'} \left(\sum_{j = 1}^{n_i} \left(\mathbf{y}_{i,j} - \mu^0_{i,j} \right)\right) \left(\sum_{j = 1}^{n_{i'}} \left(\mathbf{y}_{i',j} - \mu^0_{i',j} \right)\right) \right]
+  \end{aligned}
+  $$
+  Since $\beta \sim \mathcal{N}(\mathbf{0}, \tau^2 \mathbb{I}_{k \times k})$, taking the expectation w.r.t. $\beta$ gives us:
+  $$
+  \mathcal{L}_q(\alpha, \tau^2; \mathbf{y})
+  \approx 
+  \left[ \mathcal{L}_q(\alpha, \tau^2; \mathbf{y} \rvert \beta) \right]\bigg\rvert_{\beta = \mathbf{0}} \left( 1 + \frac{\tau^2}{2} \sum_{i = 1}^k \left[ \left( \sum_{j = 1}^{n_i} \left(\mathbf{y}_{i,j} - \mu_{i,j}^0\right) \right)^2 - \sum_{j = 1}^{n_i} \mu_{i,j}^0 \right] \right)
+  $$
+  <details>
+  <summary>Derivations.</summary>
+  $$
+  \begin{aligned}
+  \mathcal{L}_q(\alpha, \tau^2; \mathbf{y})
+  &= \mathbb{E}_\beta \left[ \mathcal{L}_q(\alpha, \tau^2; \mathbf{y} \rvert \beta) \right] \\
+  &\approx 
+  \left[ \mathcal{L}_q(\alpha, \tau^2; \mathbf{y} \rvert \beta) \right]\bigg\rvert_{\beta = \mathbf{0}}
+  + \left[ \mathcal{L}_q(\alpha, \tau^2; \mathbf{y} \rvert \beta) \right]\bigg\rvert_{\beta = \mathbf{0}} \sum_{i = 1}^k \mathbb{E}_\beta \left[\beta_i\right] \left(\sum_{j = 1}^{n_i} \left(\mathbf{y}_{i, j} - \mu_{i,j}^0 \right) \right) \\
+  &\hspace{5mm} + \frac{1}{2} \left[ \mathcal{L}_q(\alpha, \tau^2; \mathbf{y} \rvert \beta) \right]\bigg\rvert_{\beta = \mathbf{0}} \sum_{i = 1}^k \left[ \mathbb{E}\left[\beta_i^2\right]  \left[\left( \sum_{j = 1}^{n_i} \left(\mathbf{y}_{i, j} - \mu^0_{i,j} \right) \right)^2 - \sum_{j = 1}^{n_i} \mu^0_{i, j} \right] + \sum_{i' \neq i} \mathbb{E}\left[\beta_i\right] \mathbb{E}\left[\beta_{i'}\right] \left(\sum_{j = 1}^{n_i} \left(\mathbf{y}_{i,j} - \mu^0_{i,j} \right)\right) \left(\sum_{j = 1}^{n_{i'}} \left(\mathbf{y}_{i',j} - \mu^0_{i',j} \right)\right) \right] \\
+  &=  \left[ \mathcal{L}_q(\alpha, \tau^2; \mathbf{y} \rvert \beta) \right]\bigg\rvert_{\beta = \mathbf{0}} \left( 1 + \frac{1}{2} \sum_{i = 1}^k \tau^2 \left[ \left( \sum_{j = 1}^{n_i} \left(\mathbf{y}_{i,j} - \mu_{i,j}^0\right) \right)^2 - \sum_{j = 1}^{n_i} \mu_{i,j}^0 \right] \right) \\
+  &= \left[ \mathcal{L}_q(\alpha, \tau^2; \mathbf{y} \rvert \beta) \right]\bigg\rvert_{\beta = \mathbf{0}} \left( 1 + \frac{\tau^2}{2} \sum_{i = 1}^k \left[ \left( \sum_{j = 1}^{n_i} \left(\mathbf{y}_{i,j} - \mu_{i,j}^0\right) \right)^2 - \sum_{j = 1}^{n_i} \mu_{i,j}^0 \right] \right)
+  \end{aligned}
+  \nonumber
+  $$
+  </details>
+  And taking the natural logarithm gives us the marginal log quasi-likelihood:
+  $$
+  \ell_q(\alpha, \tau^2; \mathbf{y})
+  \approx
+  \left[ \ell_q(\alpha, \tau^2; \mathbf{y} \rvert \beta) \right]\bigg\rvert_{\beta = \mathbf{0}} + \log\left(1 + \frac{\tau^2}{2} \sum_{i = 1}^k \left[ \left( \sum_{j = 1}^{n_i} \left(\mathbf{y}_{i,j} - \mu_{i,j}^0\right) \right)^2 - \sum_{j = 1}^{n_i} \mu_{i,j}^0 \right] \right)
+  $$
+  Since $\log(1 + x) \approx x$ for small enough $x$:
+  $$
+  \ell_q(\alpha, \tau^2; \mathbf{y}) 
+  \approx
+  \left[ \ell_q(\alpha, \tau^2; \mathbf{y} \rvert \beta) \right]\bigg\rvert_{\beta = \mathbf{0}} +  \frac{\tau^2}{2}\sum_{i = 1}^k \left[ \left( \sum_{j = 1}^{n_i} \left(\mathbf{y}_{i,j} - \mu_{i,j}^0\right) \right)^2 - \sum_{j = 1}^{n_i} \mu_{i,j}^0 \right] 
+  $$
+  </body>
+</div> -->
+<!-- 
+#### Score
+We now need to derive the score vector, $\mathbf{S}(\theta)$. This is straightforward; we just take the gradient with respect to $\theta = (\alpha, \tau^2)$.  -->
+<!-- 
+<div class="example">
+  <body>
+  <strong>Example (Score).</strong>
+  <br>
+  We'll do the differentiation component-by-component. 
+  $$
+  \begin{aligned}
+  \frac{\partial \ell_q(\alpha, \tau^2; \mathbf{y})}{\partial \alpha}
+  &\approx 
+  \underbrace{\frac{\partial}{\partial \alpha} \left[ [\ell_q(\alpha, \tau^2; \mathbf{y} \rvert \beta)]\bigg\rvert_{\beta = \mathbf{0}} \right]}_{(a)}
+  + \underbrace{\frac{\partial}{\partial \alpha} \left[ \frac{\tau^2}{2} \sum_{i = 1}^k \left[ \left( \sum_{j = 1}^{n_i} \left(\mathbf{y}_{i,j} - \mu_{i,j}^0\right) \right)^2 - \sum_{j = 1}^{n_i} \mu_{i,j}^0 \right] \right]}_{(b)} \\
+  &= \left( \sum_{i = 1}^k \sum_{j = 1}^{n_i} \left( \mathbf{y}_{i,j} - \mu^0_{i,j} \right) \right)
+  -\frac{\tau^2}{2} \sum_{i = 1}^k \left(\sum_{j = 1}^{n_i} \mu_{i,j}^0 \right) \left[2 \left( \sum_{j = 1}^{n_i} \left(\mathbf{y}_{i,j} - \mu_{i,j}^0 \right) \right) + 1\right]
+  \end{aligned}
+  \nonumber
+  $$
+  <details>
+  <summary>Derivations Of $(a)$ And $(b)$.</summary>
+  $$
+  \begin{aligned}
+  (a)
+  &= \sum_{i = 1}^k \sum_{j = 1}^{n_i} \frac{\partial}{\partial \alpha} \left[ \mathbf{y}_{i,j} \log(\mu^0_{i,j}) - \mathbf{y}_{i,j} \log(\mathbf{y}_{i,j}) - \mu^0_{i,j} + \mathbf{y}_{i,j} \right] \\
+  &= \sum_{i = 1}^k \sum_{j = 1}^{n_i} \left( \mathbf{y}_{i,j} \frac{\partial}{\partial \alpha} \left[ \alpha \right] - \frac{\partial}{\partial \alpha} \left[ \exp(\alpha) \right] \right) \\
+  &= \sum_{i = 1}^k \sum_{j = 1}^{n_i} \left( \mathbf{y}_{i,j} - \exp(\alpha) \right) \\
+  &= \sum_{i = 1}^k \sum_{j = 1}^{n_i} \left( \mathbf{y}_{i,j} - \mu^0_{i,j} \right)
+  \end{aligned}
+  \nonumber
+  $$
+  $$
+  \begin{aligned}
+  (b)
+  &= \frac{\tau^2}{2} \sum_{i = 1}^k  \frac{\partial}{\partial \alpha} \left[ \left( \sum_{j = 1}^{n_i} \left(\mathbf{y}_{i,j} - \mu_{i,j}^0\right) \right)^2 - \sum_{j = 1}^{n_i} \mu_{i,j}^0  \right] \\
+  &= \frac{\tau^2}{2} \sum_{i = 1}^k \left[ 2 \left( \sum_{j = 1}^{n_i} \left(\mathbf{y}_{i,j} - \mu_{i,j}^0 \right) \right)\left(\sum_{j = 1}^{n_i} \frac{\partial}{\partial \alpha} \left[\mathbf{y}_{i,j} - \mu^0_{i,j}\right] \right)- \sum_{j = 1}^{n_i} \frac{\partial}{\partial \alpha} [\mu^0_{i,j}] \right] \\
+  &= \frac{\tau^2}{2} \sum_{i = 1}^k \left[ 2 \left( \sum_{j = 1}^{n_i} \left(\mathbf{y}_{i,j} - \mu_{i,j}^0 \right) \right)\left(\sum_{j = 1}^{n_i}  - \mu^0_{i,j} \right) - \sum_{j = 1}^{n_i} \mu^0_{i,j} \right]  \\
+  &= -\frac{\tau^2}{2} \sum_{i = 1}^k \left(\sum_{j = 1}^{n_i} \mu_{i,j}^0 \right) \left[2 \left( \sum_{j = 1}^{n_i} \left(\mathbf{y}_{i,j} - \mu_{i,j}^0 \right) \right) + 1\right]
+  \end{aligned}
+  \nonumber
+  $$
+  </details>
+  $$
+  \begin{aligned}
+  \frac{\partial \ell_q(\alpha, \tau^2; \mathbf{y})}{\partial \tau^2}
+  &\approx \frac{1}{2} \sum_{i = 1}^k \left[ \left( \sum_{j = 1}^{n_i} \left(\mathbf{y}_{i,j} - \mu_{i,j}^0\right) \right)^2 - \sum_{j = 1}^{n_i} \mu_{i,j}^0 \right]
+  \end{aligned}
+  \nonumber
+  $$
+  </body>
+</div> -->
+
+<!-- #### Information
+This become a bit tricky here as we need to compute the variance of the score under the null hypothesis. Unfortunately, we can't use the negative expected Hessian because there is no $\tau^2$ term in the second component of the score, so that would be zero. We'll have to take the variance directly. Luckily, the score has expectation zero, so we don't have to do any centering.
+
+<div class="example">
+  <body>
+  <strong>Example (Information).</strong>
+  <br>
+  $$
+  \begin{aligned}
+  \mathcal{I}_{\alpha, \alpha} 
+  &= \mathbb{E}\left[ \frac{\partial \ell_q(\alpha, \tau^2; \mathbf{y} \rvert \beta)}{\partial \alpha}\frac{\partial \ell_q(\alpha, \tau^2; \mathbf{y} \rvert \beta)}{\partial \alpha} \right] \\
+  &\approx \mathbb{E}\left[ \left( \left[ \ell_q(\alpha, \tau^2; \mathbf{y} \rvert \beta) \right]\bigg\rvert_{\beta = \mathbf{0}} +  \frac{\tau^2}{2}\sum_{i = 1}^k \left[ \left( \sum_{j = 1}^{n_i} \left(\mathbf{y}_{i,j} - \mu_{i,j}^0\right) \right)^2 - \sum_{j = 1}^{n_i} \mu_{i,j}^0 \right] \right)^2 \right] \\
+  &= \underbrace{\mathbb{E}\left[ \left( [ \ell_q(\alpha, \tau^2; \mathbf{y} \rvert \beta) ] \bigg\rvert_{\beta = \mathbf{0}} \right)^2 \right]}_{(a)} \\
+  &\hspace{5mm} + \frac{2 \tau^2}{2} \underbrace{\mathbb{E}\left[ [\ell_q(\alpha, \tau^2; \mathbf{y} \rvert \beta) ]\bigg\rvert_{\beta = \mathbf{0}} \sum_{i = 1}^k \left[ \left( \sum_{j = 1}^{n_i} \left(\mathbf{y}_{i,j} - \mu_{i,j}^0\right) \right)^2 - \sum_{j = 1}^{n_i} \mu_{i,j}^0 \right] \right]}_{(b)} \\
+  &\hspace{5mm} + \frac{(\tau^2)^2}{4} \underbrace{\mathbb{E}\left[ \left( \sum_{i = 1}^k \left[ \left( \sum_{j = 1}^{n_i} \left(\mathbf{y}_{i,j} - \mu_{i,j}^0\right) \right)^2 - \sum_{j = 1}^{n_i} \mu_{i,j}^0 \right] \right)^2 \right]}_{(c)}
+  \end{aligned}
+  \nonumber
+  $$
+  $$
+  \begin{aligned}
+  (a) &= \mathbb{E}\left[ \left( \sum_{i = 1}^k \sum_{j = 1}^{n_i} \left(\mathbf{y}_{i,j} \log(\mu_{i,j}^0) - \mathbf{y}_{i,j} \log(\mathbf{y}_{i,j}) - \mu^0_{i,j} + \mathbf{y}_{i,j} \right) \right)^2\right]
+  \end{aligned}
+  \nonumber
+  $$
+  </body>
+</div>
+ -->
+
+
+#### Likelihood
+The complete marginal likelihood is given by:
+
+$$
+\ell(\theta; \mathbf{y}) = -\frac{1}{2} \sum_{i = 1}^k \left[ n_i \log(2 \pi) + \log(\rvert \Sigma \rvert) + (\mathbf{y}_i - \alpha \mathbf{1}_{n_i})^\top \Sigma^{-1} (\mathbf{y}_i - \alpha \mathbf{1}_{n_i}) \right]
+$$
+
+where $$\Sigma = \sigma^2 \mathbb{I}_{n_i \times n_i} + \tau^2 \mathbf{1}_{n_i} \mathbf{1}_{n_i}^\top$$.
+
+Note that the Sherman-Morrison formula gives us:
+
+$$
+\Sigma^{-1} = \frac{1}{\sigma^2} \mathbb{I}_{n \times n} -\frac{\tau^2}{\sigma^2(\sigma^2 + \tau^2 n)} \mathbf{1}_{n}  \mathbf{1}_{n}^\top
+$$
+
+<details>
+<summary>Proof.</summary>
+$$
+\begin{aligned}
+  \Sigma^{-1}
+  &= \left[ \sigma^2 \mathbb{I}_{n_i \times n_i} + \tau^2 \mathbf{1}_{n_i} \mathbf{1}_{n_i}^\top \right]^{-1} \\
+  &= \left[ \sigma^2 \mathbb{I}_{n_i \times n_i} \right]^{-1} - \frac{\left[ \sigma^2 \mathbb{I}_{n_i \times n_i} \right]^{-1} \left(\tau^2 \mathbf{1}_{n_i} \mathbf{1}_{n_i}^\top \right) \left[ \sigma^2 \mathbb{I}_{n_i \times n_i} \right]^{-1}}{1 + \tau^2 \mathbf{1}_{n_i}^\top\left[ \sigma^2 \mathbb{I}_{n_i \times n_i} \right]^{-1} \mathbf{1}_{n_i} } \\
+  &= \frac{1}{\sigma^2} \mathbb{I}_{n_i \times n_i} - \frac{\frac{1}{\sigma^2} \mathbb{I}_{n_i \times n_i} \left(\tau^2 \mathbf{1}_{n_i} \mathbf{1}_{n_i}^\top\right) \frac{1}{\sigma^2} \mathbb{I}_{n_i \times n_i} }{1 + \tau^2 \mathbf{1}_{n_i}^\top \left(\frac{1}{\sigma^2} \mathbb{I}_{n_i \times n_i} \right) \mathbf{1}_{n_i}} \\
+  &= \frac{1}{\sigma^2} \mathbb{I}_{n_i \times n_i} - \frac{\left(\frac{\tau^2}{\sigma^2} \mathbf{1}_{n_i} \mathbf{1}_{n_i}^\top\right) \frac{1}{\sigma^2} \mathbb{I}_{n_i \times n_i} }{1 + \frac{\tau^2}{\sigma^2} \mathbf{1}_{n_i}^\top  \mathbf{1}_{n_i}} \\
+  &= \frac{1}{\sigma^2} \mathbb{I}_{n_i \times n_i} - \frac{\frac{\tau^2}{(\sigma^2)^2} \mathbf{1}_{n_i} \mathbf{1}_{n_i}^\top }{1 + \frac{\tau^2 n_i}{\sigma^2}} \\
+  &= \frac{1}{\sigma^2} \mathbb{I}_{n_i \times n_i} -\frac{\tau^2}{\sigma^2(\sigma^2 + \tau^2 n_i)} \mathbf{1}_{n_i}  \mathbf{1}_{n_i}^\top
+\end{aligned}
+\nonumber
+$$
+</details>
+
+We have:
+
+$$
+\mathbf{S}(\theta) = \frac{\partial}{\partial \theta} \left[ \ell(\theta; \mathbf{y})\right] 
+= 
+\begin{bmatrix}
+\frac{\partial}{\partial \alpha} \left[ \ell(\theta; \mathbf{y})\right] \\
+\frac{\partial}{\partial \sigma^2} \left[ \ell(\theta; \mathbf{y})\right] \\
+\frac{\partial}{\partial \tau^2} \left[ \ell(\theta; \mathbf{y})\right] 
+\end{bmatrix} 
+=
+\begin{bmatrix}
+- \left( \frac{1}{\sigma^2} - \frac{n \tau^2}{\sigma^2(\sigma^2 + \tau^2 n)}\right) \sum_{i = 1}^k \sum_{j = 1}^{n} (\alpha - \mathbf{y}_{i,j}) \\
+- \frac{1}{2} \left[\frac{kn(\sigma^2 - \tau^2 + \tau^2 n)}{\sigma^2( \sigma^2 + \tau^2 n)}  + \frac{2\tau^2 \sigma^2 + (\tau^2)^2 n}{(\sigma^2)^2(\sigma^2 + \tau^2 n)^2} \sum_{i = 1}^k  \left(\sum_{j = 1}^{n} (\mathbf{y}_{i,j} -\alpha) \right)^2 - \frac{1}{(\sigma^2)^2} \sum_{i = 1}^k \sum_{j = 1}^{n} (\mathbf{y}_{i,j} - \alpha)^2 \right] \\
+- \frac{1}{2} \left[\frac{kn}{\sigma^2 + \tau^2 n} \right] +  \frac{1}{2(\sigma^2 + \tau^2 n)^2} \sum_{i = 1}^k  \left( \sum_{j = 1}^{n} (\mathbf{y}_{i,j} - \alpha) \right)^2 
+\end{bmatrix}
+$$
+
+<details>
+<summary>Proof.</summary>
+$$
+\frac{\partial}{\partial \tau^2} \left[ \ell(\theta; \mathbf{y})\right] 
+= - \frac{1}{2} \left[\frac{kn}{\sigma^2 + \tau^2 n} \right] +  \frac{1}{2(\sigma^2 + \tau^2 n)^2} \sum_{i = 1}^k  \left( \sum_{j = 1}^{n} (\mathbf{y}_{i,j} - \alpha) \right)^2 
+$$
+<details>
+<summary>Proof.</summary> 
+  Using identities from <a href="https://en.wikipedia.org/wiki/Matrix_calculus#:~:text=Identities%3A%20scalar%2Dby%2Dscalar%2C%20with%20matrices%20involved">this table</a> on Wikipedia, we have:
+  $$
+  \begin{aligned}
+    \frac{\partial}{\partial \tau^2} \left[ \log(\rvert \Sigma \rvert) \right] 
+    &= \text{tr} \left[ \Sigma^{-1} \frac{\partial \Sigma}{\partial \tau^2} \right] \\
+    &= \text{tr} \left[ \Sigma^{-1} \mathbf{1}_{n_i} \mathbf{1}_{n_i}^\top \right] \\
+    &= \text{tr} \left[  \left( \frac{1}{\sigma^2} \mathbb{I}_{n_i \times n_i} -\frac{\tau^2}{\sigma^2(\sigma^2 + \tau^2 n_i)} \mathbf{1}_{n_i} \mathbf{1}_{n_i}^\top  \right) \mathbf{1}_{n_i} \mathbf{1}_{n_i}^\top \right] \\
+    &= \text{tr} \left[ \frac{1}{\sigma^2} \mathbf{1}_{n_i} \mathbf{1}_{n_i}^\top - \frac{\tau^2 n_i}{\sigma^2(\sigma^2 + \tau^2 n_i)} \mathbf{1}_{n_i} \mathbf{1}_{n_i}^\top \right] \\
+    &= \text{tr} \left[ \left( \frac{1}{\sigma^2} - \frac{\tau^2 n_i}{\sigma^2(\sigma^2 + \tau^2 n_i)} \right) \mathbf{1}_{n_i} \mathbf{1}_{n_i}^\top \right] \\
+    &= \left( \frac{1}{\sigma^2} - \frac{\tau^2 n_i}{\sigma^2(\sigma^2 + \tau^2 n_i)} \right) \text{tr}\left[ \mathbf{1}_{n_i} \mathbf{1}_{n_i}^\top \right] \\
+    &= \frac{n_i}{\sigma^2} - \frac{\tau^2 n_i^2}{\sigma^2(\sigma^2 + \tau^2 n_i)} \\
+    &= \frac{n_i\sigma^2 + \tau^2 n_i^2 - \tau^2 n_i^2}{\sigma^2(\sigma^2 + \tau^2 n_i)} \\
+    &= \frac{n_i}{\sigma^2 + \tau^2 n_i}
+  \end{aligned}
+  \nonumber
+  $$
+  $$
+  \begin{aligned}
+    \frac{\partial \Sigma^{-1}}{\partial \tau^2} 
+    &= - \Sigma^{-1} \frac{\partial \Sigma}{\partial \tau^2} \Sigma^{-1} \\
+    &= - \left( \frac{1}{\sigma^2} \mathbb{I}_{n_i \times n_i} -\frac{\tau^2}{\sigma^2(\sigma^2 + \tau^2 n_i)} \mathbf{1}_{n_i}  \mathbf{1}_{n_i}^\top \right) \mathbf{1}_{n_i} \mathbf{1}_{n_i}^\top \left(\frac{1}{\sigma^2} \mathbb{I}_{n_i \times n_i} -\frac{\tau^2}{\sigma^2(\sigma^2 + \tau^2 n_i)} \mathbf{1}_{n_i}  \mathbf{1}_{n_i}^\top\right) \\
+    &= - \left( \frac{1}{\sigma^2} \mathbf{1}_{n_i} \mathbf{1}_{n_i}^\top - \frac{\tau^2 n_i}{\sigma^2(\sigma^2 + \tau^2 n_i)} \mathbf{1}_{n_i} \mathbf{1}_{n_i}^\top\right)\left(\frac{1}{\sigma^2} \mathbb{I}_{n_i \times n_i} -\frac{\tau^2}{\sigma^2(\sigma^2 + \tau^2 n_i)} \mathbf{1}_{n_i}  \mathbf{1}_{n_i}^\top\right) \\
+    &= - \left( \left( \frac{1}{(\sigma^2)^2} - \frac{\tau^2 n_i}{(\sigma^2)^2 (\sigma^2 + \tau^2 n_i)}\right)  \mathbf{1}_{n_i} \mathbf{1}_{n_i}^\top - \left(\frac{\tau^2 n_i}{(\sigma^2)^2 (\sigma^2 + \tau^2 n_i)} - \frac{(\tau^2)^2 n_i^2}{(\sigma^2)^2 (\sigma^2 + \tau^2 n_i)^2} \right) \mathbf{1}_{n_i} \mathbf{1}_{n_i}^\top \right) \\
+    &= -\left( \frac{1}{(\sigma^2)^2} - \frac{2\tau^2 n_i}{(\sigma^2)^2 (\sigma^2 + \tau^2 n_i)} + \frac{(\tau^2)^2 n_i^2}{(\sigma^2)^2(\sigma^2 + \tau^2 n_i)^2}\right) \mathbf{1}_{n_i} \mathbf{1}_{n_i}^\top \\
+    &= -\left(\frac{\tau^2 n_i}{\sigma^2(\sigma^2 + \tau^2 n_i)} - \frac{1}{\sigma^2} \right)^2 \mathbf{1}_{n_i} \mathbf{1}_{n_i}^\top \\
+    &= - \left(- \frac{\sigma^2}{\sigma^2(\sigma^2 + \tau^2 n_i)} \right)^2 \mathbf{1}_{n_i} \mathbf{1}_{n_i}^\top \\
+    &= -\frac{1}{(\sigma^2 + \tau^2 n_i)^2} \mathbf{1}_{n_i} \mathbf{1}_{n_i}^\top
+  \end{aligned}
+  $$
+  The above equations can be used to derive:
+  $$
+  \begin{aligned}
+    \frac{\partial}{\partial \tau^2} \left[ \sum_{i = 1}^k (\mathbf{y}_i - \alpha \mathbf{1}_{n_i})^\top \Sigma^{-1} (\mathbf{y}_i - \alpha \mathbf{1}_{n_i}) \right]
+    &= \sum_{i = 1}^k (\mathbf{y}_i - \alpha \mathbf{1}_{n_i})^\top \frac{\partial \Sigma^{-1}}{\tau^2} (\mathbf{y}_i - \alpha \mathbf{1}_{n_i}) \\
+    &= \sum_{i = 1}^k (\mathbf{y}_i - \alpha \mathbf{1}_{n_i})^\top \left(- \frac{1}{(\sigma^2 + \tau^2 n_i)^2} \mathbf{1}_{n_i} \mathbf{1}_{n_i}^\top \right) (\mathbf{y}_i - \alpha \mathbf{1}_{n_i}) \\
+    &= \sum_{i = 1}^k \sum_{j = 1}^{n_i} \sum_{j' = 1}^{n_i} (\mathbf{y}_{i,j} - \alpha)(\mathbf{y}_{i, j'} - \alpha) \left(- \frac{1}{(\sigma^2 + \tau^2 n_i)^2}\right) \\
+    &= -  \sum_{i = 1}^k \frac{1}{(\sigma^2 + \tau^2 n_i)^2}\sum_{j = 1}^{n_i} (\mathbf{y}_{i,j} - \alpha) \sum_{j' = 1}^{n_i} (\mathbf{y}_{i, j'} - \alpha) \\
+    &= -  \sum_{i = 1}^k  \frac{1}{(\sigma^2 + \tau^2 n_i)^2}\left(\sum_{j = 1}^{n_i} (\mathbf{y}_{i,j} - \alpha) \right) \left(\sum_{j' = 1}^{n_i} (\mathbf{y}_{i, j'} - \alpha) \right) \\
+    &= -  \sum_{i = 1}^k  \frac{1}{(\sigma^2 + \tau^2 n_i)^2} \left(\sum_{j = 1}^{n_i} (\mathbf{y}_{i,j} - \alpha) \right)^2
+  \end{aligned}
+  \nonumber
+  $$
+  Putting all of the above together, we get:
+  $$
+  \begin{aligned}
+    \frac{\partial}{\partial \tau^2} \left[ \ell(\alpha, \sigma^2, \tau^2; \mathbf{y})\right] 
+    &= -\frac{1}{2} \sum_{i = 1}^k \left[  \frac{\partial}{\partial \tau^2} \left[ \log\left( \rvert \Sigma \rvert \right) \right] + \frac{\partial}{\partial \tau^2} \left[ (\mathbf{y}_i - \alpha \mathbf{1}_{n_i})^\top \Sigma^{-1} (\mathbf{y}_i - \alpha \mathbf{1}_{n_i}) \right] \right] \\
+    &= - \frac{1}{2} \sum_{i = 1}^k \left[ \frac{n_i}{\sigma^2 + \tau^2 n_i} \right] - \frac{1}{2} \frac{\partial}{\partial \tau^2} \left[ \sum_{i = 1}^k (\mathbf{y}_i - \alpha \mathbf{1}_{n_i})^\top \Sigma^{-1} (\mathbf{y}_i - \alpha \mathbf{1}_{n_i}) \right] \\
+    &= - \frac{1}{2} \sum_{i = 1}^k \left[\frac{n_i}{\sigma^2 + \tau^2 n_i} \right] +  \sum_{i = 1}^k \left[ \frac{1}{2(\sigma^2 + \tau^2 n_i)^2} \left(\sum_{j = 1}^{n_i} (\mathbf{y}_{i,j} - \alpha) \right)^2 \right]
+  \end{aligned}
+  \nonumber
+  $$
+  Since $n_i = n$ for all $i \in [k]$, this simplifies to:
+  $$
+  \begin{aligned}
+    \frac{\partial}{\partial \tau^2} \left[ \ell(\alpha, \sigma^2, \tau^2; \mathbf{y})\right] 
+    &= - \frac{1}{2} \sum_{i = 1}^k \left[\frac{n}{\sigma^2 + \tau^2 n} \right] +  \sum_{i = 1}^k \left[ \frac{1}{2(\sigma^2 + \tau^2 n)^2} \left(\sum_{j = 1}^{n} (\mathbf{y}_{i,j} - \alpha) \right)^2 \right] \\
+    &= - \frac{1}{2} \left[\frac{kn}{\sigma^2 + \tau^2 n} \right] +  \frac{1}{2(\sigma^2 + \tau^2 n)^2} \sum_{i = 1}^k  \left( \sum_{j = 1}^{n} (\mathbf{y}_{i,j} - \alpha) \right)^2  \\
+  \end{aligned}
+  \nonumber
+  $$
+</details>
+$$
+\frac{\partial}{\partial \sigma^2} \left[ \ell(\theta; \mathbf{y})\right] 
+= - \frac{1}{2} \left[\frac{kn(\sigma^2 - \tau^2 + \tau^2 n)}{\sigma^2( \sigma^2 + \tau^2 n)}  + \frac{2\tau^2 \sigma^2 + (\tau^2)^2 n}{(\sigma^2)^2(\sigma^2 + \tau^2 n)^2} \sum_{i = 1}^k  \left(\sum_{j = 1}^{n} (\mathbf{y}_{i,j} -\alpha) \right)^2 - \frac{1}{(\sigma^2)^2} \sum_{i = 1}^k \sum_{j = 1}^{n} (\mathbf{y}_{i,j} - \alpha)^2 \right]
+$$
+<details>
+<summary>Proof.</summary>
+  We repeat the process with $\sigma^2$.
+  $$
+  \begin{aligned}
+    \frac{\partial}{\partial \sigma^2} \left[ \log(\rvert \Sigma \rvert) \right]
+    &= \text{tr} \left[ \Sigma^{-1} \frac{\partial \Sigma}{\partial \sigma^2} \right] \\
+    &=  \text{tr} \left[ \Sigma^{-1} \mathbb{I}_{n_i \times n_i} \right] \\
+    &= \text{tr} \left[ \frac{1}{\sigma^2} \mathbb{I}_{n_i \times n_i} -\frac{\tau^2}{\sigma^2(\sigma^2 + \tau^2 n_i)} \mathbf{1}_{n_i}  \mathbf{1}_{n_i}^\top \right] \\
+    &= \frac{n_i}{\sigma^2} - \frac{\tau^2 n_i}{\sigma^2(\sigma^2 + \tau^2 n_i)} \\
+    &= \frac{n_i(\sigma^2 - \tau^2 + \tau^2 n_i)}{\sigma^2(\sigma^2 + \tau^2 n_i)}
+  \end{aligned}
+  $$
+  $$
+  \begin{aligned}
+    \frac{\partial \Sigma^{-1}}{\partial \sigma^2} 
+    &= - \Sigma^{-1} \frac{\partial \Sigma}{\partial \sigma^2} \Sigma^{-1} \\
+    &= - \left( \frac{1}{\sigma^2} \mathbb{I}_{n_i \times n_i} -\frac{\tau^2}{\sigma^2(\sigma^2 + \tau^2 n_i)} \mathbf{1}_{n_i}  \mathbf{1}_{n_i}^\top \right) \mathbb{I}_{n_i \times n_i} \left(\frac{1}{\sigma^2} \mathbb{I}_{n_i \times n_i} -\frac{\tau^2}{\sigma^2(\sigma^2 + \tau^2 n_i)} \mathbf{1}_{n_i}  \mathbf{1}_{n_i}^\top\right) \\
+    &= - \left(\frac{1}{(\sigma^2)^2} \mathbb{I}_{n_i \times n_i} - \frac{2\tau^2}{(\sigma^2)^2(\sigma^2 + \tau^2 n_i)} \mathbf{1}_{n_i} \mathbf{1}_{n_i}^\top + \frac{(\tau^2)^2 n_i}{(\sigma^2)^2(\sigma^2 + \tau^2 n_i)^2} \mathbf{1}_{n_i} \mathbf{1}_{n_i}^\top\right) \\
+    &= - \left(\frac{1}{(\sigma^2)^2} \mathbb{I}_{n_i \times n_i} - \left(\frac{2\tau^2(\sigma^2 + \tau^2 n_i)}{(\sigma^2)^2(\sigma^2 + \tau^2 n_i)^2} - \frac{(\tau^2)^2 n_i}{(\sigma^2)^2(\sigma^2 + \tau^2 n_i)^2} \right) \mathbf{1}_{n_i} \mathbf{1}_{n_i}^\top\right) \\
+    &= - \left(\frac{1}{(\sigma^2)^2} \mathbb{I}_{n_i \times n_i} - \frac{2\tau^2 \sigma^2 + (\tau^2)^2 n_i}{(\sigma^2)^2(\sigma^2 + \tau^2 n_i)^2} \mathbf{1}_{n_i} \mathbf{1}_{n_i}^\top\right) \\
+    &= \frac{2\tau^2 \sigma^2 + (\tau^2)^2 n_i}{(\sigma^2)^2(\sigma^2 + \tau^2 n_i)^2} \mathbf{1}_{n_i} \mathbf{1}_{n_i}^\top - \frac{1}{(\sigma^2)^2} \mathbb{I}_{n_i \times n_i}
+  \end{aligned}
+  $$
+  The above equations can be used to derive:
+  $$
+  \begin{aligned}
+    \frac{\partial}{\partial \sigma^2} \left[ \sum_{i = 1}^k (\mathbf{y}_i - \alpha \mathbf{1}_{n_i})^\top \Sigma^{-1} (\mathbf{y}_i - \alpha \mathbf{1}_{n_i}) \right]
+    &= \sum_{i = 1}^k (\mathbf{y}_i - \alpha \mathbf{1}_{n_i})^\top \frac{\partial \Sigma^{-1}}{\sigma^2} (\mathbf{y}_i - \alpha \mathbf{1}_{n_i}) \\
+    &= \sum_{i = 1}^k (\mathbf{y}_i - \alpha \mathbf{1}_{n_i})^\top \left( \frac{2\tau^2 \sigma^2 + (\tau^2)^2 n_i}{(\sigma^2)^2(\sigma^2 + \tau^2 n_i)^2} \mathbf{1}_{n_i} \mathbf{1}_{n_i}^\top - \frac{1}{(\sigma^2)^2} \mathbb{I}_{n_i \times n_i} \right) (\mathbf{y}_i - \alpha \mathbf{1}_{n_i}) \\
+    &= \sum_{i = 1}^k \left[ \frac{2\tau^2 \sigma^2 + (\tau^2)^2 n_i}{(\sigma^2)^2(\sigma^2 + \tau^2 n_i)^2} \left(\sum_{j = 1}^{n_i} (\mathbf{y}_{i,j} -\alpha ) \right)^2 - \frac{1}{(\sigma^2)^2} \sum_{j = 1}^{n_i} (\mathbf{y}_{i,j} - \alpha)^2 \right]
+  \end{aligned}
+  $$
+  Putting all of the above together, we get:
+  $$
+  \begin{aligned}
+    \frac{\partial}{\partial \sigma^2} \left[ \ell(\theta; \mathbf{y})\right] 
+    &= -\frac{1}{2} \sum_{i = 1}^k \left[  \frac{\partial}{\partial \sigma^2} \left[ \log\left( \rvert \Sigma \rvert \right) \right] + \frac{\partial}{\partial \sigma^2} \left[ (\mathbf{y}_i - \alpha \mathbf{1}_{n_i})^\top \Sigma^{-1} (\mathbf{y}_i - \alpha \mathbf{1}_{n_i}) \right] \right] \\
+    &= - \frac{1}{2}  \sum_{i = 1}^k \left[ \frac{n_i(\sigma^2 - \tau^2 + \tau^2 n_i)}{\sigma^2(\sigma^2 + \tau^2 n_i)} + \frac{2\tau^2 \sigma^2 + (\tau^2)^2 n_i}{(\sigma^2)^2(\sigma^2 + \tau^2 n_i)^2} \left(\sum_{j = 1}^{n_i} (\mathbf{y}_{i,j} -\alpha ) \right)^2 - \frac{1}{(\sigma^2)^2} \sum_{j = 1}^{n_i} (\mathbf{y}_{i,j} - \alpha)^2 \right] 
+  \end{aligned}
+  $$
+  Since $n_i = n$ for all $i \in [k]$, this simplifies to:
+  $$
+  \begin{aligned}
+    \frac{\partial}{\partial \sigma^2} \left[ \ell(\theta; \mathbf{y})\right] 
+    &= - \frac{1}{2} \sum_{i = 1}^k \left[ \frac{n(\sigma^2 - \tau^2 + \tau^2 n)}{\sigma^2(\sigma^2 + \tau^2 n)} + \frac{2\tau^2 \sigma^2 + (\tau^2)^2 n}{(\sigma^2)^2(\sigma^2 + \tau^2 n)^2} \left(\sum_{j = 1}^{n} (\mathbf{y}_{i,j} -\alpha) \right)^2 - \frac{1}{(\sigma^2)^2} \sum_{j = 1}^{n} (\mathbf{y}_{i,j} - \alpha)^2 \right] \\
+    &= - \frac{1}{2} \left[\frac{kn(\sigma^2 - \tau^2 + \tau^2 n)}{\sigma^2( \sigma^2 + \tau^2 n)}  + \frac{2\tau^2 \sigma^2 + (\tau^2)^2 n}{(\sigma^2)^2(\sigma^2 + \tau^2 n)^2} \sum_{i = 1}^k  \left(\sum_{j = 1}^{n} (\mathbf{y}_{i,j} -\alpha) \right)^2 - \frac{1}{(\sigma^2)^2} \sum_{i = 1}^k \sum_{j = 1}^{n} (\mathbf{y}_{i,j} - \alpha)^2 \right]
+  \end{aligned}
+  \nonumber
+  $$
+</details>
+$$
+\frac{\partial}{\partial \alpha} \left[ \ell(\theta; \mathbf{y})\right] 
+= - \left( \frac{1}{\sigma^2} - \frac{n \tau^2}{\sigma^2(\sigma^2 + \tau^2 n)}\right) \sum_{i = 1}^k \sum_{j = 1}^{n} (\alpha - \mathbf{y}_{i,j})
+$$
+<details>
+<summary>Proof.</summary>
+$$
+\begin{aligned}
+  \frac{\partial}{\partial \alpha} \left[\ell(\alpha, \sigma^2, \tau^2; \mathbf{y}) \right] 
+  &= - \frac{1}{2} \sum_{i = 1}^k \frac{\partial}{\partial \alpha} \left[(\mathbf{y}_i - \alpha \mathbf{1}_{n_i})^\top \Sigma^{-1} (\mathbf{y}_i - \alpha \mathbf{1}_{n_i}) \right] \\
+  &= - \frac{1}{2} \sum_{i = 1}^k \left[ \frac{\partial}{\partial \alpha} \sum_{j = 1}^{n_i} \sum_{j' = 1}^{n_i} (\mathbf{y}_i - \alpha \mathbf{1}_{n_i})_{j} (\mathbf{y}_i - \alpha \mathbf{1}_{n_i})_{j'} \left[ \Sigma^{-1} \right]_{j, j'} \right] \\
+  &= - \frac{1}{2} \sum_{i = 1}^k \sum_{j = 1}^{n_i} \sum_{j' = 1}^{n_i}  \left[ \Sigma^{-1} \right]_{j, j'} \frac{\partial}{\partial \alpha}  \left[  (\mathbf{y}_{i,j} - \alpha) (\mathbf{y}_{i,j'} - \alpha) \right]\\
+  &= - \frac{1}{2} \sum_{i = 1}^k \sum_{j = 1}^{n_i} \sum_{j' = 1}^{n_i}  \left[ \Sigma^{-1} \right]_{j, j'} \left( -\mathbf{y}_{i,j} - \mathbf{y}_{i,j'} + 2 \alpha\right)\\
+  &= - \frac{1}{2} \sum_{i = 1}^k \sum_{j = 1}^{n_i} \sum_{j' = 1}^{n_i} \left[ \Sigma^{-1} \right]_{j, j'} \left( (\alpha - \mathbf{y}_{i,j}) + (\alpha - \mathbf{y}_{i, j'}) \right) \\
+  &= - \frac{1}{2} \sum_{i = 1}^k \sum_{j = 1}^{n_i} \sum_{j' = 1}^{n_i} \left[ \Sigma^{-1} \right]_{j, j'} (\alpha - \mathbf{y}_{i,j}) - \frac{1}{2} \sum_{i = 1}^k \sum_{j = 1}^{n_i} \sum_{j' = 1}^{n_i} \left[ \Sigma^{-1} \right]_{j, j'}(\alpha - \mathbf{y}_{i, j'}) \\
+  &=  - \sum_{i = 1}^k \sum_{j = 1}^{n_i} (\alpha - \mathbf{y}_{i,j}) \sum_{j' = 1}^{n_i} \left[ \Sigma^{-1} \right]_{j, j'} 
+\end{aligned} 
+$$
+Substituting for $\Sigma^{-1}$ and simplifying due to the assumption that $n_i = n$:
+$$
+\begin{aligned}
+\frac{\partial}{\partial \alpha} \left[\ell(\alpha, \sigma^2, \tau^2; \mathbf{y}) \right] 
+&= - \sum_{i = 1}^k \sum_{j = 1}^{n} (\alpha - \mathbf{y}_{i,j}) \sum_{j' = 1}^{n} \left[ \frac{1}{\sigma^2} \mathbb{I}_{n \times n} - \frac{\tau^2}{\sigma^2(\sigma^2 + \tau^2 n)} \mathbf{1}_n \mathbf{1}_n^\top \right]_{j, j'} \\
+&= - \sum_{i = 1}^k \sum_{j = 1}^{n} (\alpha - \mathbf{y}_{i,j})  \left( \frac{1}{\sigma^2} - \frac{n \tau^2}{\sigma^2(\sigma^2 + \tau^2 n)}\right) \\
+&= - \left( \frac{1}{\sigma^2} - \frac{n \tau^2}{\sigma^2(\sigma^2 + \tau^2 n)}\right) \sum_{i = 1}^k \sum_{j = 1}^{n} (\alpha - \mathbf{y}_{i,j})
+\end{aligned}
+$$
+</details>
+</details>
+
+#### Deriving $\tilde{\theta}_0$
+We will use the maximum likelihood estimates under $H_0$ as our "suitable" estimates for the nuisance parameters. Thus:
+
+$$
+\tilde{\theta}_0 
+=
+\begin{bmatrix}
+\hat{\alpha} \\
+\hat{\sigma}^2 \\
+0
+\end{bmatrix}
+=
+\begin{bmatrix}
+\frac{1}{kn} \sum_{j = 1}^{n}  \sum_{i = 1}^k  \sum_{j = 1}^n \mathbf{y}_{i,j}  \\
+\frac{1}{k n} \sum_{i = 1}^k \sum_{j = 1}^{n} (\mathbf{y}_{i,j} - \alpha)^2\\
+0
+\end{bmatrix}
+$$
+
+<details>
+<summary>Proof.</summary>
+$$
+\hat{\sigma}^2 = \frac{\sum_{i = 1}^k \sum_{j = 1}^{n} (\mathbf{y}_{i,j} - \alpha)^2}{k n}
+$$
+<details>
+<summary>Proof.</summary>
+Under the null hypothesis, $\tau^2 = 0$. Plugging this into the score for $\sigma^2$:
+$$
+\begin{aligned}
+  \frac{\partial}{\partial \sigma^2} \left[ \ell(\alpha, \sigma^2, \tau^2; \mathbf{y})\right]\bigg\rvert_{\tau^2 = 0} 
+  &= - \frac{1}{2} \sum_{i = 1}^k \left[ \frac{n_i(\sigma^2 - 0 + 0)}{\sigma^2(\sigma^2 + 0)} + \frac{0 + 0}{(\sigma^2)^2(\sigma^2 + 0)^2} \left(\sum_{j = 1}^{n_i} (\mathbf{y}_{i,j} -\alpha ) \right)^2 - \frac{1}{(\sigma^2)^2} \sum_{j = 1}^{n_i} (\mathbf{y}_{i,j} - \alpha)^2 \right] \\
+  &= -\frac{1}{2} \sum_{i = 1}^k \left[ \frac{n_i}{\sigma^2} - \frac{1}{(\sigma^2)^2} \sum_{j = 1}^{n_i} (\mathbf{y}_{i,j} - \alpha)^2 \right]
+\end{aligned}
+$$
+Equating the above with $0$ and solving for $\sigma^2$ yields:
+$$
+\begin{aligned}
+  0 &= -\frac{1}{2} \sum_{i = 1}^k \left[ \frac{n_i}{\sigma^2} - \frac{1}{(\sigma^2)^2} \sum_{j = 1}^{n_i} (\mathbf{y}_{i,j} - \alpha)^2 \right] \\
+  \frac{1}{\sigma^2}\sum_{i = 1}^k n_i &= \frac{1}{(\sigma^2)^2} \sum_{i = 1}^k \sum_{j = 1}^{n_i} (\mathbf{y}_{i,j} - \alpha)^2 \\
+  \sigma^2 &= \frac{\sum_{i = 1}^k \sum_{j = 1}^{n_i} (\mathbf{y}_{i,j} - \alpha)^2}{\sum_{i = 1}^k n_i}
+\end{aligned}
+$$
+Simplifying with $n_i = n$:
+$$
+\begin{aligned}
+\hat{\sigma}^2 &= \frac{\sum_{i = 1}^k \sum_{j = 1}^{n} (\mathbf{y}_{i,j} - \alpha)^2}{\sum_{i = 1}^k n} \\
+&= \frac{\sum_{i = 1}^k \sum_{j = 1}^{n} (\mathbf{y}_{i,j} - \alpha)^2}{k n}
+\end{aligned}
+$$
+</details>
+$$
+\hat{\alpha} = \frac{1}{kn} \sum_{j = 1}^{n}  \sum_{i = 1}^k  \mathbf{y}_{i,j} 
+$$
+<details>
+<summary>Proof.</summary>
+Setting the derivative equal to $0$ and solving for $\alpha$:
+$$
+\begin{aligned}
+0 &= \frac{\partial}{\partial \alpha} \left[ \ell(\theta; \mathbf{y})\right] \\
+0 &= - \sum_{i = 1}^k \sum_{j = 1}^{n_i} (\alpha - \mathbf{y}_{i,j}) \sum_{j' = 1}^{n_i} \left[ \Sigma^{-1} \right]_{j, j'} \\
+0 &= - \alpha \sum_{i = 1}^k \sum_{j = 1}^{n_i} \sum_{j' = 1}^{n_i} \left[ \Sigma^{-1} \right]_{j, j'} + \sum_{i = 1}^k \sum_{j = 1}^{n_i} \mathbf{y}_{i,j} \sum_{j' = 1}^{n_i} \left[ \Sigma^{-1} \right]_{j, j'} \\
+\alpha \sum_{i = 1}^k \sum_{j = 1}^{n_i} \sum_{j' = 1}^{n_i} \left[ \Sigma^{-1} \right]_{j, j'} &= \sum_{i = 1}^k \sum_{j = 1}^{n_i} \mathbf{y}_{i,j} \sum_{j' = 1}^{n_i} \left[ \Sigma^{-1} \right]_{j, j'}  \\
+\alpha \left(k \mathbf{1}_{n_i}^\top \Sigma^{-1} \mathbf{1}_{n_i} \right) &= \sum_{j = 1}^{n_i} \sum_{j' = 1}^{n_i} \left[ \Sigma^{-1} \right]_{j, j'} \sum_{i = 1}^k  \mathbf{y}_{i,j} \\
+\alpha &= \frac{\sum_{j = 1}^{n_i} \sum_{j' = 1}^{n_i} \left[ \Sigma^{-1} \right]_{j, j'} \sum_{i = 1}^k  \mathbf{y}_{i,j}}{k \mathbf{1}_{n_i}^\top \Sigma^{-1} \mathbf{1}_{n_i} }
+\end{aligned}
+\nonumber
+$$
+Substituting in for $\Sigma^{-1}$ under the null and simplifying, since $n_i = n$:
+$$
+\begin{aligned}
+\hat{\alpha} &= \frac{\sum_{j = 1}^{n} \sum_{j' = 1}^{n} \left[ \frac{1}{\sigma^2} \mathbb{I}_{n \times n} - \frac{0}{\sigma^2 (\sigma^2 + 0)} \mathbf{1}_n \mathbf{1}_n^\top \right]_{j, j'} \sum_{i = 1}^k  \mathbf{y}_{i,j}}{k \mathbf{1}_{n}^\top \left( \frac{1}{\sigma^2} \mathbb{I}_{n \times n} - \frac{0}{\sigma^2 (\sigma^2 + 0)} \mathbf{1}_n \mathbf{1}_n^\top \right) \mathbf{1}_{n} }\\
+&= \frac{\sum_{j = 1}^{n} \sum_{j' = 1}^{n} \left[ \frac{1}{\sigma^2} \mathbb{I}_{n \times n} \right]_{j, j'} \sum_{i = 1}^k  \mathbf{y}_{i,j}}{\frac{kn}{\sigma^2}}\\
+&= \frac{\sigma^2 \sum_{j = 1}^{n} \frac{1}{\sigma^2} \sum_{i = 1}^k  \mathbf{y}_{i,j}}{kn} \\
+&= \frac{1}{kn} \sum_{j = 1}^{n}  \sum_{i = 1}^k  \mathbf{y}_{i,j} 
+\end{aligned}
+$$
+</details>
+</details>
+
+Thus:
+
+$$
+\mathbf{S}(\tilde{\theta}_0) = 
+\begin{bmatrix}
+  \frac{1}{\hat{\sigma}^2} \sum_{i = 1}^k (\mathbf{y}_{i,j} - \hat{\alpha}) \\
+  - \frac{kn}{2\hat{\sigma}^2} + \frac{1}{2(\sigma^2)^2} \sum_{i = 1}^k \sum_{j = 1}^n (\mathbf{y}_{i,j} - \hat{\alpha})^2 \\
+  - \frac{kn}{2 \hat{\sigma}^2} + \frac{1}{2(\hat{\sigma}^2)^2} \sum_{i = 1}^k \left(\sum_{j = 1}^n (\mathbf{y}_{i,j} - \hat{\alpha}) \right)^2
+\end{bmatrix}
+$$
+
+#### Deriving $\tilde{\mathcal{I}}(\tilde{\theta}_0)$
+We'll derive the components of the Hessian by each variable:
+
+$$
+\frac{\partial}{\partial \alpha} \left[ \frac{\partial}{\partial \theta}\left[\ell (\theta; \mathbf{y}) \right] \right] = 
+\begin{bmatrix}
+-\frac{nk}{\sigma^2} + \frac{k n^2 \tau^2}{\sigma^2(\sigma^2 + \tau^2 n)} \\
+- \frac{1}{(\sigma^2 + \tau^2 n)^2} \sum_{i = 1}^k \sum_{j = 1}^n (\mathbf{y}_{i,j} - \alpha) \\
+-\frac{n}{(\sigma^2 + \tau^2 n)^2}\sum_{i = 1}^k \sum_{j = 1}^n (\mathbf{y}_{i,j} - \alpha)
+\end{bmatrix}
+$$
+
+<details>
+<summary>Second Derivatives w.r.t. $\alpha$.</summary>
+$$
+\begin{aligned}
+  \frac{\partial^2}{\partial \alpha^2} \left[ \ell(\theta; \mathbf{y}) \right] 
+&= \frac{\partial}{\partial \alpha} \left[ - \left( \frac{1}{\sigma^2} - \frac{n \tau^2}{\sigma^2(\sigma^2 + \tau^2 n)}\right) \sum_{i = 1}^k \sum_{j = 1}^{n} (\alpha - \mathbf{y}_{i,j}) \right] \\
+&= - \left( \frac{1}{\sigma^2} - \frac{n \tau^2}{\sigma^2(\sigma^2 + \tau^2 n)}\right) \sum_{i = 1}^k \sum_{j = 1}^{n} 1 \\
+&= - nk \left( \frac{1}{\sigma^2} - \frac{n \tau^2}{\sigma^2(\sigma^2 + \tau^2 n)}\right) \\
+&= -\frac{nk}{\sigma^2} + \frac{k n^2 \tau^2}{\sigma^2(\sigma^2 + \tau^2 n)}
+\end{aligned}
+\nonumber
+$$
+$$
+\begin{aligned}
+  \frac{\partial^2}{\partial \alpha \partial \sigma^2} \left[ \ell(\theta; \mathbf{y}) \right] 
+&= - \frac{1}{2} \left[\frac{kn(\sigma^2 - \tau^2 + \tau^2 n)}{\sigma^2( \sigma^2 + \tau^2 n)}  + \frac{2\tau^2 \sigma^2 + (\tau^2)^2 n}{(\sigma^2)^2(\sigma^2 + \tau^2 n)^2} \sum_{i = 1}^k  \left(\sum_{j = 1}^{n} (\mathbf{y}_{i,j} -\alpha) \right)^2 - \frac{1}{(\sigma^2)^2} \sum_{i = 1}^k \sum_{j = 1}^{n} (\mathbf{y}_{i,j} - \alpha)^2 \right] \\
+&= - \frac{1}{2} \left[\frac{2\tau^2 \sigma^2 + (\tau^2)^2 n}{(\sigma^2)^2(\sigma^2 + \tau^2 n)^2} \sum_{i = 1}^k \frac{\partial}{\partial \alpha} \left[ \left(\sum_{j = 1}^n (\mathbf{y}_{i,j} - \alpha) \right)^2 \right]  - \frac{1}{(\sigma^2)^2} \sum_{i = 1}^k \sum_{j = 1}^n \frac{\partial}{\partial \alpha} \left[(\mathbf{y}_{i,j} - \alpha)^2 \right] \right] \\
+&=  - \frac{1}{2} \left[\frac{2\tau^2 \sigma^2 + (\tau^2)^2 n}{(\sigma^2)^2(\sigma^2 + \tau^2 n)^2} \sum_{i = 1}^k 2\left(\sum_{j = 1}^n (\mathbf{y}_{i,j} - \alpha) \right) \frac{\partial}{\partial \alpha} \left[ \sum_{j = 1}^n (\mathbf{y}_{i,j} - \alpha)  \right]   - \frac{1}{(\sigma^2)^2} \sum_{i = 1}^k \sum_{j = 1}^n -2(\mathbf{y}_{i,j} - \alpha)  \right] \\ 
+&=  - \frac{1}{2} \left[\frac{2\tau^2 \sigma^2 + (\tau^2)^2 n}{(\sigma^2)^2(\sigma^2 + \tau^2 n)^2} \sum_{i = 1}^k 2\left(\sum_{j = 1}^n (\mathbf{y}_{i,j} - \alpha) \right)  \sum_{j = 1}^n (-1) + \frac{2}{(\sigma^2)^2} \sum_{i = 1}^k \sum_{j = 1}^n (\mathbf{y}_{i,j} - \alpha)  \right] \\ 
+&=  - \left[-\frac{2\tau^2 \sigma^2n + (\tau^2)^2 n^2}{(\sigma^2)^2(\sigma^2 + \tau^2 n)^2} \sum_{i = 1}^k \sum_{j = 1}^n (\mathbf{y}_{i,j} - \alpha)  + \frac{1}{(\sigma^2)^2} \sum_{i = 1}^k \sum_{j = 1}^n (\mathbf{y}_{i,j} - \alpha)  \right] \\ 
+&=  \frac{2\tau^2 \sigma^2n + (\tau^2)^2 n^2}{(\sigma^2)^2(\sigma^2 + \tau^2 n)^2} \sum_{i = 1}^k \sum_{j = 1}^n (\mathbf{y}_{i,j} - \alpha) - \frac{(\sigma^2 + \tau^2 n )^2}{(\sigma^2)^2 (\sigma^2 + \tau^2 n )^2} \sum_{i = 1}^k \sum_{j = 1}^n (\mathbf{y}_{i,j} - \alpha)  \\ 
+&=  \frac{2\tau^2 \sigma^2n + (\tau^2)^2 n^2}{(\sigma^2)^2(\sigma^2 + \tau^2 n)^2} \sum_{i = 1}^k \sum_{j = 1}^n (\mathbf{y}_{i,j} - \alpha) - \frac{(\sigma^2)^2 + 2 \sigma^2 \tau^2 n + (\tau^2)^2 n^2}{(\sigma^2)^2 (\sigma^2 + \tau^2 n )^2} \sum_{i = 1}^k \sum_{j = 1}^n (\mathbf{y}_{i,j} - \alpha)  \\ 
+&=  \frac{-(\sigma^2)^2}{(\sigma^2)^2(\sigma^2 + \tau^2 n)^2} \sum_{i = 1}^k \sum_{j = 1}^n (\mathbf{y}_{i,j} - \alpha) \\
+&= - \frac{1}{(\sigma^2 + \tau^2 n)^2} \sum_{i = 1}^k \sum_{j = 1}^n (\mathbf{y}_{i,j} - \alpha) \\
+\end{aligned}
+\nonumber
+$$
+$$
+\begin{aligned}
+  \frac{\partial^2}{\partial \alpha \partial \tau^2} \left[ \ell(\theta; \mathbf{y}) \right] 
+&= \frac{\partial}{\partial \alpha} \left[ - \frac{1}{2} \left[\frac{kn}{\sigma^2 + \tau^2 n} \right] +  \frac{1}{2(\sigma^2 + \tau^2 n)^2} \sum_{i = 1}^k  \left( \sum_{j = 1}^{n} (\mathbf{y}_{i,j} - \alpha) \right)^2  \right] \\
+&= \frac{2}{2(\sigma^2 + \tau^2 n)^2} \sum_{i = 1}^k \sum_{j = 1}^n (\mathbf{y}_{i,j}- \alpha)\frac{\partial}{\partial \alpha} \left[ \sum_{j = 1}^n (\mathbf{y}_{i,j} - \alpha) \right] \\
+&= \frac{1}{(\sigma^2 + \tau^2 n)^2} \sum_{i = 1}^k \sum_{j = 1}^n (\mathbf{y}_{i,j} - \alpha) \left[ \sum_{j = 1}^n (-1) \right]\\
+&= -\frac{n}{(\sigma^2 + \tau^2 n)^2} \sum_{i = 1}^k \sum_{j = 1}^n (\mathbf{y}_{i,j} - \alpha)
+\end{aligned}
+\nonumber
+$$
+</details>
+
+$$
+\frac{\partial}{\partial \sigma^2} \left[ \frac{\partial}{\partial \theta}\left[\ell (\theta; \mathbf{y}) \right] \right] = 
+\begin{bmatrix}
+-\frac{1}{(\sigma^2 + \tau^2 n)^2} \sum_{i = 1}^k \sum_{j = 1}^{n} (\mathbf{y}_{i,j}- \alpha) \\
+- \frac{1}{2} \left( \left[\frac{k - kn}{(\sigma^2)^2} - \frac{k}{(\sigma^2 + \tau^2 n)^2}\right] + \frac{2}{n} \left[\frac{1}{(\sigma^2 + \tau^2 n)^3} - \frac{1}{(\sigma^2)^3} \right] \sum_{i = 1}^k  \left(\sum_{j = 1}^{n} (\mathbf{y}_{i,j} -\alpha) \right)^2 + \frac{2}{(\sigma^2)^3} \sum_{i = 1}^k \sum_{j = 1}^{n} (\mathbf{y}_{i,j} - \alpha)^2  \right) \\
+\frac{kn}{2(\sigma^2 + \tau^2 n)^2} - \frac{1}{(\sigma^2 + \tau^2n)^3}\sum_{i = 1}^k  \left( \sum_{j = 1}^{n} (\mathbf{y}_{i,j} - \alpha) \right)^2
+\end{bmatrix}
+$$
+
+<details>
+<summary>Second Derivatives w.r.t. $\sigma^2$.</summary>
+$$
+\begin{aligned}
+\frac{\partial}{\partial \sigma^2} \left[ \frac{\partial}{\partial \alpha} \ell(\theta; \mathbf{y}) \right]
+&= \frac{\partial}{\partial \sigma^2} \left[ - \left( \frac{1}{\sigma^2} - \frac{n \tau^2}{\sigma^2(\sigma^2 + \tau^2 n)}\right) \sum_{i = 1}^k \sum_{j = 1}^{n} (\alpha - \mathbf{y}_{i,j})  \right] \\
+&= \frac{1}{(\sigma^2 + \tau^2 n)^2} \sum_{i = 1}^k \sum_{j = 1}^{n} (\alpha - \mathbf{y}_{i,j}) \\
+&= -\frac{1}{(\sigma^2 + \tau^2 n)^2} \sum_{i = 1}^k \sum_{j = 1}^{n} (\mathbf{y}_{i,j} - \alpha)
+\end{aligned}
+\nonumber
+$$
+$$
+\begin{aligned}
+  \frac{\partial}{\partial \sigma^2} \left[ \frac{\partial}{\partial \sigma^2} \ell(\theta; \mathbf{y}) \right]
+&=   \frac{\partial}{\partial \sigma^2} \left[ - \frac{1}{2} \left[\frac{kn(\sigma^2 - \tau^2 + \tau^2 n)}{\sigma^2( \sigma^2 + \tau^2 n)}  + \frac{2\tau^2 \sigma^2 + (\tau^2)^2 n}{(\sigma^2)^2(\sigma^2 + \tau^2 n)^2} \sum_{i = 1}^k  \left(\sum_{j = 1}^{n} (\mathbf{y}_{i,j} -\alpha) \right)^2 - \frac{1}{(\sigma^2)^2} \sum_{i = 1}^k \sum_{j = 1}^{n} (\mathbf{y}_{i,j} - \alpha)^2 \right] \right] \\
+&= - \frac{1}{2}\left( \frac{\partial}{\partial \sigma^2} \left[ \frac{kn(\sigma^2 - \tau^2 + \tau^2 n)}{\sigma^2( \sigma^2 + \tau^2 n)} \right] + \frac{\partial}{\partial \sigma^2} \left[ \frac{2\tau^2 \sigma^2 + (\tau^2)^2 n}{(\sigma^2)^2(\sigma^2 + \tau^2 n)^2} \sum_{i = 1}^k  \left(\sum_{j = 1}^{n} (\mathbf{y}_{i,j} -\alpha) \right)^2\right] - \frac{\partial}{\partial \sigma^2}\left[ \frac{1}{(\sigma^2)^2} \sum_{i = 1}^k \sum_{j = 1}^{n} (\mathbf{y}_{i,j} - \alpha)^2 \right] \right) \\
+&= - \frac{1}{2} \left( \left[\frac{k - kn}{(\sigma^2)^2} - \frac{k}{(\sigma^2 + \tau^2 n)^2}\right] + \frac{2}{n} \left[\frac{1}{(\sigma^2 + \tau^2 n)^3} - \frac{1}{(\sigma^2)^3} \right] \sum_{i = 1}^k  \left(\sum_{j = 1}^{n} (\mathbf{y}_{i,j} -\alpha) \right)^2 + \frac{2}{(\sigma^2)^3} \sum_{i = 1}^k \sum_{j = 1}^{n} (\mathbf{y}_{i,j} - \alpha)^2  \right)
+\end{aligned}
+\nonumber
+$$
+$$
+\begin{aligned}
+\frac{\partial}{\partial \sigma^2} \left[ \frac{\partial}{\partial \tau^2} \ell(\theta; \mathbf{y}) \right]
+&= \frac{\partial}{\partial \sigma^2} \left[ - \frac{1}{2} \left[\frac{kn}{\sigma^2 + \tau^2 n} \right] +  \frac{1}{2(\sigma^2 + \tau^2 n)^2} \sum_{i = 1}^k  \left( \sum_{j = 1}^{n} (\mathbf{y}_{i,j} - \alpha) \right)^2  \right] \\
+&= - \frac{1}{2}\left(\frac{-kn}{(\sigma^2 + \tau^2 n)^2}\right) + \frac{1}{(\sigma^2 + \tau^2n)^3}\sum_{i = 1}^k  \left( \sum_{j = 1}^{n} (\mathbf{y}_{i,j} - \alpha) \right)^2 \\
+&= \frac{kn}{2(\sigma^2 + \tau^2 n)^2} - \frac{1}{(\sigma^2 + \tau^2n)^3}\sum_{i = 1}^k  \left( \sum_{j = 1}^{n} (\mathbf{y}_{i,j} - \alpha) \right)^2
+\end{aligned}
+\nonumber
+$$
+</details>
+
+$$
+\frac{\partial}{\partial \tau^2} \left[ \frac{\partial}{\partial \theta}\left[\ell (\theta; \mathbf{y}) \right] \right] = 
+\begin{bmatrix}
+-\frac{n}{(\sigma^2 + \tau^2 n)^2} \sum_{i = 1}^k \sum_{j = 1}^{n} (\mathbf{y}_{i,j} -\alpha) \\
+\frac{kn}{2(\sigma^2 + \tau^2 n)^2} - \frac{1}{(\sigma^2 + \tau^2 n)^3}\sum_{i = 1}^k  \left(\sum_{j = 1}^{n} (\mathbf{y}_{i,j} -\alpha) \right)^2 \\
+\frac{kn^2}{2(\sigma^2 + \tau^2n)^2} - \frac{n}{(\sigma^2 + \tau^2 n)^3}\sum_{i = 1}^k  \left( \sum_{j = 1}^{n} (\mathbf{y}_{i,j} - \alpha) \right)^2
+\end{bmatrix}
+$$
+
+<details>
+<summary>Second Derivatives w.r.t. $\tau^2$.</summary>
+$$
+\begin{aligned}
+\frac{\partial}{\partial \tau^2} \left[ \frac{\partial}{\partial \alpha} \ell(\theta; \mathbf{y}) \right] 
+&= \frac{\partial}{\partial \tau^2} \left[ - \left( \frac{1}{\sigma^2} - \frac{n \tau^2}{\sigma^2(\sigma^2 + \tau^2 n)}\right) \sum_{i = 1}^k \sum_{j = 1}^{n} (\alpha - \mathbf{y}_{i,j}) \right]  \\
+&= \frac{n}{(\sigma^2 + \tau^2 n)^2} \sum_{i = 1}^k \sum_{j = 1}^{n} (\alpha - \mathbf{y}_{i,j})
+\end{aligned}
+\nonumber
+$$
+$$
+\begin{aligned}
+\frac{\partial}{\partial \tau^2} \left[ \frac{\partial}{\partial \sigma^2} \ell(\theta; \mathbf{y}) \right] 
+&= \frac{\partial}{\partial \tau^2} \left[ - \frac{1}{2} \left[\frac{kn(\sigma^2 - \tau^2 + \tau^2 n)}{\sigma^2( \sigma^2 + \tau^2 n)}  + \frac{2\tau^2 \sigma^2 + (\tau^2)^2 n}{(\sigma^2)^2(\sigma^2 + \tau^2 n)^2} \sum_{i = 1}^k  \left(\sum_{j = 1}^{n} (\mathbf{y}_{i,j} -\alpha) \right)^2 - \frac{1}{(\sigma^2)^2} \sum_{i = 1}^k \sum_{j = 1}^{n} (\mathbf{y}_{i,j} - \alpha)^2 \right] \right] \\
+&= - \frac{1}{2}\left(
+  - \frac{kn}{(\sigma^2 + \tau^2 n)^2} + \frac{2}{(\sigma^2 + \tau^2 n)^3}\sum_{i = 1}^k  \left(\sum_{j = 1}^{n} (\mathbf{y}_{i,j} -\alpha) \right)^2 
+\right) \\
+&= \frac{kn}{2(\sigma^2 + \tau^2 n)^2} - \frac{1}{(\sigma^2 + \tau^2 n)^3}\sum_{i = 1}^k  \left(\sum_{j = 1}^{n} (\mathbf{y}_{i,j} -\alpha) \right)^2 
+\end{aligned}
+\nonumber
+$$
+$$
+\begin{aligned}
+\frac{\partial}{\partial \tau^2} \left[ \frac{\partial}{\partial \tau^2} \ell(\theta; \mathbf{y}) \right] 
+&= \frac{\partial}{\partial \tau^2} \left[ - \frac{1}{2} \left[\frac{kn}{\sigma^2 + \tau^2 n} \right] +  \frac{1}{2(\sigma^2 + \tau^2 n)^2} \sum_{i = 1}^k  \left( \sum_{j = 1}^{n} (\mathbf{y}_{i,j} - \alpha) \right)^2  \right] \\
+&= - \frac{1}{2}\frac{-kn^2}{(\sigma^2 + \tau^2n)^2} - \frac{n}{(\sigma^2 + \tau^2 n)^3}\sum_{i = 1}^k  \left( \sum_{j = 1}^{n} (\mathbf{y}_{i,j} - \alpha) \right)^2 \\
+&= \frac{kn^2}{2(\sigma^2 + \tau^2n)^2} - \frac{n}{(\sigma^2 + \tau^2 n)^3}\sum_{i = 1}^k  \left( \sum_{j = 1}^{n} (\mathbf{y}_{i,j} - \alpha) \right)^2
+\end{aligned}
+\nonumber
+$$
+</details>
+
+Taking the expectation, we get:
+
+$$
+\mathbb{E}\left[ \frac{\partial \ell(\theta; \mathbf{y})}{\partial \theta \partial \theta^\top} \right] =
+\begin{bmatrix}
+- \frac{nk}{\sigma^2} + \frac{k n^2 \tau^2}{\sigma^2(\sigma^2 + \tau^2 n)} & 0 & \\ 
+0 & - \frac{1}{2}\left(\left[\frac{k - nk}{(\sigma^2)^2} - \frac{k}{(\sigma^2 + \tau^2 n)^2} \right] + \frac{2nk(\sigma^2 + \tau^2 n)}{n} \left[ \frac{1}{(\sigma^2 + \tau^2 n)^3} - \frac{1}{(\sigma^2)^3} \right]+ \frac{2 n k (\sigma^2 + \tau^2)}{(\sigma^2)^3} \right) & -\frac{nk}{2(\sigma^2 + \tau^2 n)^2} \\
+0 & -\frac{nk}{2(\sigma^2 + \tau^2 n)^2} & - \frac{n^2 k}{2(\sigma^2 + \tau^2 n)^2}
+\end{bmatrix}
+$$
+
+<details>
+<summary>Derivations.</summary>
+$$
+\begin{aligned}
+\mathbb{E}\left[ \frac{\partial \ell(\theta; \mathbf{y})}{\partial \alpha \partial \theta} \right]
+&= \begin{bmatrix}
+- \frac{nk}{\sigma^2} + \frac{k n^2 \tau^2}{\sigma^2(\sigma^2 + \tau^2 n)} \\
+- \frac{1}{(\sigma^2 + \tau^2 n)^2} \sum_{i = 1}^n \sum_{j = 1}^n \mathbb{E}\left[(\mathbf{y}_{i,j} - \alpha) \right] \\
+- \frac{n}{(\sigma^2 + \tau^2 n)^2} \sum_{i = 1}^n \sum_{j = 1}^n \mathbb{E}\left[(\mathbf{y}_{i,j} - \alpha) \right]
+\end{bmatrix} \\
+&= \begin{bmatrix}
+- \frac{nk}{\sigma^2} + \frac{k n^2 \tau^2}{\sigma^2(\sigma^2 + \tau^2 n)} \\
+0 \\
+0
+\end{bmatrix}
+\end{aligned}
+\nonumber
+$$
+$$
+\begin{aligned}
+\mathbb{E}\left[ \frac{\partial \ell(\theta; \mathbf{y})}{\partial \sigma^2 \partial \theta} \right]
+&= \begin{bmatrix}
+-\frac{1}{(\sigma^2 + \tau^2 n)^2} \sum_{i = 1}^k \sum_{j = 1}^n \mathbb{E}\left[ (\mathbf{y}_{i,j} - \alpha)\right] \\
+- \frac{1}{2}\left(\left[\frac{k - nk}{(\sigma^2)^2} - \frac{k}{(\sigma^2 + \tau^2 n)^2} \right] + \frac{2}{n} \left[ \frac{1}{(\sigma^2 + \tau^2 n)^3} - \frac{1}{(\sigma^2)^3} \right] \sum_{i = 1}^k \mathbb{E}\left[ \left( \sum_{j = 1}^n (\mathbf{y}_{i,j} - \alpha) \right)^2 \right] + \frac{2}{(\sigma^2)^3} \sum_{i = 1}^n \sum_{j = 1}^n \mathbb{E}\left[ (\mathbf{y}_{i,j} - \alpha)^2 \right] \right) \\
+\frac{nk}{2(\sigma^2 + \tau^2 n)^2} - \frac{1}{(\sigma^2 + \tau^2 n)^3} \sum_{i = 1}^k \mathbb{E}\left[  \left( \sum_{j = 1}^n (\mathbf{y}_{i,j} - \alpha) \right)^2 \right]
+\end{bmatrix} \\
+&= \begin{bmatrix}
+0 \\
+- \frac{1}{2}\left(\left[\frac{k - nk}{(\sigma^2)^2} - \frac{k}{(\sigma^2 + \tau^2 n)^2} \right] + \frac{2}{n} \left[ \frac{1}{(\sigma^2 + \tau^2 n)^3} - \frac{1}{(\sigma^2)^3} \right] \sum_{i = 1}^k \sum_{j = 1}^n \sum_{j'  = 1}^n\text{Cov}\left(\mathbf{y}_{i,j}, \mathbf{y}_{i,j'} \right)+ \frac{2}{(\sigma^2)^3} \sum_{i = 1}^n \sum_{j = 1}^n \text{Var}(\mathbf{y}_{i,j}) \right) \\
+\frac{nk}{2(\sigma^2 + \tau^2 n)^2} - \frac{1}{(\sigma^2 + \tau^2 n)^3} \sum_{i = 1}^k \sum_{j = 1}^n \sum_{j' = 1}^n \text{Cov}\left(\mathbf{y}_{i,j}, \mathbf{y}_{i,j'} \right)
+\end{bmatrix} \\
+&= \begin{bmatrix}
+0 \\
+- \frac{1}{2}\left(\left[\frac{k - nk}{(\sigma^2)^2} - \frac{k}{(\sigma^2 + \tau^2 n)^2} \right] + \frac{2}{n} \left[ \frac{1}{(\sigma^2 + \tau^2 n)^3} - \frac{1}{(\sigma^2)^3} \right] \sum_{i = 1}^k  \sum_{j = 1}^n \left[\text{Var}(\mathbf{y}_{i,j}) + \sum_{j' \neq j} \text{Cov}\left(\mathbf{y}_{i,j}, \mathbf{y}_{i,j'} \right) \right] + \frac{2}{(\sigma^2)^3} \sum_{i = 1}^n \sum_{j = 1}^n (\sigma^2 + \tau^2)\right) \\
+\frac{nk}{2(\sigma^2 + \tau^2 n)^2} - \frac{1}{(\sigma^2 + \tau^2 n)^3} \sum_{i = 1}^k \sum_{j = 1}^n\left[ \text{Var}(\mathbf{y}_{i,j}) + \sum_{j' \neq j}\text{Cov}\left(\mathbf{y}_{i,j}, \mathbf{y}_{i,j'} \right) \right]
+\end{bmatrix} \\
+&= \begin{bmatrix}
+0 \\
+- \frac{1}{2}\left(\left[\frac{k - nk}{(\sigma^2)^2} - \frac{k}{(\sigma^2 + \tau^2 n)^2} \right] + \frac{2}{n} \left[ \frac{1}{(\sigma^2 + \tau^2 n)^3} - \frac{1}{(\sigma^2)^3} \right] \sum_{i = 1}^k  \sum_{j = 1}^n \left[\sigma^2 + \tau^2 + \sum_{j' \neq j} \tau^2 \right] + \frac{2 n k (\sigma^2 + \tau^2)}{(\sigma^2)^3} \right) \\
+\frac{nk}{2(\sigma^2 + \tau^2 n)^2} - \frac{1}{(\sigma^2 + \tau^2 n)^3} \sum_{i = 1}^k \sum_{j = 1}^n\left[\sigma^2 + \tau^2 + \sum_{j' \neq j} \tau^2 \right] 
+\end{bmatrix} \\
+&= \begin{bmatrix}
+0 \\
+- \frac{1}{2}\left(\left[\frac{k - nk}{(\sigma^2)^2} - \frac{k}{(\sigma^2 + \tau^2 n)^2} \right] + \frac{2}{n} \left[ \frac{1}{(\sigma^2 + \tau^2 n)^3} - \frac{1}{(\sigma^2)^3} \right] \left[nk(\sigma^2 + \tau^2) + kn(n-1)\tau^2\right] + \frac{2 n k (\sigma^2 + \tau^2)}{(\sigma^2)^3} \right) \\
+\frac{nk}{2(\sigma^2 + \tau^2 n)^2} - \frac{1}{(\sigma^2 + \tau^2 n)^3} \left(nk(\sigma^2 + \tau^2) + nk(n-1) \tau^2\right)
+\end{bmatrix} \\
+&= \begin{bmatrix}
+0 \\
+- \frac{1}{2}\left(\left[\frac{k - nk}{(\sigma^2)^2} - \frac{k}{(\sigma^2 + \tau^2 n)^2} \right] + \frac{2nk(\sigma^2 + \tau^2 n)}{n} \left[ \frac{1}{(\sigma^2 + \tau^2 n)^3} - \frac{1}{(\sigma^2)^3} \right]+ \frac{2 n k (\sigma^2 + \tau^2)}{(\sigma^2)^3} \right) \\
+\frac{nk}{2(\sigma^2 + \tau^2 n)^2} - \frac{nk(\sigma^2 + \tau^2 n)}{(\sigma^2 + \tau^2 n)^3} 
+\end{bmatrix} \\
+&= \begin{bmatrix}
+0 \\
+- \frac{1}{2}\left(\left[\frac{k - nk}{(\sigma^2)^2} - \frac{k}{(\sigma^2 + \tau^2 n)^2} \right] + \frac{2nk(\sigma^2 + \tau^2 n)}{n} \left[ \frac{1}{(\sigma^2 + \tau^2 n)^3} - \frac{1}{(\sigma^2)^3} \right]+ \frac{2 n k (\sigma^2 + \tau^2)}{(\sigma^2)^3} \right) \\
+-\frac{nk}{2(\sigma^2 + \tau^2 n)^2}
+\end{bmatrix}
+\end{aligned}
+\nonumber
+$$
+$$
+\begin{aligned}
+\mathbb{E}\left[ \frac{\partial \ell(\theta; \mathbf{y})}{\partial \tau^2 \partial \theta} \right] 
+&= \begin{bmatrix}
+- \frac{n}{(\sigma^2 + \tau^2 n)^2} \sum_{i = 1}^k \sum_{j = 1}^n \mathbb{E}\left[ (\mathbf{y}_{i,j} - \alpha) \right] \\
+\frac{nk}{2(\sigma^2 + \tau^2 n)^2} - \frac{1}{(\sigma^2 + \tau^2 n)^3} \sum_{i = 1}^k \mathbb{E}\left[ \left(\sum_{j = 1}^n (\mathbf{y}_{i,j} - \alpha) \right)^2\right] \\
+\frac{n^2k}{2(\sigma^2 + \tau^2 n)^2} - \frac{n}{(\sigma^2 + \tau^2 n)^3} \sum_{i = 1}^k \mathbb{E}\left[ \left(\sum_{j = 1}^n (\mathbf{y}_{i,j} - \alpha) \right)^2\right] \\
+\end{bmatrix} \\
+&= \begin{bmatrix}
+0 \\
+\frac{nk}{2(\sigma^2 + \tau^2 n)^2} - \frac{1}{(\sigma^2 + \tau^2 n)^3} \sum_{i = 1}^k \sum_{j = 1}^n \left[ \text{Var}(\mathbf{y}_{i,j}) + \sum_{j' \neq j} \text{Cov}(\mathbf{y}_{i,j}, \mathbf{y}_{i,j'}) \right] \\
+\frac{n^2k}{2(\sigma^2 + \tau^2 n)^2} - \frac{n}{(\sigma^2 + \tau^2 n)^3} \sum_{i = 1}^k \sum_{j = 1}^n \left[ \text{Var}(\mathbf{y}_{i,j}) + \sum_{j' \neq j} \text{Cov}(\mathbf{y}_{i,j}, \mathbf{y}_{i,j'}) \right]
+\end{bmatrix} \\
+&= \begin{bmatrix}
+0 \\
+\frac{nk}{2(\sigma^2 + \tau^2 n)^2} - \frac{1}{(\sigma^2 + \tau^2 n)^3} \sum_{i = 1}^k \sum_{j = 1}^n \left[\sigma^2 + \tau^2 + \sum_{j' \neq j} \tau^2 \right] \\
+\frac{n^2 k}{2(\sigma^2 + \tau^2 n)^2} - \frac{n}{(\sigma^2 + \tau^2 n)^3} \sum_{i = 1}^k \sum_{j = 1}^n \left[\sigma^2 + \tau^2 + \sum_{j' \neq j} \tau^2 \right]
+\end{bmatrix} \\
+&= \begin{bmatrix}
+0 \\
+\frac{nk}{2(\sigma^2 + \tau^2 n)^2} - \frac{nk(\sigma^2 + \tau^2 + (n-1)\tau^2)}{(\sigma^2 + \tau^2 n)^3}  \\
+\frac{n^2k}{2(\sigma^2 + \tau^2 n)^2} - \frac{n(nk(\sigma^2 + \tau^2 + (n-1)\tau^2))}{(\sigma^2 + \tau^2 n)^3}
+\end{bmatrix} \\
+&= \begin{bmatrix}
+0 \\
+\frac{nk}{2(\sigma^2 + \tau^2 n)^2} - \frac{nk(\sigma^2 + \tau^2n)}{(\sigma^2 + \tau^2 n)^3} \\
+\frac{n^2 k}{2(\sigma^2 + \tau^2 n)^3} - \frac{n^2 k(\sigma^2 + \tau^2 n)}{(\sigma^2 + \tau^2 n)^3}
+\end{bmatrix} \\
+&= \begin{bmatrix}
+0 \\
+-\frac{nk}{2(\sigma^2 + \tau^2 n)^2} \\
+- \frac{n^2 k}{2(\sigma^2 + \tau^2 n)^2}
+\end{bmatrix}
+\end{aligned}
+\nonumber
+$$
+</details>
+
+Multiplying by $-1$ and evaluating at $\tilde{\theta}_0 = (\hat{\alpha}, \hat{\sigma}^2, 0)$ gives us the information matrix:
+
+$$
+\tilde{\mathcal{I}}(\tilde{\theta}_0) =
+\begin{bmatrix}
+\frac{nk}{\hat{\sigma}^2} & 0 & 0 \\
+0 & \frac{nk}{2(\hat{\sigma}^2)^2} & \frac{nk}{2(\hat{\sigma}^2)^2} \\
+0 & \frac{nk}{2(\hat{\sigma}^2)^2} & \frac{n^2 k}{2(\sigma^2 + \tau^2 n)^2}-
+\end{bmatrix}
+$$
+
+<details>
+<summary>Derivations.</summary>
+$$
+\begin{aligned}
+\tilde{\mathcal{I}}(\tilde{\theta}_0) &= 
+\begin{bmatrix}
+\frac{nk}{\hat{\sigma}^2} & 0 & 0 \\
+0 & \frac{1}{2}\left(\frac{k - nk - k}{(\hat{\sigma}^2)^2} + \frac{2nk}{(\hat{\sigma}^2)^2} \right) & \frac{nk}{2(\hat{\sigma}^2)^2} \\
+0 & \frac{nk}{2(\hat{\sigma}^2)^2} & \frac{n^2 k}{2(\sigma^2 + \tau^2 n)^2}
+\end{bmatrix} \\
+&= \begin{bmatrix}
+\frac{nk}{\hat{\sigma}^2} & 0 & 0 \\
+0 & \frac{- nk}{2(\hat{\sigma}^2)^2} + \frac{nk}{(\hat{\sigma}^2)^2} & \frac{nk}{2(\hat{\sigma}^2)^2} \\
+0 & \frac{nk}{2(\hat{\sigma}^2)^2} & \frac{n^2 k}{2(\sigma^2 + \tau^2 n)^2}
+\end{bmatrix} \\
+&= \begin{bmatrix}
+\frac{nk}{\hat{\sigma}^2} & 0 & 0 \\
+0 & \frac{nk}{2(\hat{\sigma}^2)^2} & \frac{nk}{2(\hat{\sigma}^2)^4} \\
+0 & \frac{nk}{2(\hat{\sigma}^2)^2} & \frac{n^2 k}{2(\sigma^2 + \tau^2 n)^2}
+\end{bmatrix}
+\end{aligned}
+$$
+</details>
+
+
+#### Deriving $\tilde{\mathcal{I}}^{-1}(\tilde{\theta}_0)$
+We'll partition $\tilde{\mathcal{I}}(\tilde{\theta}_0)$ into the nuisance parameter ($\lambda = (\alpha, \sigma^2)$) and the parameter of interest, $\tau^2$. 
+
+$$
+\tilde{\mathcal{I}}(\tilde{\theta}_0) =
+\begin{bmatrix}
+  \tilde{\mathcal{I}}_{\lambda, \lambda}(\tilde{\theta}_0) & \tilde{\mathcal{I}}_{\lambda, \tau^2}(\tilde{\theta}_0) \\
+  \tilde{\mathcal{I}}_{\tau^2, \lambda}(\tilde{\theta}_0) & \tilde{\mathcal{I}}_{\tau^2, \tau^2}(\tilde{\theta}_0)
+\end{bmatrix}
+$$
+
+where we let:
+
+$$
+\begin{aligned}
+\tilde{\mathcal{I}}_{\lambda, \lambda}(\tilde{\theta}_0) &= 
+\begin{bmatrix}
+  \tilde{\mathcal{I}}_{\alpha, \alpha}(\tilde{\theta}_0) & \tilde{\mathcal{I}}_{\alpha, \sigma^2}(\tilde{\theta}_0) \\
+  \tilde{\mathcal{I}}_{\sigma^2, \alpha}(\tilde{\theta}_0) & \tilde{\mathcal{I}}_{\sigma^2, \sigma^2}(\tilde{\theta}_0)
+\end{bmatrix} =
+\begin{bmatrix}
+\frac{nk}{\hat{\sigma}^2} & 0 \\
+0 & \frac{nk}{2(\hat{\sigma}^2)^2}
+\end{bmatrix} \\
+\tilde{\mathcal{I}}_{\tau^2, \lambda}(\tilde{\theta}_0) &= 
+\begin{bmatrix}
+  \tilde{\mathcal{I}}_{\alpha, \tau^2}(\tilde{\theta}_0) & \tilde{\mathcal{I}}_{\sigma^2, \tau^2}(\tilde{\theta}_0)
+\end{bmatrix} =
+\begin{bmatrix}
+  0 & \frac{nk}{2(\hat{\sigma}^2)^2}
+\end{bmatrix} \\
+\tilde{\mathcal{I}}_{\tau^2, \tau^2}(\tilde{\theta}_0) &= 
+\begin{bmatrix}
+\frac{n^2 k}{2(\hat{\sigma}^2)^2}
+\end{bmatrix} 
+\end{aligned}
+$$
+
+We only really need the block of the inverse Fisher information that corresponds to $(\tau^2, \tau^2)$. Using the <a href="https://chrisyeh96.github.io/2021/05/19/schur-complement.html#schur-complements">matrix inverse/Schur complement theorem</a>, we can find this pretty easily:
+
+$$
+\begin{aligned}
+\tilde{\mathcal{I}}^{-1}_{\tau^2, \tau^2} (\tilde{\theta}_0)
+&= \left[\tilde{\mathcal{I}}_{\tau^2, \tau^2}(\tilde{\theta}_0) - \tilde{\mathcal{I}}_{\tau^2, \lambda}(\tilde{\theta}_0) \tilde{\mathcal{I}}^{-1}_{\lambda, \lambda}(\tilde{\theta}_0) \tilde{\mathcal{I}}_{\lambda, \tau^2}(\tilde{\theta}_0)\right]^{-1} \\
+&= \left[\frac{n^2 k}{2(\hat{\sigma}^2)^2} - 
+\begin{bmatrix}
+0 & \frac{n^2 k^2}{4(\hat{\sigma}^2)^2}
+\end{bmatrix}
+\begin{bmatrix}
+0 \\
+\frac{nk}{2(\hat{\sigma}^2)^2}
+\end{bmatrix}\right]^{-1} \\
+&= \left[\frac{n^2 k}{2(\hat{\sigma}^2)^2} - \frac{n^3 k^3}{8 (\hat{\sigma}^2)^6}\right]^{-1}
+\end{aligned}
+$$
+
+
+
+
 #### Test Statistic
-Define $\mathbf{S}_n(\theta) = \mathbf{0}$ as any $k \times 1$ vector estimating equation for $\theta$ (e.g. the score function or something else!) such that there exist non-singular $\mathbf{G}(\theta)$ and $\mathbf{V}(\theta)$ satisfying for any $a > 0$:
+Following Eq. \eqref{eq:test-stat-1}, we get our one-sided test statistic:
 
 $$
-\frac{1}{\sqrt{n}}\mathbf{S}_n(\theta) \rightsquigarrow \mathcal{N}(\mathbf{0}, \mathbf{V}(\theta)) \hspace{10mm} \text{and} \hspace{10mm} \underset{\rvert \rvert \mathbf{h} \rvert \rvert \leq a}{\sup} \left\{ \frac{1}{\sqrt{n}} \left( \mathbf{S}_n\left(\theta + \frac{1}{\sqrt{n}} \mathbf{h}\right) - \mathbf{S}_n(\theta) \right)  + \mathbf{G}(\theta) \mathbf{h} \right\} = o_p(1)
-\label{eq:condition-a}
+T = \mathbf{S}^\top(\tilde{\theta}_0) \tilde{\mathcal{I}}_{\tau^2, \tau^2}^{-1}(\tilde{\theta}_0) \mathbf{S}(\tilde{\theta}_0) - \underset{\mathbf{b} \in \mathcal{C}}{\inf} \left\{ \left(\mathbf{S}(\tilde{\theta}_0) - \mathbf{b}\right)^\top \tilde{\mathcal{I}}_{\tau^2, \tau^2}^{-1}(\tilde{\theta}_0) \left( \mathbf{S}(\tilde{\theta}_0)- \mathbf{b}\right) \right\}
 $$
 
-(Recall $o_p$ is stochastic order notation for convergence in probability to $0$). Partition $\mathbf{S}_n$ into $$(S_{n, \lambda} : S_{n, \psi})$$ and $$\mathbf{G}$$ into $$\mathbf{G}_{\lambda, \lambda}$$, $$\mathbf{G}_{\lambda, \psi}$$, $$\mathbf{G}_{\psi, \lambda}$$, and $$\mathbf{G}_{\psi, \psi}$$. Let $$\theta_0 = (\lambda : \mathbf{0})$$ denote the value of $\theta$ under the null hypothesis.
+Since we are comparing a model with one random effect to one with zero, the large sample $p$-value is a fifty-fifty mixture of a $\chi^2_0$ and a $\chi^2_1$ distribution.[^fn-shapiro]
 
-Suppose the null hypothesis is true. Define $$\mathbf{Z}_n(\theta_0) = n^{-1/2} \left( \mathbf{S}_{n, \psi}(\theta_0) - \mathbf{G}_{\psi, \lambda}(\theta_0) \mathbf{G}_{\lambda, \lambda}^{-1}(\theta_0) \mathbf{S}_{n, \lambda}(\theta_0) \right)$$. Since the above condition (Eq. \eqref{eq:condition-a}) is assumed to be satisfied, we know that $$n^{-1/2} \mathbf{S}_n(\theta_0) \rightsquigarrow \mathcal{N}(\mathbf{0}, \mathbf{V}(\theta_0))$$. Since $\mathbf{Z}_n$ is just a function of $\mathbf{S}_n$, this implies that $$\mathbf{Z}_n(\theta_0) \rightsquigarrow \mathcal{N}(\mathbf{0}, \mathbf{C}(\theta_0))$$, where $$\mathbf{C} = \mathbf{V}_{\psi, \psi} - \mathbf{G}_{\psi, \lambda} \mathbf{G}^{-1}_{\lambda, \lambda} \mathbf{V}_{\lambda, \psi} - \left( \mathbf{V}_{\psi, \lambda} - \mathbf{G}_{\psi, \lambda} \mathbf{G}_{\lambda, \lambda}^{-1} \mathbf{V}_{\lambda, \lambda} \right)\left(\mathbf{G}^{-1}_{\lambda, \lambda}\right)^\top \mathbf{G}^\top_{\psi, \lambda}$$ (in which we have partitioned $\mathbf{V}(\theta)$ in the same way as we did with $\mathbf{G}(\theta)$).
+---
 
-Denote consistent estimators for $\mathbf{G}(\theta_0)$ and $\mathbf{V}(\theta_0)$ with $\tilde{\mathbf{G}}$ and $\tilde{\mathbf{V}}$, respectively. Furthermore, let $\tilde{\lambda}$ denote a "suitable" estimator for $\lambda$ (where suitable is not really specific, but examples are given in the text). Let $\tilde{\theta}_0 = (\tilde{\lambda} : \mathbf{0})$.
+### A Score-Type Test
+How do we use this test statistic in practice? This is pretty much just a question of what function, $\mathbf{U}_0$, of our data we want to pick. Silvapulle and Silvapulle explain how to construct a score-type test statistic using their general statistic.  
 
-Define the following:
+Let's define $\mathbf{S}_n(\theta)$ as any $k \times 1$ vector estimating equation (so it should have expectation zero) for $\theta$ (e.g. the score function or something else). We need this vector to satisfy a couple of conditions.
+
+<div class="definition">
+  <body>
+  <strong>Conditions.</strong>
+  <br>
+  Suppose $\mathbf{S}_n(\theta)$ is such that there exist non-singular $\mathbf{G}(\theta)$ and $\mathbf{V}(\theta)$ satisfying for any $a > 0$:
+  $$
+  \frac{1}{\sqrt{n}}\mathbf{S}_n(\theta) \rightsquigarrow \mathcal{N}(\mathbf{0}, \mathbf{V}(\theta))
+  \label{eq:condition-a1}
+  $$
+  and
+  $$
+  \underset{\rvert \rvert \mathbf{h} \rvert \rvert \leq a}{\sup} \left\{ \frac{1}{\sqrt{n}} \left( \mathbf{S}_n\left(\theta + \frac{1}{\sqrt{n}} \mathbf{h}\right) - \mathbf{S}_n(\theta) \right)  + \mathbf{G}(\theta) \mathbf{h} \right\} = o_p(1)
+  \label{eq:condition-a2}
+  $$
+  where $o_p(1)$ is stochastic order notation for convergence in probability to $0$.
+  </body>
+</div>
+
+The first condition basically states that $\mathbf{S}_n(\theta)$ is asymptotically Gaussian when suitably scaled. Let's take a closer look at the second condition (this will be kind of hand-wavy).
+
+Suppose we fix $\mathbf{h}$. The directional derivative of $\mathbf{S}_n(\theta)$ at $\theta$ along $\mathbf{h}$ is given by the limit:
 
 $$
-\mathbf{G}^{\psi, \psi} = \left( \mathbf{G}_{\psi, \psi} - \mathbf{G}_{\psi, \lambda} \mathbf{G}^{-1}_{\lambda, \lambda} \mathbf{G}_{\lambda, \psi} \right)^{-1} \hspace{15mm} \mathbf{A}(\theta) = \left( \mathbf{G}^\top(\theta) \mathbf{V}^{-1}(\theta)\mathbf{G}(\theta) \right)^{-1} \hspace{15mm} \mathbf{U} = \tilde{\mathbf{G}}^{\psi, \psi} \tilde{\mathbf{Z}}_n
+\nabla_{\mathbf{h}} \mathbf{S}_n(\theta) = \underset{s \rightarrow 0}{\lim} \left[ \frac{\mathbf{S}_n(\theta + s \mathbf{h}) - \mathbf{S}_n(\theta)}{s \rvert \rvert \mathbf{h} \rvert \rvert} \right]
 $$
 
-where $\tilde{\mathbf{G}}^{\psi, \psi}$ is a consistent estimator for $\mathbf{G}^{\psi, \psi}$, and $\tilde{\mathbf{Z}}_n$ is $\mathbf{Z}_n$ found using $\tilde{\theta}_0$, $\tilde{\mathbf{G}}$, and $\tilde{\mathbf{V}}$.
+Technically, this is the definition for a scalar function, but we can just use the above notation to mean the limits are taken element-wise to get the result for a vector-valued function.
 
-Let's partition $\mathbf{A}(\theta)$ in the same way that we did with $\mathbf{V}(\theta)$ and $\mathbf{G}(\theta)$. With some work, we can see that for a fixed $\delta \in \mathcal{C}$, $\mathbf{U} \rightsquigarrow \mathcal{N}(\delta, \mathbf{A}_{\psi, \psi}(\theta_0))$ under the sequence of alternatives $H_n: \psi = n^{-1/2} \delta$ as we take $n \rightarrow \infty$. 
-
-The test statistic for one-sided alternatives is then:
+If we let $s = \frac{1}{\sqrt{n}}$, then we can rewrite the above as the limit as $n \rightarrow \infty$:
 
 $$
-T_s = \mathbf{U}^\top \tilde{\mathbf{A}}_{\psi, \psi}^{-1} \mathbf{U} - \underset{\mathbf{b} \in \mathcal{C}}{\inf} \left\{ (\mathbf{U} - \mathbf{b})^\top \tilde{\mathbf{A}}_{\psi, \psi}^{-1} (\mathbf{U} - \mathbf{b}) \right\}
-\label{eq:test-stat-2}
+\nabla_{\mathbf{h}} \mathbf{S}_n(\theta) = \underset{n \rightarrow \infty}{\lim} \left[  \frac{\sqrt{n}}{\rvert \rvert \mathbf{h} \rvert \rvert} \left( \mathbf{S}_n \left(\theta + \frac{1}{\sqrt{n}} \mathbf{h} \right) - \mathbf{S}_n(\theta) \right) \right]
 $$
+
+Scaling by $- \frac{1}{n}$, we get:
+
+$$
+\nabla_{\mathbf{h}} \left[ -\frac{1}{n} \mathbf{S}_n(\theta)\right] = -\frac{1}{\rvert \rvert \mathbf{h} \rvert \rvert} \underset{n \rightarrow \infty}{\lim} \left[  \frac{1}{\sqrt{n} } \left( \mathbf{S}_n \left(\theta + \frac{1}{\sqrt{n}} \mathbf{h} \right) - \mathbf{S}_n(\theta) \right) \right]
+$$
+
+Recall that for differentiable functions, the directional derivative is equal to the dot product between the gradient and the normalized direction vector. That is:
+
+$$
+\begin{aligned}
+&\nabla_{\mathbf{h}} \left[ -\frac{1}{n} \mathbf{S}_n(\theta)\right] = \frac{\partial}{\partial \theta} \left[ - \frac{1}{n} \mathbf{S}_n(\theta) \right] \cdot \frac{\mathbf{h}}{\rvert \rvert \mathbf{h}\rvert \rvert} \\
+\implies &-\underset{n \rightarrow \infty}{\lim} \left[  \frac{1}{\sqrt{n} } \left( \mathbf{S}_n \left(\theta + \frac{1}{\sqrt{n}} \mathbf{h} \right) - \mathbf{S}_n(\theta) \right) \right] = \frac{\partial}{\partial \theta} \left[ - \frac{1}{n} \mathbf{S}_n(\theta) \right] \cdot \mathbf{h}
+\end{aligned}
+$$
+
+Let's subtract $\mathbf{G}(\theta) \mathbf{h}$ from both sides.
+
+$$
+\begin{aligned}
+&- \mathbf{G}(\theta) \mathbf{h} - \underset{n \rightarrow \infty}{\lim} \left[  \frac{1}{\sqrt{n} } \left( \mathbf{S}_n \left(\theta + \frac{1}{\sqrt{n}} \mathbf{h} \right) - \mathbf{S}_n(\theta) \right) \right] = \left( \frac{\partial}{\partial \theta} \left[ - \frac{1}{n} \mathbf{S}_n(\theta) \right] - \mathbf{G}(\theta) \right) \mathbf{h} \\
+\implies & - \left(\underset{n \rightarrow \infty}{\lim} \left[  \frac{1}{\sqrt{n} } \left( \mathbf{S}_n \left(\theta + \frac{1}{\sqrt{n}} \mathbf{h} \right) - \mathbf{S}_n(\theta) \right) \right] + \mathbf{G}(\theta) \mathbf{h}  \right)  = \left( \frac{\partial}{\partial \theta} \left[ - \frac{1}{n} \mathbf{S}_n(\theta) \right] - \mathbf{G}(\theta) \right) \mathbf{h}
+\end{aligned}
+$$
+
+Notice that both $\mathbf{G}(\theta)$ and $\mathbf{h}$ are independent of $n$, so we can take them inside the limit:
+
+$$
+- \left(\underset{n \rightarrow \infty}{\lim} \left[  \frac{1}{\sqrt{n} } \left( \mathbf{S}_n \left(\theta + \frac{1}{\sqrt{n}} \mathbf{h} \right) - \mathbf{S}_n(\theta) \right) + \mathbf{G}(\theta) \mathbf{h}  \right] \right)  = \left( \frac{\partial}{\partial \theta} \left[ - \frac{1}{n} \mathbf{S}_n(\theta) \right] - \mathbf{G}(\theta) \right) \mathbf{h}
+$$
+
+Condition \eqref{eq:condition-a2} basically implies that the lefthand side will approach $0$, which itself implies that $\mathbf{G}(\theta) = \frac{\partial}{\partial \theta} \left[ - \frac{1}{n} \mathbf{S}_n(\theta) \right]$ in the limit. 
+
+Let's partition our vectors and matrices in the following ways:
+
+$$
+\mathbf{S}_n(\theta) =
+\begin{bmatrix}
+\mathbf{S}^\top_{n, \lambda}(\theta) & 
+\mathbf{S}^\top_{n, \psi}(\theta)
+\end{bmatrix}^\top
+\hspace{2mm} \text{ and } \hspace{2mm}
+\mathbf{G}(\theta) =
+\begin{bmatrix}
+\mathbf{G}_{\lambda, \lambda}(\theta) & 
+\mathbf{G}_{\lambda, \psi}(\theta) \\ 
+\mathbf{G}_{\psi, \lambda}(\theta) &
+\mathbf{G}_{\psi, \psi}(\theta)
+\end{bmatrix}
+\hspace{2mm} \text{ and } \hspace{2mm}
+\mathbf{V}(\theta) =
+\begin{bmatrix}
+\mathbf{V}_{\lambda, \lambda}(\theta) & 
+\mathbf{V}_{\lambda, \psi}(\theta) \\ 
+\mathbf{V}_{\psi, \lambda}(\theta) &
+\mathbf{V}_{\psi, \psi}(\theta)
+\end{bmatrix}
+$$
+
+Let $$\theta_0 = (\lambda : \mathbf{0})$$ denote the value of $\theta$ under the null hypothesis, and suppose the null is true. Define the quantities:
+
+$$
+\begin{aligned}
+\mathbf{Z}_n(\theta_0) &= n^{-1/2} \left( \mathbf{S}_{n, \psi}(\theta_0) - \mathbf{G}_{\psi, \lambda}(\theta_0) \mathbf{G}_{\lambda, \lambda}^{-1}(\theta_0) \mathbf{S}_{n, \lambda}(\theta_0) \right) \\
+\mathbf{C}(\theta_0) &= \mathbf{V}_{\psi, \psi}(\theta_0) - \mathbf{G}_{\psi, \lambda}(\theta_0) \mathbf{G}^{-1}_{\lambda, \lambda}(\theta_0) \mathbf{V}_{\lambda, \psi}(\theta_0) - \left( \mathbf{V}_{\psi, \lambda}(\theta_0) - \mathbf{G}_{\psi, \lambda}(\theta_0) \mathbf{G}_{\lambda, \lambda}^{-1}(\theta_0) \mathbf{V}_{\lambda, \lambda}(\theta_0) \right)\left(\mathbf{G}^{-1}_{\lambda, \lambda}(\theta_0)\right)^\top \mathbf{G}^\top_{\psi, \lambda}(\theta_0)
+\end{aligned}
+$$
+
+Since the above condition (Eq. \eqref{eq:condition-a1}) is assumed to be satisfied, and $\mathbf{Z}_n$ is just a function of $\mathbf{S}_n$:
+
+$$
+n^{-1/2} \mathbf{S}_n(\theta_0) \rightsquigarrow \mathcal{N}(\mathbf{0}, \mathbf{V}(\theta_0)) 
+\hspace{2mm} \implies \hspace{2mm}
+\mathbf{Z}_n(\theta_0) \rightsquigarrow \mathcal{N}(\mathbf{0}, \mathbf{C}(\theta_0))
+$$
+
+Denote consistent estimators for $\mathbf{G}(\theta_0)$ and $\mathbf{V}(\theta_0)$ with $\tilde{\mathbf{G}}(\theta_0)$ and $\tilde{\mathbf{V}}(\theta_0)$, respectively. Furthermore, let $\tilde{\lambda}$ denote a "suitable" estimator for $\lambda$ (where suitable is not really specific, but examples are given in the text), and let $\tilde{\theta}_0 = (\tilde{\lambda} : \mathbf{0})$. Define:
+
+$$
+\begin{aligned}
+\mathbf{G}^{\psi, \psi}(\theta) &= \left( \mathbf{G}_{\psi, \psi}(\theta) - \mathbf{G}_{\psi, \lambda}(\theta) \mathbf{G}^{-1}_{\lambda, \lambda}(\theta) \mathbf{G}_{\lambda, \psi}(\theta) \right)^{-1} \\
+\mathbf{A}(\theta) &= \left( \mathbf{G}^\top(\theta) \mathbf{V}^{-1}(\theta)\mathbf{G}(\theta) \right)^{-1} \\
+\tilde{\mathbf{Z}}_n(\tilde{\theta}_0) &= n^{-1/2} \left( \mathbf{S}_{n, \psi}(\tilde{\theta}_0) - \tilde{\mathbf{G}}_{\psi, \lambda}(\tilde{\theta}_0) \tilde{\mathbf{G}}_{\lambda, \lambda}^{-1}(\tilde{\theta}_0) \mathbf{S}_{n, \lambda}(\tilde{\theta}_0) \right) 
+\end{aligned}
+$$
+
+Using these, define:
+
+$$
+\mathbf{U}(\tilde{\theta}_0) = \tilde{\mathbf{G}}^{\psi, \psi}(\theta_0) \tilde{\mathbf{Z}}_n(\tilde{\theta}_0)
+$$
+
+where $\tilde{\mathbf{G}}^{\psi, \psi}$ is a consistent estimator for $\mathbf{G}^{\psi, \psi}(\theta_0)$.
+
+Let's partition $\mathbf{A}(\theta)$ in the same way that we did with $\mathbf{V}(\theta)$ and $\mathbf{G}(\theta)$. With some work, we can see that for a fixed $$\delta \in \mathcal{C}$$, $$\mathbf{U}(\tilde{\theta}_0) \rightsquigarrow \mathcal{N}(\delta, \mathbf{A}_{\psi, \psi}(\theta_0))$$ under the sequence of alternatives $H_n: \psi = n^{-1/2} \delta$ as we take $n \rightarrow \infty$. Thus, $\mathbf{U}$ is a function of the data satisfying the condition in Eq. \eqref{eq:U-condition} and can be used in our test statistic construction.
+
+<div id="test-statistic"></div>
+<div class="definition">
+  <body>
+  <strong>Definition (One-Sided Test Statistic).</strong>
+  <br>
+  The test statistic for $H_0: \psi = \mathbf{0}$ against $H_A: \psi \in \mathcal{C}$ is given by:
+  $$
+  T_s = \mathbf{U}^\top(\tilde{\theta}_0) \tilde{\mathbf{A}}_{\psi, \psi}^{-1}(\tilde{\theta}_0) \mathbf{U}(\tilde{\theta}_0) - \underset{\mathbf{b} \in \mathcal{C}}{\inf} \left\{ (\mathbf{U}(\tilde{\theta}_0) - \mathbf{b})^\top \tilde{\mathbf{A}}_{\psi, \psi}^{-1}(\tilde{\theta}_0) (\mathbf{U}(\tilde{\theta}_0) - \mathbf{b}) \right\}
+  \label{eq:test-stat-2}
+  $$
+  where $\tilde{\mathbf{A}}_{\psi, \psi}^{-1}(\tilde{\theta}_0)$ is the partition of $\mathbf{A}_{\psi, \psi}^{-1}(\tilde{\theta}_0)$ corresponding to $(\psi, \psi)$ and constructed using $\tilde{\mathbf{G}}(\tilde{\theta}_0)$ and $\tilde{\mathbf{V}}(\tilde{\theta}_0)$ (I think...the authors never define $\tilde{\mathbf{A}}$).
+  </body>
+</div>
+
+A large sample $p$-value can be obtained as:
+
+$$
+p \approx \underset{\lambda}{\sup} \left\{ \xi(t^*, \mathbf{A}_{\psi, \psi}(\theta_0), \mathcal{C}) \right\}
+$$
+
+where $\xi(\cdot, \cdot, \cdot)$ is defined as in Eq. \eqref{eq:xi-defn} and $t^*$ is the observed value of $T_s$.
+
+---
+
+## Results
 
 <div class="theorem">
   <body>
@@ -454,6 +1529,8 @@ $$
 </div>
 
 
+
+
 ---
 ## References
 [^fn-aleph]: AlephZero. “Does This Special Case of Convex Quadratic Programming Have a Partially-Unique Solution?” Mathematics Stack Exchange, February 12, 2019. https://math.stackexchange.com/questions/3108304/does-this-special-case-of-convex-quadratic-programming-have-a-partially-unique-s. 
@@ -461,3 +1538,5 @@ $$
 [^fn-shapiro]: Shapiro, A. (1988). Towards a Unified Theory of Inequality Constrained Testing in Multivariate Analysis. International Statistical Review / Revue Internationale de Statistique, 56(1), 49. https://doi.org/10.2307/1403361
 
 [^fn-silvapulle]: Silvapulle, M. J., & Silvapulle, P. (1995). A Score Test Against One-Sided Alternatives.
+
+[^fn-cox-hinkley] Cox, D. R., & Hinkley, D. V. (2017). Theoretical statistics. CRC Press, Taylor & Francis Group.

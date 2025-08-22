@@ -183,7 +183,7 @@ The main results of this paper are based on the <i>predictable plug-in</i>, whic
   \end{aligned}
   \nonumber
   $$
- Sicne $\mathbb{E}_P[M_t^\psi(\mu) \rvert \mathcal{F}_{t-1}] \leq M_{t-1}^\psi(\mu)$ for all $t \geq 1$, and $\mathbb{E}_P[M_1^\psi(\mu) \rvert \mathcal{F}_0] \leq 1$, $(M_t^\psi(\mu))_{t = 1}^\infty$ is a test supermartingale. 
+ Since $\mathbb{E}_P[M_t^\psi(\mu) \rvert \mathcal{F}_{t-1}] \leq M_{t-1}^\psi(\mu)$ for all $t \geq 1$, and $\mathbb{E}_P[M_1^\psi(\mu) \rvert \mathcal{F}_0] \leq 1$, $(M_t^\psi(\mu))_{t = 1}^\infty$ is a test supermartingale. 
   </details>
 </div>
 

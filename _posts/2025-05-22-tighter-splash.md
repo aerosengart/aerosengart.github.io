@@ -246,7 +246,7 @@ For any $s = \frac{t}{M} \geq 0$, the Hoeffding probability bound (see Eq. \ref{
 $$
 \mathbb{P}\left( \rvert \bar{Y} - \mathbb{E}[Y] \rvert \geq s \right) \leq 2 \exp\left( - \frac{2 s^2}{1 - \gamma} \right)
 $$
-
+;
 Setting the righthandside of the above equal to $\delta$ and solving for $s$ gives:
 
 $$
