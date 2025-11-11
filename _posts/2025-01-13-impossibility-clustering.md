@@ -12,13 +12,13 @@ include_scripts: [
 ]
 ---
 
-Though the journey to this point is a bit confusing, I have recently become interesting in clustering metrics and evaluation. In this post, I'll work through a couple papers on describing how good a clustering function is based upon a set of axioms. These include Jon Kleinberg's "An Impossibility Theorem for Clustering"[^fn-kleinberg] and Margareta Ackerman and Shai Ben-David's "Measures of Clustering Quality: A Working Set of Axioms for Clustering"[^fn-ackerman].
+Though the journey to this point is a bit confusing, I have recently become interesting in clustering metrics and evaluation. In this post, I'll work through a couple papers on describing how good a clustering function is based upon a set of axioms. These include Jon Kleinberg's[^fn-kleinberg] "An Impossibility Theorem for Clustering" and Margareta Ackerman and Shai Ben-David's[^fn-ackerman] "Measures of Clustering Quality: A Working Set of Axioms for Clustering".
 
 ---
 
 ## Background
 
-First, let's more rigorously define what we mean by _clustering_ and our problem setting as defined by Kleinberg.
+First, let's more rigorously define what we mean by <i>clustering</i> and our problem setting as defined by Kleinberg.
 
 <div id="clustering"></div>
 <div class="definition">

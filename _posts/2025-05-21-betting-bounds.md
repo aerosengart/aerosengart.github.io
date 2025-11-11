@@ -289,7 +289,7 @@ $$
 \lambda_t^{\text{PrPl-EB}(n)} = \min \left\{ \sqrt{\frac{2 \log(2/\alpha)}{n \hat{\sigma}_{t-1}^2}}  \right\}
 $$
 
-with $\hat{\sigma}_i^2$ and $c$ as in Eq. \ref{eq:empirical-bernstein-choices}.
+with $\hat{\sigma}_i^2$ and $c$ as in Eq. \eqref{eq:empirical-bernstein-choices}.
 
 Something very interesting is that the width of the above confidence interval goes to $\sigma \sqrt{2 \log(2/\alpha)}$ for i.i.d. data (where $\sigma$ is the true standard deviation). In contrast, the original empriical Bernstein confidence intervals introduced by Maurer and Pontil (2009) only go to $\sigma \sqrt{2 \log(4 / \alpha)}$. 
 
@@ -418,7 +418,7 @@ $$
 \tilde{\lambda}_t^+ = \tilde{\lambda}_t^- = \tilde{\lambda}_t^\pm = \sqrt{\frac{2 \log(2/\alpha)}{n \hat{\sigma}_{t - 1}^2}}
 $$
 
-for the same $\hat{\sigma}^2$ as defined in Eq. \ref{eq:hedged-capital-choices}.
+for the same $\hat{\sigma}^2$ as defined in Eq. \eqref{eq:hedged-capital-choices}.
 
 A key finding of Waudby-Smith and Ramdas is that, for large sample sizes, the hedged capital confidence intervals are <i>almost surely better</i> than the confidence intervals one can create from Hoeffding's inequality. Even more, the hedged capital confidence intervals converge at a rate of $O(1/\sqrt{n})$, which is optimal. 
 
@@ -430,7 +430,7 @@ A key finding of Waudby-Smith and Ramdas is that, for large sample sizes, the he
 
 [^fn-waudby-smith-a]: Waudby-Smith, I., & Ramdas, A. (2022). Estimating means of bounded random variables by betting. arXiv [Math.ST]. Retrieved from http://arxiv.org/abs/2010.09686
 
-[^fn-waudby-smith-b]:Waudby-Smith, I., & Ramdas, A. (2023). Estimating means of bounded random variables by betting. Journal of the Royal Statistical Society Series B: Statistical Methodology, 86(1), 1–27. doi:10.1093/jrsssb/qkad009
+[^fn-waudby-smith-b]: Waudby-Smith, I., & Ramdas, A. (2023). Estimating means of bounded random variables by betting. Journal of the Royal Statistical Society Series B: Statistical Methodology, 86(1), 1–27. doi:10.1093/jrsssb/qkad009
 
 [^fn-shafer]: Shafer, G., & Vovk, V. (2019). Game-theoretic foundations for probability and finance (First edition). John Wiley & Sons, Inc.
 

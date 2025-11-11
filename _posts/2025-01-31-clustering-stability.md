@@ -12,9 +12,11 @@ include_scripts: [
 ]
 ---
 
-My last post related to clustering discussed how to describe a "good" clustering algorithm. One way to measure this is by _stability_, which I'll define more rigorously later. 
+My last post related to clustering discussed how to describe a "good" clustering algorithm. One way to measure this is by <i>stability</i>, which I'll define more rigorously later. 
 
 The main paper I'll be summarizing, "A Sober Look at Clustering Stability", by Shai Ben-David, Ulrike von Luxberg, and Dávid Pál takes a decision theoretic perspective. This allows the authors to derive some results about the behavior of (un)stable algorithms; however it limits their discussion to clustering algorithms that optimize some objective function. I'll restrict myself to these as well. 
+
+---
 
 ## Stability (Conceptually)
 Similar to the general idea of a robust estimation procedure, a _stable_ clustering algorithm should produce similar results for small perturbations of the data. As Ben-David, von Luxburg, and Pál point out, stability is often used for tuning $k$, the number of clusters the algorithm should yield. Intuitively, choosing $k$ too large will result in arbitrary splitting of true clusters. On the other hand, a $k$ that is too small will do the opposite and arbitrarily merge true clusters.
@@ -147,7 +149,6 @@ The above distribution gives us a way to characterize risk functions and cluster
 ----
 
 ## Results
-
 Ben-David et al. present their first theorem as follows:
 
 <div class="theorem">
@@ -258,6 +259,6 @@ With these points in mind, the authors prove a related theorem.
 ---
 
 ## References
-[^fn-ben-david]: Ben-David, S., Von Luxburg, U., & Pál, D. (2006). A Sober Look at Clustering Stability. In G. Lugosi & H. U. Simon (Eds.), Learning Theory (Vol. 4005, pp. 5–19). Springer Berlin Heidelberg. https://doi.org/10.1007/11776420_4
+[^fn-ben-david]: Ben-David, S., Von Luxburg, U., & Pál, D. (2006). A Sober Look at Clustering Stability. In G. Lugosi & H. U. Simon (Eds.), Learning Theory (Vol. 4005, pp. 5–19). Springer Berlin Heidelberg. https://doi.org/10.1007/11776420_4.
 
 

@@ -3,7 +3,7 @@ layout: post
 title:  "Likelihood and Large-Sample Theory"
 date: 02 February 2025
 categories: posts
-tags: ["theory", "likelihood", "score test"]
+tags: ["theory", "likelihood"]
 use_math: true
 include_scripts: [
     "/assets/js/snackbar.js",
@@ -26,7 +26,9 @@ Let $$\mathcal{P}_\Theta$$ be a family of distributions for $X$ parametrized by 
 To make our notation match less measure theoretical texts, we'll use $X$ to denote a random variable with realizations denoted with the lowercase $x$. A parameter will be denoted with $\Theta$ with particular values denoted by $\theta$ and its true value by $\theta^*$. The density of $X$ given parameter $\Theta$ evaluated at a particular $x$ and $\theta$ will be denoted by $f_{X \rvert \Theta}(x; \theta)$ or, more compactly, $f(x; \theta)$.
 
 
-### Score
+---
+
+## Score
 Suppose $\Theta$ is $k$-dimensional, let $f_{X \rvert \Theta}(x; \theta)$ denote the density of $X$ given $\Theta = \theta$. The _score function_ or _statistic_ is given by the gradient of the log density of the data with respect to the parameter. It describes the curvature of the log density at a particular value of the parameter $\Theta$. We use the following notation:
 
 $$
@@ -34,106 +36,22 @@ U_\Theta(x; \theta) = \frac{\partial \log f_{X \rvert \Theta}(x; \Theta)}{\parti
 \label{eq:score}
 $$
 
-### Fisher Information 
-The Fisher information describes the amount of information about $\Theta$ held by $X$. It is the expectation of the squared gradient of the log density of the data:
+---
+
+## Fisher Information 
+The Fisher information describes the amount of information about $\Theta$ held by $X$. It is the expectation of the squared gradient of the log density of the data (i.e. the variance of the score function):
 
 $$
 \mathcal{I}_X(\theta) = \mathbb{E}_\Theta \left[ U_\Theta(x; \theta) U_\theta(x; \theta)^\top \right]
 \label{eq:information}
 $$
 
-#### Conditions
-Schervish outlines several regularity conditions, which he terms the _Fisher Information (FI) conditions_, that are needed for some nice results about the properties of the score and Fisher information:
+Schervish outlines several regularity conditions, which he terms the <i>Fisher Information (FI) conditions</i>, that are needed for the definition of the Fisher information and some nice results about the properties of the score.
 
-1) There exists a subset of the sample space, $B$, with measure $0$ (i.e. $\mu(B) = 0$) such that $\frac{\partial f_{X \rvert \Theta}(x; \theta)}{\partial \theta_i}$ exists for any $x \notin B$ and all values (and coordinates) of $\theta$.
-
-2) The order of integration and differentiation can be exchanged for all coordinates of $\theta$. That is:
-
-$$
-\frac{\partial}{\partial \theta_i} \int f_{X \rvert \Theta}(x; \theta) d\mu(x) = \int \frac{\partial f_X(x; \theta)}{\partial \theta_i} d \mu(x)
-\nonumber
-$$
-
-3) The set $$C = \{ x: f_X(x \rvert \theta) > 0 \}$$ is the same $\forall \theta$
-
-
-When these conditions hold, the Fisher Information is the variance of the score, and the score has expectation $0$. 
-
-<!-- PROOFS? -->
-
-Furthermore, if we also have that the log-likelihood is twice differentiable with respect to $\theta$, then the Fisher information is equal to:
-
-$$
-\mathcal{I}_X(\theta) = - \mathbb{E}_\Theta \left[ \frac{\partial^2 \log f_{X \rvert \Theta}(x; \Theta)}{\partial \Theta \partial \Theta^\top} \bigg\rvert \theta \right]
-$$
-
-<details>
-<summary>Proof.</summary>
-$$
-\begin{aligned}
-\frac{\partial^2}{\partial \Theta \partial \Theta^\top} \left[ \log f_{X \rvert \Theta}(x; \Theta)\right] 
-&= \frac{\partial}{\partial \Theta} \left[ \frac{1}{f_{X \rvert \Theta}(x; \Theta)} \frac{\partial}{\partial \Theta^\top} \left[ f_{X \rvert \Theta}(x; \Theta) \right] \right] \\
-&= \frac{\partial}{\partial \Theta} \left[ \frac{1}{f_{X\rvert \Theta}(x; \Theta)} \right] \frac{\partial}{\partial \Theta^\top} \left[ f_{X \rvert \Theta}(x; \Theta) \right] + \frac{1}{f_{X\rvert \Theta}(x; \Theta)} \frac{\partial^2}{\partial \Theta \partial \Theta^\top} \left[ f_{X \rvert \Theta}(x; \Theta) \right] \\
-&= - \frac{\frac{\partial}{\partial \Theta} \left[ f_{X \rvert \Theta}(x; \Theta) \right] \frac{\partial}{\partial \Theta^\top} \left[ f_{X \rvert \Theta}(x; \Theta) \right]}{f^2_{X \rvert \Theta}(x; \Theta)} + \frac{\frac{\partial^2}{\partial \Theta \partial \Theta^\top}[ f_{X \rvert \Theta}(x; \Theta)]}{f_{X \rvert \Theta}(x; \Theta)} \\
-&= \frac{\frac{\partial^2}{\partial \Theta \partial \Theta^\top}[ f_{X \rvert \Theta}(x; \Theta)]}{f_{X \rvert \Theta}(x; \Theta)} - \left(\frac{\partial}{\partial \Theta} [ \log f_{X \rvert \Theta}(x; \Theta)]\right)^2 
-\end{aligned}
-\nonumber
-$$
-Taking the expected value:
-$$
-\begin{aligned}
-\mathbb{E}_\Theta \left[ \frac{\partial^2}{\partial \Theta \partial \Theta^\top} \left[ \log f_{X \rvert \Theta}(x; \Theta)\right] \bigg\rvert \theta \right]
-&= \mathbb{E}_\Theta \left[ \frac{\frac{\partial^2}{\partial \theta \partial \theta^\top}[ f_{X \rvert \Theta}(x; \theta)]}{f_{X \rvert \Theta}(x; \theta)} - \left(\frac{\partial}{\partial \theta} [ \log f_{X \rvert \Theta}(x; \theta)]\right)^2  \right] \\
-&= \mathbb{E}_\Theta \left[ \frac{\frac{\partial^2}{\partial \theta \partial \theta^\top}[ f_{X \rvert \Theta}(x; \theta)]}{f_{X \rvert \Theta}(x; \theta)} \right] - \mathbb{E}_\Theta \left[ \frac{\partial}{\partial \theta} [ \log f_{X \rvert \Theta}(x; \theta)] \right] \\
-&= \mathbb{E}_\Theta \left[ \frac{\frac{\partial^2}{\partial \theta \partial \theta^\top}[ f_{X \rvert \Theta}(x; \theta)]}{f_{X \rvert \Theta}(x; \theta)} \right] - \mathcal{I}_X(\theta) \\
-&= \int_\mathbb{R} \left( \frac{\frac{\partial^2}{\partial \theta \partial \theta^\top}[ f_{X \rvert \Theta}(x; \theta)]}{f_{X \rvert \Theta}(x; \theta)} \right) f(x; \theta) dx - \mathcal{I}_X(\theta) \\
-&= \int_\mathbb{R} \left( \frac{\partial^2}{\partial \theta \partial \theta^\top}[ f_{X \rvert \Theta}(x; \theta)]  \right) dx - \mathcal{I}_X(\theta) \\
-&\overset{(i)}{=} \frac{\partial^2}{\partial \theta \partial \theta^\top} \left[ \underbrace{\int_\mathbb{R} f_{X \rvert \Theta}(x; \theta) dx}_{= 1} \right] - \mathcal{I}_X \\
-&= - \mathcal{I}_X 
-\end{aligned}
-\nonumber
-$$
-In $(i)$, we rely on the regularity conditions (specifically number 2 above) so we can interchange the order of differentiation and integration.<span markdown="1">[^fn-fisher]</span>
-</details>
-
-### Score Test
-Suppose we wish to test the simple null hypothesis $H_0: \Theta = \theta_0$ against the composite alternative hypothesis $H_1: \Theta \neq \theta_0$. We can use the score test for this whose test statistic is given by:
-
-$$
-S_\Theta(x; \theta_0) = U_\Theta(x; \theta_0)^\top \mathcal{I}_X(\theta)^{-1} U_\Theta(x; \theta_0)
-\label{eq:score-test}
-$$
-
-Under the null hypothesis, and assuming certain regularity conditions hold, the score test has an asymptotic $\chi^2_k$ distribution where $k$ is the dimension of $\Theta$.
-
-
-### Asymptotic Theory
-Consider the score test setting. Intuitively, if the null hypothesis were true, then $\theta_0$ should maximize the likelihood as it will be equal to (or very close to) the true value of $\Theta$. Let's continue under the regime where the null hypothesis is true and $\theta^* = \theta_0$. Suppose, further, that the FI conditions hold. Let's rewrite the score evaluated at $\theta_0$ with a second-order Taylor expansion about the true value $\theta^*$. 
-
-<!-- STOPPED HERE. DERIVE SCORE TEST DISTRIBUTION
-
-$$
-U_\Theta(x; \theta_0) = 
-\nonumber
-$$
-
-$$
-U_\Theta(x; \theta_0) = \frac{\partial \log f(x; \Theta)}{\partial \Theta} \bigg\rvert_{\Theta = \theta_0} =: 
-\nonumber
-$$ -->
-
-
----
-
-## Fisher Information Conditions
-
-First, let's try to answer the following related questions with some digging and concrete examples:
-
-- When do the FI conditions usually hold?
-- What are the underlying conditions for them to hold?
-- How can we break them?
 
 ### Condition 1
+There exists a subset of the sample space, $B$, with measure $0$ (i.e. $\mu(B) = 0$) such that $\frac{\partial f_{X \rvert \Theta}(x; \theta)}{\partial \theta_i}$ exists for any $x \notin B$ and all values (and coordinates) of $\theta$.
+
 Condition 1 requires that the partial derivatives with respect to all coordinates of $\theta$ (for all values of $\theta$) exists almost surely.
 
 Intuitively (and a bit hand-wavily), this means that the derivatives must exist for all possible values of $\theta$ for pretty much any sample. This implies that log-likelihood functions that have cusps or points will not be differentiable at the particular value of $\theta$ where the feature occurs, implying a violation of this condition. 
@@ -150,8 +68,14 @@ Intuitively (and a bit hand-wavily), this means that the derivatives must exist 
   </body>
 </div>
 
-
 ### Condition 2
+The order of integration and differentiation can be exchanged for all coordinates of $\theta$. That is:
+
+$$
+\frac{\partial}{\partial \theta_i} \int f_{X \rvert \Theta}(x; \theta) d\mu(x) = \int \frac{\partial f_X(x; \theta)}{\partial \theta_i} d \mu(x)
+\nonumber
+$$
+
 Condition 2 states the order of integration of differentiation can be exchanged. Since differentiation is basically just a particular limit, we can use results about the interchanging of the integral and limit to get results about interchaing the integral with differentiation.
 
 <div class="theorem">
@@ -193,17 +117,89 @@ This is the basic idea of the Leibniz integral rule:
 
 In summary, if our log-likelihood/density satisfies the (Lebesgue version of the) Leibniz Rule conditions, then it will satisfy Condition 2. 
 
-
 ### Condition 3
+The set $$C = \{ x: f_X(x \rvert \theta) > 0 \}$$ is the same $\forall \theta$.
+
 Condition 3 states that the support of $f_X(x; \theta)$ should not depend on $\theta$. This is fairly easy to verify because we usually assume we know the family of distributions that our data are drawn from. I won't go into any more details than this.
+
+<br>
+
+When these conditions hold, the score has expectation $0$. 
+
+<details>
+<summary>Proof.</summary>
+  $$
+  \begin{aligned}
+    \mathbb{E}_{\Theta}\left[ U_\Theta(x; \theta) \right]
+    &= \int f_{X \rvert \Theta}(x; \theta) \frac{\partial \log f_{X \rvert \Theta}(x; \theta)}{\partial \Theta} d x \\
+    &= \int \frac{\partial f_{X \rvert \Theta}(x; \theta)}{\partial \Theta} d x \\
+    &= \frac{\partial}{\partial \Theta} \int f_{X \rvert \Theta}(x; \theta) d x \\
+    &= \frac{\partial}{\partial \Theta} [1]\\
+    &= 0 
+  \end{aligned}
+  \nonumber
+  $$
+</details>
+
+Furthermore, if we also have that the log-likelihood is twice differentiable with respect to $\theta$, then the Fisher information is equal to:
+
+$$
+\mathcal{I}_X(\theta) = - \mathbb{E}_\Theta \left[ \frac{\partial^2 \log f_{X \rvert \Theta}(x; \Theta)}{\partial \Theta \partial \Theta^\top} \bigg\rvert \theta \right]
+$$
+
+<details>
+<summary>Proof.</summary>
+$$
+\begin{aligned}
+\frac{\partial^2}{\partial \Theta \partial \Theta^\top} \left[ \log f_{X \rvert \Theta}(x; \Theta)\right] 
+&= \frac{\partial}{\partial \Theta} \left[ \frac{1}{f_{X \rvert \Theta}(x; \Theta)} \frac{\partial}{\partial \Theta^\top} \left[ f_{X \rvert \Theta}(x; \Theta) \right] \right] \\
+&= \frac{\partial}{\partial \Theta} \left[ \frac{1}{f_{X\rvert \Theta}(x; \Theta)} \right] \frac{\partial}{\partial \Theta^\top} \left[ f_{X \rvert \Theta}(x; \Theta) \right] + \frac{1}{f_{X\rvert \Theta}(x; \Theta)} \frac{\partial^2}{\partial \Theta \partial \Theta^\top} \left[ f_{X \rvert \Theta}(x; \Theta) \right] \\
+&= - \frac{\frac{\partial}{\partial \Theta} \left[ f_{X \rvert \Theta}(x; \Theta) \right] \frac{\partial}{\partial \Theta^\top} \left[ f_{X \rvert \Theta}(x; \Theta) \right]}{f^2_{X \rvert \Theta}(x; \Theta)} + \frac{\frac{\partial^2}{\partial \Theta \partial \Theta^\top}[ f_{X \rvert \Theta}(x; \Theta)]}{f_{X \rvert \Theta}(x; \Theta)} \\
+&= \frac{\frac{\partial^2}{\partial \Theta \partial \Theta^\top}[ f_{X \rvert \Theta}(x; \Theta)]}{f_{X \rvert \Theta}(x; \Theta)} - \left(\frac{\partial}{\partial \Theta} [ \log f_{X \rvert \Theta}(x; \Theta)]\right)^2 
+\end{aligned}
+\nonumber
+$$
+Taking the expected value:
+$$
+\begin{aligned}
+\mathbb{E}_\Theta \left[ \frac{\partial^2}{\partial \Theta \partial \Theta^\top} \left[ \log f_{X \rvert \Theta}(x; \Theta)\right] \bigg\rvert \theta \right]
+&= \mathbb{E}_\Theta \left[ \frac{\frac{\partial^2}{\partial \theta \partial \theta^\top}[ f_{X \rvert \Theta}(x; \theta)]}{f_{X \rvert \Theta}(x; \theta)} - \left(\frac{\partial}{\partial \theta} [ \log f_{X \rvert \Theta}(x; \theta)]\right)^2  \right] \\
+&= \mathbb{E}_\Theta \left[ \frac{\frac{\partial^2}{\partial \theta \partial \theta^\top}[ f_{X \rvert \Theta}(x; \theta)]}{f_{X \rvert \Theta}(x; \theta)} \right] - \mathbb{E}_\Theta \left[ \frac{\partial}{\partial \theta} [ \log f_{X \rvert \Theta}(x; \theta)] \right] \\
+&= \mathbb{E}_\Theta \left[ \frac{\frac{\partial^2}{\partial \theta \partial \theta^\top}[ f_{X \rvert \Theta}(x; \theta)]}{f_{X \rvert \Theta}(x; \theta)} \right] - \mathcal{I}_X(\theta) \\
+&= \int_\mathbb{R} \left( \frac{\frac{\partial^2}{\partial \theta \partial \theta^\top}[ f_{X \rvert \Theta}(x; \theta)]}{f_{X \rvert \Theta}(x; \theta)} \right) f(x; \theta) dx - \mathcal{I}_X(\theta) \\
+&= \int_\mathbb{R} \left( \frac{\partial^2}{\partial \theta \partial \theta^\top}[ f_{X \rvert \Theta}(x; \theta)]  \right) dx - \mathcal{I}_X(\theta) \\
+&\overset{(i)}{=} \frac{\partial^2}{\partial \theta \partial \theta^\top} \left[ \underbrace{\int_\mathbb{R} f_{X \rvert \Theta}(x; \theta) dx}_{= 1} \right] - \mathcal{I}_X \\
+&= - \mathcal{I}_X 
+\end{aligned}
+\nonumber
+$$
+In $(i)$, we rely on the regularity conditions (specifically number 2 above) so we can interchange the order of differentiation and integration.<span markdown="1">[^fn-fisher]</span>
+</details>
 
 ---
 
-## Likelihood Conditions
-Often we rely upon likelihood principles to estimate parameter values. A small, but nevertheless important, condition has to do with the existence of a maximum likelihood estimator. 
+## Maximum Likelihood
+If we consider the observations $x$ as fixed, then we can define the <i>likelihood function</i> as a function of $\Theta$:
 
-### Maximum Likelihood
-Recall that a _maximum likelihood estimate (MLE)_ is given by $$\hat{\theta} = \underset{\theta \in \Omega}{\arg \max} \mathcal{L}(\theta; x)$$ where $$\mathcal{L}(\theta; x)$$ is the likelihood function for the particular value of $$\Theta = \theta$$ given sample $x$. The _maximum likelihood estimator_ is a function $$\hat{\theta}_n: \mathcal{X} \rightarrow \Omega$$ mapping from the sample space to the parameter space. 
+$$
+\mathcal{L}(\theta; x) = f_{X \rvert \Theta}(x; \theta)
+\label{eq:lik-func}
+$$
+
+One of the most common settings in which the likelihood function will be useful is in statistical inference. A good starting point is in point estimation. Intuitively, it seems reasonable to judge the quality of a parameter estimate by how probable it is one would observe the sample at hand under the assumption that the estimate is the true parameter value. Or, in another way, we might think that the best estimate we could come up with is the one that is most likely to result in the observations we have. Thus, maximum likelihood estimation is born. 
+
+<div class="definition">
+  <body>
+  <strong>Definition. (Maximum Likelihood Estimator<span markdown="1">[^fn-schervish]</span>)</strong>
+  <br>
+  Let $X$ be a random variable with density $f_{X \rvert \Theta}(x; \theta)$, and let $x$ be some realization of $X$. A <i>maximum likelihood estimator (MLE)</i> is any random quantity:
+  $$
+  \hat{\theta} = \underset{\theta \in \Omega}{\arg\max}\left\{ f_{X \rvert \Theta}(x; \theta) \right\} 
+               = \underset{\theta \in \Omega}{\arg \max}\left\{ \mathcal{L}(\theta; x) \right\}
+  $$
+  The MLE is a function $\hat{\theta}: \mathcal{X} \rightarrow \Omega$ mapping from the sample space to the parameter space. 
+  </body>
+</div>
 
 If the parameter space $\Omega$ is compact and the likelihood function is continuous over $\Omega$, then maximum likelihood estimate will exist for a given sample (i.e. the supremum of the maximum likelihood estimator will be achieved in $\Omega$). If the parameter space is open, then the likelihood may increase and never reach a supremum. 
 
@@ -219,6 +215,42 @@ If the parameter space $\Omega$ is compact and the likelihood function is contin
   This function is decreasing on the interval $(0, \theta)$, and the maximum is never achieved. 
   </body>
 </div>
+
+MLEs exhibit the <i>invariance property</i>, which is, in words, that a function of an MLE is the MLE of that function.
+
+<div class="theorem">
+  <body>
+  <strong>Invariance Property of Maximum Likelihood Estimators.</strong>
+  <br>
+  Let $\hat{\theta}$ be an MLE of $\Theta$, and let $g$ be some function of $\theta$. Then $g(\hat{\theta})$ is an MLE of $g(\Theta)$. 
+  </body>
+  <details>
+    <summary>Proof.</summary>
+    Define the <i>induced likelihood function</i>:
+    $$
+    \mathcal{L}^*(\eta; x) = \underset{\theta: g(\theta) = \eta}{\sup} \left\{ \mathcal{L}(\theta; x) \right\}
+    $$
+    which is a function of $\eta$ equal to the maximum value of the likelihood function over all values of $\theta$ such that $g(\theta) = \eta$. Let:
+    $$
+    \hat{\eta} = \underset{\eta}{\arg\sup}\left\{ \mathcal{L}^*(\eta; x) \right\};
+    \hspace{5mm}
+    \hat{\theta} = \underset{\theta}{\arg\sup}\left\{ \mathcal{L}(\theta; x) \right\}
+    $$
+    We have:
+    $$
+    \begin{aligned}
+      \mathcal{L}^*(\hat{\eta}; x)
+      &= \underset{\eta}{\sup}\left\{ \mathcal{L}^*(\eta; x) \right\} \\
+      &= \underset{\eta}{\sup}\left\{ \underset{\theta: g(\theta) = \eta}{\sup} \left\{ \mathcal{L}(\theta; x) \right\} \right\} \\
+      &= \underset{\theta}{\sup}\left\{ \mathcal{L}(\theta; x) \right\}  \\
+      &= \mathcal{L}(\hat{\theta}; x) \\
+      &= \underset{\theta: g(\theta) = g(\hat{\theta})}{\sup} \left\{ \mathcal{L}(\theta; x) \right\} \\
+      &= \mathcal{L}^*(\hat{\theta}; x)
+    \end{aligned}
+    $$
+  </details>
+</div>
+
 
 ### Finding MLEs
 The easiest way to find an MLE is to use set the log-likelihood equal to zero (since monotonic transformations will not affect the $\arg \max$ or $\arg \min$). 
@@ -296,6 +328,6 @@ which is called the _observed Fisher information_. It's basically the sample ana
 
 [^fn-moran]: Moran, P. A. P. (1971). Maximum-likelihood estimation in non-standard conditions. Mathematical Proceedings of the Cambridge Philosophical Society, 70(3), 441–450. https://doi.org/10.1017/S0305004100050088.
 
-[^fn-schervish]: Schervish, M. J. (1995). Theory of Statistics. Springer New York. https://doi.org/10.1007/978-1-4612-4250-5
+[^fn-schervish]: Schervish, M. J. (1995). Theory of Statistics. Springer New York. https://doi.org/10.1007/978-1-4612-4250-5.
 
-[^fn-fisher]: Wikipedia contributors. (2025, July 17). Fisher information. In Wikipedia, The Free Encyclopedia. Retrieved 13:57, August 22, 2025, from https://en.wikipedia.org/w/index.php?title=Fisher_information&oldid=1300951940
+[^fn-fisher]: Wikipedia contributors. (2025, July 17). Fisher information. In Wikipedia, The Free Encyclopedia. Retrieved 13:57, August 22, 2025, from https://en.wikipedia.org/w/index.php?title=Fisher_information&oldid=1300951940.

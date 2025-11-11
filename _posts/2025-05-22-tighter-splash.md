@@ -139,7 +139,7 @@ $$
 </details>
 
 
-A drawback of this method is that, in practice, it often requires very favorable samples. Simulations[^fn-hult] have shown that only in the case of very small variance and very large sample sizes do empirical Bernstein bounds beat Hoeffding. In my own explorations, I've found that, even in some seemingly favorable cases, the bound in Eq. \ref{eq:emp-bern-bound} decays faster than Hoeffding for a bit but eventually loses out as $t$ grows large. 
+A drawback of this method is that, in practice, it often requires very favorable samples. Simulations[^fn-hult] have shown that only in the case of very small variance and very large sample sizes do empirical Bernstein bounds beat Hoeffding. In my own explorations, I've found that, even in some seemingly favorable cases, the bound in Eq. \eqref{eq:emp-bern-bound} decays faster than Hoeffding for a bit but eventually loses out as $t$ grows large. 
 
 <div class="row">
     <div class="column">
@@ -199,7 +199,7 @@ $$
 By a $(1 - \delta)$ confidence interval, we mean that $\mathbb{P}_P\left( \mu \not\in C_n \right) \leq \delta$. 
 
 ### Application To SPLASH
-Using Eq. \ref{eq:y-bounds}, we can transform the $Y_{j,k}$ variables to be $[0, 1]$-valued so that we can use the above results by substituting $\tilde{Y}_{j,k}$ in place of $X_i$. We'll denote these shifted and scaled values:
+Using Eq. \eqref{eq:y-bounds}, we can transform the $Y_{j,k}$ variables to be $[0, 1]$-valued so that we can use the above results by substituting $\tilde{Y}_{j,k}$ in place of $X_i$. We'll denote these shifted and scaled values:
 
 $$
 \tilde{Y}_{j,k} = \frac{Y_{j,k} - \alpha}{2\alpha}
@@ -241,7 +241,7 @@ $$
 \nonumber
 $$
 
-For any $s = \frac{t}{M} \geq 0$, the Hoeffding probability bound (see Eq. \ref{eq:oasis-bound}) yields:
+For any $s = \frac{t}{M} \geq 0$, the Hoeffding probability bound (see Eq. \eqref{eq:oasis-bound}) yields:
 
 $$
 \mathbb{P}\left( \rvert \bar{Y} - \mathbb{E}[Y] \rvert \geq s \right) \leq 2 \exp\left( - \frac{2 s^2}{1 - \gamma} \right)
@@ -263,7 +263,7 @@ $$
 
 If $0 \not \in C_M$, then we would reject $H_0$!
 
-Since the problem thus reduces to one of testing the mean of bounded random variables, we can use the results of Waudby-Smith and Ramdas[^fn-waudby-smith]! We can test the null hypothesis using the confidence interval in Eq. \ref{eq:hedged-capital-ci} instead of $C_M$ described above. Since the OASIS bound improves on a strictly Hoeffding-based bound by using information we assume about the data, we don't necessarily have the same convergence and optimality results for the betting intervals that Waudby-Smith and Ramdas prove. 
+Since the problem thus reduces to one of testing the mean of bounded random variables, we can use the results of Waudby-Smith and Ramdas[^fn-waudby-smith]! We can test the null hypothesis using the confidence interval in Eq. \eqref{eq:hedged-capital-ci} instead of $C_M$ described above. Since the OASIS bound improves on a strictly Hoeffding-based bound by using information we assume about the data, we don't necessarily have the same convergence and optimality results for the betting intervals that Waudby-Smith and Ramdas prove. 
 
 However, from some elementary simulations, it looks like the betting-based confidence intervals are always less wide than the OASIS ones! Instead of looking at anchors that have $p$-values less than some designated $\delta$, we could look at the anchors whose associated confidence intervals exclude $0$. And instead of ranking the statistically significant anchors by their $p$-values, we could rank them by confidence interval width. 
 

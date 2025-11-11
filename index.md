@@ -2,7 +2,7 @@
 layout: home
 ---
 
-I am a third year Ph.D. student in statistics at Carnegie Mellon University advised by [F. William Townes](https://www.cmu.edu/dietrich/statistics-datascience/research/members/will-townes.html).
+I am a fourth year Ph.D. candidate in statistics at Carnegie Mellon University advised by [F. William Townes](https://www.cmu.edu/dietrich/statistics-datascience/research/members/will-townes.html).
 
 I am a member of the [Delphi Research Group](https://delphi.cmu.edu) at Carnegie Mellon in which I focus on applying and developing statistical methods for wastewater-based epidemiology. 
 

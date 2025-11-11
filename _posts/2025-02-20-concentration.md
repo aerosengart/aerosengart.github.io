@@ -265,24 +265,15 @@ Notice that, although the Bernstein inequalities and Bennett's inequality can pr
   <strong>Empirical Bernstein Bound (Theorem 11 Maurer and Pontil<span markdown="1">[^fn-maurer-b]</span>).</strong>
   <br>
   Let $\mathbf{X} = (X_1, \dots, X_n)$ be a vector with independent random variables taking values in $[0, 1]$. Let $\delta > 0$. With probability at least $1 - \delta$ in $\mathbf{X}$:
-
   $$
   \mathbb{E}\left[ P_n(\mathbf{X}) \right] \leq P_n(\mathbf{X}) + \sqrt{\frac{2V_n(\mathbf{X}) \log(2/\delta)}{n}} + \frac{7 \log(2/\delta)}{3(n-1)}
   \nonumber
   $$
-
   where we recall that $P_n(\mathbf{X}) := \frac{1}{n} \sum_{i = 1}^n X_i$, the sample average.
-  <hr>
-  If the $X_i \in [a, b]$ instead, then with probability at least $1 - \delta$:
-
-  $$
-  \sum_{i = 1}^n \left[ \mathbb{E}\left[ X_i \right] - X_i \right] \leq n\sqrt{\frac{2V_n(\mathbf{X}) \log(2 / \delta)}{n}} + \frac{7 (b-a)n\log(2/\delta)}{3(n-1)} 
-  \nonumber
-  $$
 
   <details>
-    <summary>Proof.</summary>
-      We'll first write $W := \frac{1}{n} \sum_{i = 1}^n V(X_i)$, the average variance of each $X_i$ (since they aren't necessarily identically distributed). Note that $W \leq \mathbb{E}[V_n(\mathbf{X})]$.
+  <summary>Proof.</summary>
+    We'll first write $W := \frac{1}{n} \sum_{i = 1}^n V(X_i)$, the average variance of each $X_i$ (since they aren't necessarily identically distributed). Note that $W \leq \mathbb{E}[V_n(\mathbf{X})]$.
     <details>
       <summary>Proof.</summary>
       $$
@@ -304,29 +295,78 @@ Notice that, although the Bernstein inequalities and Bennett's inequality can pr
         \end{aligned}
         \nonumber
         $$
-      </details>
+    </details>
       Since $X_i \in [0, 1]$ for all $i$, we can use a derivative of Bennett's inequality (see <a href="#bennett-derivative">Corollary 2</a>) to get:
       $$
       \mathbb{E}[P_n(\mathbf{X})] \leq P_n(\mathbf{X}) + \sqrt{\frac{2 W \log \left(\frac{1}{\delta}\right)}{n}} + \frac{\log \left( \frac{1}{\delta} \right)}{3n} \leq P_n(\mathbf{X}) + \sqrt{\frac{2 \mathbb{E}[V_n(\mathbf{X})] \log \left(\frac{1}{\delta}\right)}{n}} + \frac{\log \left( \frac{1}{\delta} \right)}{3n}
-      \label{eq:bennett}
       $$
-    Looking at <a href="#theorem-10">Theorem 10</a>, we also have that $\sqrt{\mathbb{E}[V_n(\mathbf{X})]} \leq \sqrt{V_n(\mathbf{X})} + \sqrt{\frac{2\log\left(\frac{1}{\delta}\right)}{n-1}}$ with probability $1 - \delta$ for any $\delta > 0$. 
+    Looking at <a href="#theorem-10">Theorem 10</a>, we also have that $\sqrt{V_n(\mathbf{X})} - \sqrt{\frac{2\log\left(\frac{1}{\delta}\right)}{n-1}} > \sqrt{\mathbb{E}[V_n(\mathbf{X})]}$ with probability $1 - \delta$ for any $\delta > 0$. 
       <br> 
-      Since the probability of having both $\sqrt{\mathbb{E}[V_n(\mathbf{X})]} \leq \sqrt{V_n(\mathbf{X})} + \sqrt{\frac{2\log\left(\frac{1}{\delta}\right)}{n-1}}$ AND the statement in Eq. \eqref{eq:bennett} satisfied is less than or equal to the sum of their individual probabilities (via the union bound), we can pick $\delta = 2\epsilon$ for any $\epsilon > 0$ to ensure that, with probability at least $1 - 2\epsilon = 1 - \delta$:
+      Since the probability of having both statements above satisfied is less than or equal to the sum of their individual probabilities (via the union bound), we can pick $\delta = 2\epsilon$ for any $\epsilon > 0$ to ensure that, with probability at least $1 - 2\epsilon = 1 - \delta$:
       $$
       \begin{aligned}
       P_n(\mathbf{X}) + 2\sqrt{\mathbb{E}[V_n(\mathbf{X})]} \sqrt{\frac{\log\left(\frac{1}{\epsilon}\right)}{2n}} + \frac{\log\left(\frac{1}{\epsilon}\right)}{3n} 
-      &\leq P_n(\mathbf{X}) + 2\left(\sqrt{V_n(\mathbf{X})} + \sqrt{\frac{2 \log\left(\frac{1}{\epsilon}\right)}{n-1}} \right)\sqrt{\frac{\log\left(\frac{1}{\epsilon}\right)}{2n}} + \frac{\log\left(\frac{1}{\epsilon}\right)}{3n} \\
-      &= P_n(\mathbf{X}) + \sqrt{\frac{2 V_n(\mathbf{X}) \log\left(\frac{1}{\epsilon}\right)}{n}} +\sqrt{\frac{4\log^2\left(\frac{1}{\epsilon}\right)}{n(n-1)}} + \frac{\log\left(\frac{1}{\epsilon}\right)}{3n} \\
-      &= P_n(\mathbf{X}) + \sqrt{\frac{2 V_n(\mathbf{X}) \log\left(\frac{1}{\epsilon}\right)}{n}} +\frac{2\log\left(\frac{1}{\epsilon}\right)}{\sqrt{n(n-1)}} + \frac{\log\left(\frac{1}{\epsilon}\right)}{3n} \\
-      &\leq P_n(\mathbf{X}) + \sqrt{\frac{2 V_n(\mathbf{X}) \log\left(\frac{1}{\epsilon}\right)}{n}} +\frac{2\log\left(\frac{1}{\epsilon}\right)}{\sqrt{n^2}} + \frac{\log\left(\frac{1}{\epsilon}\right)}{3n} \hspace{10mm} n^2 \geq n(n-1) \implies n^{-1} \leq (n(n-1))^{-1/2} \\
-      &= P_n(\mathbf{X}) + \sqrt{\frac{2 V_n(\mathbf{X}) \log\left(\frac{1}{\epsilon}\right)}{n}} +\frac{6\log\left(\frac{1}{\epsilon}\right)}{3n} + \frac{\log\left(\frac{1}{\epsilon}\right)}{3n} \\
-      &= P_n(\mathbf{X}) + \sqrt{\frac{2 V_n(\mathbf{X}) \log\left(\frac{1}{\epsilon}\right)}{n}} +\frac{7\log\left(\frac{1}{\epsilon}\right)}{3n} \\
-      &= P_n(\mathbf{X}) + \sqrt{\frac{2 V_n(\mathbf{X}) \log\left(\frac{2}{\delta}\right)}{n}} +\frac{7\log\left(\frac{2}{\delta}\right)}{3n} \hspace{10mm} \epsilon = \frac{\delta}{2}
+      &\leq P_n(\mathbf{X}) + 2\left(\sqrt{V_n(\mathbf{X})} - \sqrt{\frac{2 \log\left(\frac{1}{\epsilon}\right)}{n-1}} \right)\sqrt{\frac{\log\left(\frac{1}{\epsilon}\right)}{2n}} + \frac{\log\left(\frac{1}{\epsilon}\right)}{3n} \\
+      &= P_n(\mathbf{X}) + \sqrt{\frac{2 V_n(\mathbf{X}) \log\left(\frac{1}{\epsilon}\right)}{n}} - \sqrt{\frac{4\log^2\left(\frac{1}{\epsilon}\right)}{n(n-1)}} + \frac{\log\left(\frac{1}{\epsilon}\right)}{3n} \\
+      &= P_n(\mathbf{X}) + \sqrt{\frac{2 V_n(\mathbf{X}) \log\left(\frac{1}{\epsilon}\right)}{n}} - \frac{2\log\left(\frac{1}{\epsilon}\right)}{\sqrt{n(n-1)}} + \frac{\log\left(\frac{1}{\epsilon}\right)}{3n} \\
+      &\leq P_n(\mathbf{X}) + \sqrt{\frac{2 V_n(\mathbf{X}) \log\left(\frac{1}{\epsilon}\right)}{n}} - \frac{2\log\left(\frac{1}{\epsilon}\right)}{\sqrt{n^2}} + \frac{\log\left(\frac{1}{\epsilon}\right)}{3n} & \left( n^2 \geq n(n-1) \implies -\frac{x}{n^{2}} \geq -\frac{x}{n(n-1)} \right)\\
+      &= P_n(\mathbf{X}) + \sqrt{\frac{2 V_n(\mathbf{X}) \log\left(\frac{1}{\epsilon}\right)}{n}} - \frac{6\log\left(\frac{1}{\epsilon}\right)}{3n} + \frac{\log\left(\frac{1}{\epsilon}\right)}{3n} \\
+      &= P_n(\mathbf{X}) + \sqrt{\frac{2 V_n(\mathbf{X}) \log\left(\frac{1}{\epsilon}\right)}{n}} - \frac{5\log\left(\frac{1}{\epsilon}\right)}{3n} \\
+      &= P_n(\mathbf{X}) + \sqrt{\frac{2 V_n(\mathbf{X}) \log\left(\frac{2}{\delta}\right)}{n}} - \frac{5\log\left(\frac{2}{\delta}\right)}{3n} \hspace{10mm} \epsilon = \frac{\delta}{2}
       \end{aligned}
       \nonumber
       $$
-      To show the second statement, suppose that the $X_i \in [a, b]$. We can repeat the prior argument with $Z_i := \frac{X_i - a}{b - a}$ so that $Z_i \in [0,1]$ and then rearrange the result to get a bound for $X_i$.
+    </details>
+
+  If we want a probability inequality that matches the form of Markov's, Chebyshev's, and Hoeffding's, we can rearrange some things to get:
+  $$
+  \mathbb{P}\left(\mathbb{E}[P_n(\mathbf{X})]- P_n(\mathbf{X}) \geq t \right) \leq 2
+  \exp\left(- 2\left[ \sqrt{\frac{3(n-1)}{7} \left( t + \sqrt{\frac{V_n(\mathbf{X})}{2n}}\right)} - \frac{3(n-1)}{7}\sqrt{\frac{V_n(\mathbf{X})}{2n}} \right]\right)
+  $$
+
+  <details>
+  <summary>Proof.</summary>
+  We have that:
+  $$
+  \begin{aligned}
+  &\mathbb{P}\left(  \mathbb{E}\left[ \frac{1}{n}\sum_{i = 1}^n X_i \right]  -  \frac{1}{n} \sum_{i = 1}^n X_i  \leq \sqrt{\frac{2 V_n(\mathbf{X})\log(2/\delta)}{n}} + \frac{7 \log(2/\delta)}{3(n-1)} \right) \geq 1 - \delta \\
+  \implies
+  &1 - \mathbb{P}\left(  \mathbb{E}\left[ \frac{1}{n}\sum_{i = 1}^n X_i \right]  -  \frac{1}{n} \sum_{i = 1}^n X_i  \leq \sqrt{\frac{2 V_n(\mathbf{X})\log(2/\delta)}{n}} + \frac{7 \log(2/\delta)}{3(n-1)} \right) \leq \delta \\
+  \implies
+  &\mathbb{P}\left(  \mathbb{E}\left[ \frac{1}{n}\sum_{i = 1}^n X_i \right]  -  \frac{1}{n} \sum_{i = 1}^n X_i  \geq \sqrt{\frac{2 V_n(\mathbf{X})\log(2/\delta)}{n}} + \frac{7 \log(2/\delta)}{3(n-1)} \right) \leq \delta
+  \end{aligned}
+  \nonumber
+  $$
+  We then set the righthand side of the first inequality equal to $t$ and solve for $\delta$:
+  $$
+  \begin{aligned}
+    t &= \sqrt{\frac{2 V_n(\mathbf{X})\log(2/\delta)}{n}} + \frac{7 \log(2/\delta)}{3(n-1)} \\
+    t &= 2 \sqrt{\log(2/\delta)} \sqrt{\frac{V_n(\mathbf{X})}{2n}} + \frac{7}{3(n-1)}\log(2/\delta) \\
+    \frac{3(n-1)}{7} t &= 2 \frac{3(n-1)}{7} \sqrt{\log(2/\delta)} \sqrt{\frac{V_n(\mathbf{X})}{2n}} + \log(2/\delta)  \\
+    \frac{3(n-1)}{7} t + \frac{3(n - 1)}{7}\sqrt{\frac{V_n(\mathbf{X})}{2n}} &= \frac{3(n - 1)}{7}\sqrt{\frac{V_n(\mathbf{X})}{2n}} + 2\frac{3(n-1)}{7} \sqrt{\log(2/\delta)} \sqrt{\frac{V_n(\mathbf{X})}{2n}} + \log(2/\delta)  \\
+    \frac{3(n-1)}{7} t + \frac{3(n - 1)}{7}\sqrt{\frac{V_n(\mathbf{X})}{2n}} &= \left(\sqrt{\log(2/\delta)} + \frac{3(n-1)}{7}\sqrt{\frac{V_n(\mathbf{X})}{2n}}\right)^2 \\
+    \sqrt{\log(2/\delta)} + \frac{3(n-1)}{7}\sqrt{\frac{V_n(\mathbf{X})}{2n}}  &= \sqrt{\frac{3(n-1)}{7} \left( t + \sqrt{\frac{V_n(\mathbf{X})}{2n}}\right)} \\
+    \sqrt{\log(2/\delta)} &= \sqrt{\frac{3(n-1)}{7} \left( t + \sqrt{\frac{V_n(\mathbf{X})}{2n}}\right)} - \frac{3(n-1)}{7}\sqrt{\frac{V_n(\mathbf{X})}{2n}} \\
+    \log(2/\delta) &= \left(\sqrt{\frac{3(n-1)}{7} \left( t + \sqrt{\frac{V_n(\mathbf{X})}{2n}}\right)} - \frac{3(n-1)}{7}\sqrt{\frac{V_n(\mathbf{X})}{2n}}\right)^2 \\
+    \frac{2}{\delta} &= \exp\left(2\left(\sqrt{\frac{3(n-1)}{7} \left( t + \sqrt{\frac{V_n(\mathbf{X})}{2n}}\right)} - \frac{3(n-1)}{7}\sqrt{\frac{V_n(\mathbf{X})}{2n}}\right)\right) \\
+    \delta &= 2\exp\left(- 2\left[ \sqrt{\frac{3(n-1)}{7} \left( t + \sqrt{\frac{V_n(\mathbf{X})}{2n}}\right)} - \frac{3(n-1)}{7}\sqrt{\frac{V_n(\mathbf{X})}{2n}} \right]\right)
+  \end{aligned}
+  \nonumber
+  $$
+  </details>
+</body>
+</div>
+
+  If the $X_i \in [a, b]$ instead, then with probability at least $1 - \delta$:
+
+  $$
+ \mathbb{E}[P_n(\mathbf{X})]- P_n(\mathbf{X}) \leq \sqrt{\frac{2V_n(\mathbf{X}) \log(2 / \delta)}{n}} + \frac{7(b-a)\log(2/\delta)}{3(n-1)} 
+  \nonumber
+  $$
+
+  <details>
+    <summary>Proof.</summary>
+      Suppose that the $X_i \in [a, b]$. We can repeat the prior argument with $Z_i := \frac{X_i - a}{b - a}$ so that $Z_i \in [0,1]$ and then rearrange the result to get a bound for $X_i$.
       $$
       \begin{aligned}
       V_n(\mathbf{Z}) &= \frac{1}{2n(n-1)}\sum_{i = 1}^n \sum_{j = 1}^n (Z_i - Z_j)^2 \\
@@ -340,11 +380,11 @@ Notice that, although the Bernstein inequalities and Bennett's inequality can pr
       $$
       \begin{aligned}
       &\mathbb{E}\left[ \frac{1}{n}\sum_{i = 1}^n \frac{X_i - a}{b-a} \right] \leq \frac{1}{n} \sum_{i = 1}^n \frac{X_i - a}{b-a} + \sqrt{\frac{2V_n(\mathbf{Z}) \log(2 / \delta)}{n}} + \frac{7 \log(2/\delta)}{3(n-1)} \\
-      \implies &\frac{1}{b-a}\sum_{i = 1}^n \left[ \mathbb{E}\left[ X_i \right] - a \right] \leq \sum_{i = 1}^n \frac{X_i - a}{b-a} + n\sqrt{\frac{2V_n(\mathbf{Z}) \log(2 / \delta)}{n}} + \frac{7 n\log(2/\delta)}{3(n-1)} \\
-      \implies &\frac{1}{b-a}\sum_{i = 1}^n \left[  \mathbb{E}\left[ X_i \right] - a - X_i + a\right] \leq n\sqrt{\frac{2V_n(\mathbf{Z}) \log(2 / \delta)}{n}} + \frac{7 n\log(2/\delta)}{3(n-1)} \\
-      \implies &\sum_{i = 1}^n \left[ \mathbb{E}\left[ X_i \right] - X_i \right] \leq n(b-a)\sqrt{\frac{2V_n(\mathbf{Z}) \log(2 / \delta)}{n}} + \frac{7 (b-a)n\log(2/\delta)}{3(n-1)} \\
-      \implies  &\sum_{i = 1}^n \left[ \mathbb{E}\left[ X_i \right] - X_i \right] \leq n(b-a)\sqrt{\frac{2V_n(\mathbf{X}) \log(2 / \delta)}{(b-a)^2n}} + \frac{7 (b-a)n\log(2/\delta)}{3(n-1)} \\
-      \implies  &\sum_{i = 1}^n \left[ \mathbb{E}\left[ X_i \right] - X_i \right] \leq n\sqrt{\frac{2V_n(\mathbf{X}) \log(2 / \delta)}{n}} + \frac{7 (b-a)n\log(2/\delta)}{3(n-1)} \\
+      \implies &\frac{1}{n(b-a)}\sum_{i = 1}^n \left[ \mathbb{E}\left[ X_i \right] - a \right] \leq \frac{1}{n(b-a)}\sum_{i = 1}^n (X_i - a) + \sqrt{\frac{2V_n(\mathbf{Z}) \log(2 / \delta)}{n}} + \frac{7 \log(2/\delta)}{3(n-1)} \\
+      \implies &\frac{1}{n(b-a)}\sum_{i = 1}^n \left[  \mathbb{E}\left[ X_i \right] - a - X_i + a\right] \leq \sqrt{\frac{2V_n(\mathbf{Z}) \log(2 / \delta)}{n}} + \frac{7\log(2/\delta)}{3(n-1)} \\
+      \implies &\frac{1}{n}\sum_{i = 1}^n \left[ \mathbb{E}\left[ X_i \right] - X_i \right] \leq (b-a)\sqrt{\frac{2V_n(\mathbf{Z}) \log(2 / \delta)}{n}} + \frac{7 (b-a)\log(2/\delta)}{3(n-1)} \\
+      \implies  & \frac{1}{n}\sum_{i = 1}^n \left[ \mathbb{E}\left[ X_i \right] - X_i \right] \leq (b-a)\sqrt{\frac{2V_n(\mathbf{X}) \log(2 / \delta)}{(b-a)^2n}} + \frac{7 (b-a)\log(2/\delta)}{3(n-1)} \\
+      \implies  &\frac{1}{n}\sum_{i = 1}^n \left[ \mathbb{E}\left[ X_i \right] - X_i \right] \leq \sqrt{\frac{2V_n(\mathbf{X}) \log(2 / \delta)}{n}} + \frac{7 (b-a)\log(2/\delta)}{3(n-1)} \\
       \end{aligned}
       \nonumber
       $$
@@ -361,44 +401,79 @@ Notice that, although the Bernstein inequalities and Bennett's inequality can pr
   <summary>Details Of Restatement.</summary>
   Theorem 11 states that, with probability at least $1 - \delta$:
   $$
-  \sum_{i = 1}^n \left[ \mathbb{E}\left[ X_i \right] - X_i \right] \leq n\sqrt{\frac{2V_n(\mathbf{X}) \log(2 / \delta)}{n}} + \frac{7 (b-a)n\log(2/\delta)}{3(n-1)}     
+  \mathbb{E}[P_n(\mathbf{X})]- P_n(\mathbf{X}) \leq \sqrt{\frac{2V_n(\mathbf{X}) \log(2 / \delta)}{n}} + \frac{7 (b-a)\log(2/\delta)}{3(n-1)}     
   \nonumber
   $$
   We set $t$ equal to righthand side of the above and solve for $\delta$:
   $$
   \begin{aligned}
-  &t = n \left[  \sqrt{\frac{2 V_n(\mathbf{X}) \log(2/\delta)}{n}} + \frac{7 (b-a) \log(2/\delta)}{3(n-1)} \right] \\
-  \implies &t = 2\sqrt{\log(2/\delta)}\sqrt{\frac{nV_n(\mathbf{X})}{2}} + \frac{7  (b-a) n\log(2/\delta)}{3(n-1)} \\
-  \implies &\frac{3(n-1)t}{7 (b-a) n} = 2\sqrt{\log(2/\delta)}\left(\frac{3(n-1)\sqrt{\frac{nV_n(\mathbf{X})}{2}}}{7 (b-a) n}\right) + \log(2/\delta) \\
-  \implies &\frac{3(n-1)t}{7 (b-a) n} + \left(\frac{3(n-1)\sqrt{\frac{nV_n(\mathbf{X})}{2}}}{7 (b-a) n}\right)^2= 2\sqrt{\log(2/\delta)}\left(\frac{3(n-1)\sqrt{\frac{nV_n(\mathbf{X})}{2}}}{7 (b-a) n}\right) + \log(2/\delta) + \left(\frac{3(n-1)\sqrt{\frac{nV_n(\mathbf{X})}{2}}}{7 (b-a) n}\right)^2 \\
-  \implies &\frac{3(n-1)t}{7 (b-a) n} + \left(\frac{3(n-1)\sqrt{\frac{nV_n(\mathbf{X})}{2}}}{7 (b-a) n}\right)^2 = \left(\sqrt{\log(2/\delta)} + \frac{3(n-1)\sqrt{\frac{n V_n(\mathbf{X})}{2}}}{7(b-a)n}\right)^2 \\
-  \implies &\sqrt{\frac{3(n-1)t}{7 (b-a) n} + \left(\frac{3(n-1)\sqrt{\frac{nV_n(\mathbf{X})}{2}}}{7 (b-a) n}\right)^2} = \sqrt{\log(2/\delta)} + \frac{3(n-1)\sqrt{\frac{nV_n(\mathbf{X})}{2}}}{7(b-a)n} \\
-  \implies &\sqrt{\frac{3(n-1)t}{7 (b-a) n} + \left(\frac{3(n-1)\sqrt{\frac{nV_n(\mathbf{X})}{2}}}{7 (b-a) n}\right)^2}  - \frac{3(n-1)\sqrt{\frac{nV_n(\mathbf{X})}{2}}}{7(b-a)n} = \sqrt{\log(2/\delta)} \\
-  \implies &\left(\sqrt{\frac{3(n-1)t}{7 (b-a) n} + \left(\frac{3(n-1)\sqrt{\frac{nV_n(\mathbf{X})}{2}}}{7 (b-a) n}\right)^2}  - \frac{3(n-1)\sqrt{\frac{nV_n(\mathbf{X})}{2}}}{7(b-a)n} \right)^2 = \log(2/\delta) \\
-  \implies &2 / \delta = \exp \left( \left(\sqrt{\frac{3(n-1)t}{7 (b-a) n} + \left(\frac{3(n-1)\sqrt{\frac{nV_n(\mathbf{X})}{2}}}{7 (b-a) n}\right)^2}  - \frac{3(n-1)\sqrt{\frac{nV_n(\mathbf{X})}{2}}}{7(b-a)n} \right)^2  \right) \\
-  \implies &\delta = 2\exp\left(- 2\left(\sqrt{\frac{3(n-1)t}{7 (b-a) n} + \left(\frac{3(n-1)\sqrt{\frac{nV_n(\mathbf{X})}{2}}}{7 (b-a) n}\right)^2}  - \frac{3(n-1)\sqrt{\frac{nV_n(\mathbf{X})}{2}}}{7(b-a)n} \right)\right) 
+  &t =  \sqrt{\frac{2 V_n(\mathbf{X}) \log(2/\delta)}{n}} + \frac{7 (b-a) \log(2/\delta)}{3(n-1)} \\
+  \implies &t = 2\sqrt{\log(2/\delta)}\sqrt{\frac{V_n(\mathbf{X})}{2n}} + \frac{7 (b-a) \log(2/\delta)}{3(n-1)} \\
+  \implies &\frac{3(n-1)t}{7 (b-a)} = 2\sqrt{\log(2/\delta)}\left(\frac{3(n-1)\sqrt{\frac{V_n(\mathbf{X})}{2n}}}{7 (b-a)}\right) + \log(2/\delta) \\
+  \implies &\frac{3(n-1)t}{7 (b-a)} + \left(\frac{3(n-1)\sqrt{\frac{V_n(\mathbf{X})}{2n}}}{7 (b-a)}\right)^2= 2\sqrt{\log(2/\delta)}\left(\frac{3(n-1)\sqrt{\frac{V_n(\mathbf{X})}{2n}}}{7 (b-a)}\right) + \log(2/\delta) + \left(\frac{3(n-1)\sqrt{\frac{V_n(\mathbf{X})}{2n}}}{7 (b-a)}\right)^2 \\
+  \implies &\frac{3(n-1)t}{7 (b-a)} + \left(\frac{3(n-1)\sqrt{\frac{V_n(\mathbf{X})}{2n}}}{7 (b-a)}\right)^2 = \left(\sqrt{\log(2/\delta)} + \frac{3(n-1)\sqrt{\frac{V_n(\mathbf{X})}{2n}}}{7(b-a)}\right)^2 \\
+  \implies &\sqrt{\frac{3(n-1)t}{7 (b-a)} + \left(\frac{3(n-1)\sqrt{\frac{V_n(\mathbf{X})}{2n}}}{7 (b-a)}\right)^2} = \sqrt{\log(2/\delta)} + \frac{3(n-1)\sqrt{\frac{V_n(\mathbf{X})}{2n}}}{7(b-a)} \\
+  \implies &\sqrt{\frac{3(n-1)t}{7 (b-a)} + \left(\frac{3(n-1)\sqrt{\frac{V_n(\mathbf{X})}{2n}}}{7 (b-a)}\right)^2}  - \frac{3(n-1)\sqrt{\frac{V_n(\mathbf{X})}{2n}}}{7(b-a)} = \sqrt{\log(2/\delta)} \\
+  \implies &\left(\sqrt{\frac{3(n-1)t}{7(b-a)} + \left(\frac{3(n-1)\sqrt{\frac{V_n(\mathbf{X})}{2n}}}{7 (b-a)}\right)^2}  - \frac{3(n-1)\sqrt{\frac{V_n(\mathbf{X})}{2n}}}{7(b-a)} \right)^2 = \log(2/\delta) \\
+  \implies &2 / \delta = \exp \left( \left(\sqrt{\frac{3(n-1)t}{7 (b-a)} + \left(\frac{3(n-1)\sqrt{\frac{V_n(\mathbf{X})}{2n}}}{7 (b-a)}\right)^2}  - \frac{3(n-1)\sqrt{\frac{V_n(\mathbf{X})}{2n}}}{7(b-a)} \right)^2  \right) \\
+  \implies &\delta = 2\exp\left(- 2\left(\sqrt{\frac{3(n-1)t}{7 (b-a)} + \left(\frac{3(n-1)\sqrt{\frac{n_n(\mathbf{X})}{2n}}}{7 (b-a)}\right)^2}  - \frac{3(n-1)\sqrt{\frac{V_n(\mathbf{X})}{2n}}}{7(b-a)} \right)\right) 
   \end{aligned}
   \nonumber
   $$
   Thus, for any $t > 0$:
   $$
-  \mathbb{P}\left( \sum_{i = 1}^n \left[\mathbb{E}[X_i] - X_i \right] \geq t\right) \leq 2\exp\left(- 2\left(\sqrt{\frac{3(n-1)t}{7 (b-a) n} + \left(\frac{3(n-1)\sqrt{\frac{nV_n(\mathbf{X})}{2}}}{7 (b-a) n}\right)^2}  - \frac{3(n-1)\sqrt{\frac{nV_n(\mathbf{X})}{2}}}{7(b-a)n} \right)\right)
-  \nonumber
-  $$
-  We can repeat the entire argument where we instead multiply each $X_i$ by $-1$. Since $\mathbb{E}[-X_i] = -\mathbb{E}[X_i]$, we see that, for any $t > 0$:
-  $$
-  \mathbb{P}\left( \sum_{i = 1}^n \left[-\mathbb{E}[X_i] - (-X_i) \right] \geq t\right) = \mathbb{P}\left( - \sum_{i = 1}^n \left[X_i - \mathbb{E}[X_i] \right] \geq t\right) \leq 2\exp\left(- 2\left(\sqrt{\frac{3(n-1)t}{7 (b-a) n} + \left(\frac{3(n-1)\sqrt{\frac{nV_n(\mathbf{X})}{2}}}{7 (b-a)n}\right)^2}  - \frac{3(n-1)\sqrt{\frac{nV_n(\mathbf{X})}{2}}}{7(b-a)n} \right)\right)
-  \nonumber
-  $$
-  Putting the two together we get:
-  $$
-  \mathbb{P}\left( \bigg\rvert \sum_{i = 1}^n \left[X_i - \mathbb{E}[X_i] \right]\bigg\rvert \geq t\right) \leq 4\exp\left(- 2\left(\sqrt{\frac{3(n-1)t}{7 (b-a) n} + \left(\frac{3(n-1)\sqrt{\frac{nV_n(\mathbf{X})}{2}}}{7 (b-a) n}\right)^2}  - \frac{3(n-1)\sqrt{\frac{nV_n(\mathbf{X})}{2}}}{7(b-a)n} \right)\right)
+  \mathbb{P}\left( \mathbb{E}[P_n(\mathbf{X})] - P_n(\mathbf{X}) \geq t\right) \leq 2\exp\left(- 2\left(\sqrt{\frac{3(n-1)t}{7 (b-a)} + \left(\frac{3(n-1)\sqrt{\frac{V_n(\mathbf{X})}{2n}}}{7 (b-a)}\right)^2}  - \frac{3(n-1)\sqrt{\frac{V_n(\mathbf{X})}{2n}}}{7(b-a)} \right)\right)
   \nonumber
   $$
 </details>
 
-</body>
-</div>
+
+To make the statement two-sided, we just need to bound:
+
+$$
+\mathbb{P}\left(\mathbb{E}[P_n(\mathbf{X})] - P_n(\mathbf{X}) \leq -t \right)
+\nonumber
+$$
+
+From the proof of <a href="#theorem-11">Theorem 11</a>:
+
+$$
+\mathbb{E}[P_n(\mathbf{X})] \leq P_n(\mathbf{X}) + \sqrt{\frac{2 W \log \left(\frac{1}{\delta}\right)}{n}} + \frac{\log \left( \frac{1}{\delta} \right)}{3n} \leq P_n(\mathbf{X}) + \sqrt{\frac{2 \mathbb{E}[V_n(\mathbf{X})] \log \left(\frac{1}{\delta}\right)}{n}} + \frac{\log \left( \frac{1}{\delta} \right)}{3n}
+\nonumber
+$$
+
+Looking at $(b)$ in <a href="#theorem-10">Theorem 10</a>, we also have that:
+
+$$
+\sqrt{V_n(\mathbf{X})} > \sqrt{\mathbb{E}[V_n(\mathbf{X})]} + \sqrt{\frac{2\log\left(\frac{1}{\delta}\right)}{n-1}}
+\implies
+\sqrt{\mathbb{E}[V_n(\mathbf{X})]} < \sqrt{V_n(\mathbf{X})}  - \sqrt{\frac{2\log\left(\frac{1}{\delta}\right)}{n-1}}
+\nonumber
+$$
+
+with probability $1 - \delta$ for any $\delta > 0$. Since the probability of having both above statements satisfied is less than or equal to the sum of their individual probabilities (via the union bound), we can pick $\delta = 2\epsilon$ for any $\epsilon > 0$ to ensure that, with probability at least $1 - 2\epsilon = 1 - \delta$:
+  
+$$
+\begin{aligned}
+P_n(\mathbf{X}) + 2\sqrt{\mathbb{E}[V_n(\mathbf{X})]} \sqrt{\frac{\log\left(\frac{1}{\epsilon}\right)}{2n}} + \frac{\log\left(\frac{1}{\epsilon}\right)}{3n} 
+&\leq P_n(\mathbf{X}) + 2\left(\sqrt{V_n(\mathbf{X})} - \sqrt{\frac{2 \log\left(\frac{1}{\epsilon}\right)}{n-1}} \right)\sqrt{\frac{\log\left(\frac{1}{\epsilon}\right)}{2n}} + \frac{\log\left(\frac{1}{\epsilon}\right)}{3n} \\
+&= P_n(\mathbf{X}) + \sqrt{\frac{2 V_n(\mathbf{X}) \log\left(\frac{1}{\epsilon}\right)}{n}} - 2\sqrt{\frac{\log^2\left(\frac{1}{\epsilon}\right)}{n(n-1)}} + \frac{\log\left(\frac{1}{\epsilon}\right)}{3n} \\
+&= P_n(\mathbf{X}) + \sqrt{\frac{2 V_n(\mathbf{X}) \log\left(\frac{1}{\epsilon}\right)}{n}} -\frac{2\log\left(\frac{1}{\epsilon}\right)}{\sqrt{n(n-1)}} + \frac{\log\left(\frac{1}{\epsilon}\right)}{3n} \\
+&\leq P_n(\mathbf{X}) + \sqrt{\frac{2 V_n(\mathbf{X}) \log\left(\frac{1}{\epsilon}\right)}{n}} - \frac{2\log\left(\frac{1}{\epsilon}\right)}{\sqrt{n^2}} + \frac{\log\left(\frac{1}{\epsilon}\right)}{3n} \hspace{10mm} n^2 \geq n(n-1) \implies n^{-1} \leq (n(n-1))^{-1/2} \\
+&= P_n(\mathbf{X}) + \sqrt{\frac{2 V_n(\mathbf{X}) \log\left(\frac{1}{\epsilon}\right)}{n}} +\frac{6\log\left(\frac{1}{\epsilon}\right)}{3n} + \frac{\log\left(\frac{1}{\epsilon}\right)}{3n} \\
+&= P_n(\mathbf{X}) + \sqrt{\frac{2 V_n(\mathbf{X}) \log\left(\frac{1}{\epsilon}\right)}{n}} +\frac{7\log\left(\frac{1}{\epsilon}\right)}{3n} \\
+&= P_n(\mathbf{X}) + \sqrt{\frac{2 V_n(\mathbf{X}) \log\left(\frac{2}{\delta}\right)}{n}} +\frac{7\log\left(\frac{2}{\delta}\right)}{3n} \hspace{10mm} \epsilon = \frac{\delta}{2}
+\end{aligned}
+\nonumber
+$$
+
+$$
+\begin{aligned}
+&\mathbb{P}\left( \mathbb{E}[P_n(\mathbf{X})] \leq P_n(\mathbf{X}) + \sqrt{\frac{2V_n(\mathbf{X}) \log(2/\delta)}{n}} + \frac{7 \log(2/\delta)}{3n} \right) \geq 1 - \delta \\
+\implies 
+\end{aligned}
+\nonumber
+$$
 
 
 

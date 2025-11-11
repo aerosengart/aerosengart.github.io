@@ -12,11 +12,63 @@ include_scripts: [
 ]
 ---
 
-For some reason, I have not been able to exactly identify what has been going on in my simulations to lead to the strange distributions. My gut tells me it is either a mistake in my derivations or something that I'm not realizing in theory (perhaps related to the fact that the null hypothesis parameter value is on the boundary of the parameter space?).
+In many cases, we may want to test the null hypothesis that a parameter is zero against a one-sided alternative (e.g. the parameter is non-negative). In this setting, we are constraining the alternative parameter space, and for some parameters (such as variance components), the value of the parameter under the null may be on the boundary. 
 
-Instead of trying to derive the score test statistic again (for the umpteenth time...), I'm going to try a different angle. This post will cover comments and results related to one-sided score-type tests.
+In this post, I'll cover some of the literature on tests against one-sided alternatives. We'll mostly be in the mindset of tests of homogeneity in mixed models (i.e. testing whether the random effects variance is zero), but a lot of these results are generally applicable. 
 
-Note: Not all of the proofs are finished/included. I am hoping to find the time to return to this post and complete them.
+## Some Intuition
+First, let's discuss some of the intuition behind the score test (also called Rao's test (after C. R. Rao) and the Lagrange multiplier test). Suppose we have some model or data-generating process parametrized by $\theta$. Our goal will be to test:
+
+$$
+H_0: \theta = \theta_0
+$$
+
+Let $\ell(\theta; \mathbf{X})$ denote the log-likelihood function for parameter $\theta$ given data $\mathbf{X}$. We can imagine that if our maximum likelihood estimate, $\hat{\theta}$, is far from $\theta_0$, then our data provide evidence against $H_0$.
+
+The score test uses the slope of the log-likelihood (i.e. the derivative), called the <i>score</i> to determine what it means for $\hat{\theta}$ to be far from $\theta_0$. If the derivative is quite large (in absolute value) at $\theta_0$, then that implies that we have moved quite far away from the root of the log-likelihood, $\hat{\theta}$. 
+
+Under the assumption that the log-likelihood is partially differentiable w.r.t. each component of $\theta$ and the Fisher information exists and is invertible at $\theta_0$, the standard score test statistic for i.i.d. sample $\mathbf{X} = (\mathbf{X}_1, \dots, \mathbf{X}_n)$ is computed as:
+
+$$
+t = \frac{1}{n} U^\top(\theta_0) \mathcal{I}^{-1} (\theta_0) U(\theta_0)
+$$
+
+where 
+
+$$
+U(\theta^*) = \sum_{i = 1}^n \frac{\partial}{\partial \theta} \ell(\theta; \mathbf{X}_i) \rvert_{\theta = \theta^*}; 
+\hspace{8mm}
+\mathcal{I}(\theta^*) = \mathbb{E}\left[ U(\theta) U^\top(\theta) \right] \bigg\rvert_{\theta = \theta^*}
+$$
+
+Assuming $U(\theta)$ has finite variance and mean zero (which it will under certain conditions — see <a href="/posts/2025/02/02/likelihood-theory.html">this post on likelihood theory</a>), it is asymptotically multivariate Gaussian when suitably centered and scaled (by the central limit theorem).[^fn-dasgupta] 
+
+<details>
+<summary>Proof.</summary>
+Notice that $U(\theta_0)$ is the sum of (functions of) i.i.d. random variables. As we noted above, $U(\theta_0)$ has mean zero under certain regularity conditions. The CLT states that:
+$$
+\frac{\sqrt{n}\left(\frac{1}{n} \sum_{i = 1}^n X_i - \mu \right) }{\sigma} \rightsquigarrow \mathcal{N}(0, 1)
+\hspace{4mm} \iff \hspace{4mm}
+(\frac{1}{n} \sum_{i = 1}^n X_i - \mu_X) \rightsquigarrow \mathcal{N}\left(0, \frac{\sigma^2}{n}\right)
+\nonumber
+$$
+If $\mathcal{I}(\theta)$ is the covariance of $U(\theta)$, then $n^2 \mathcal{I}(\theta)$ is the covariance of $\frac{1}{n}U(\theta)$. Thus:
+$$
+\sqrt{n} \left(\frac{1}{n} U^\top(\theta)\right) \rightsquigarrow \mathcal{N}\left(\mathbf{0}, \mathcal{I}(\theta) \right)
+\hspace{4mm} \iff \hspace{4mm}
+\sqrt{n} \left(\frac{1}{n} U^\top(\theta)\right)\mathcal{I}^{-1/2}(\theta) \rightsquigarrow \mathcal{N}\left(\mathbf{0}, \mathbb{I}\right)
+\nonumber
+$$
+This can then be used to derive the asymptotic null distribution of the score test statistic, since the distribution of a squared Gaussian random variable is $\chi^2$:
+$$
+\left( \sqrt{n} \left(\frac{1}{n} U^\top(\theta)\right)\mathcal{I}^{-1/2}(\theta)\right)^2 \rightsquigarrow \chi^2_k
+\hspace{4mm} \iff \hspace{4mm}
+\frac{1}{n} U^\top(\theta) \mathcal{I}^{-1}(\theta) U(\theta) \rightsquigarrow \chi^2_k
+$$
+where $k$ is the dimension of $\theta$.
+</details>
+
+The alternative for the above test is implicitly two-sided: $H_1: \theta \neq \theta_0$.
 
 
 <!-- ---
@@ -45,11 +97,13 @@ The Clarke tangent cone is closed and convex, always. Furthermore, the Clarke ta
 
 In geometry, if we assume that $S$ is closed and convex, then the _solid tangent cone_ to $S$ at $\bar{\mathbf{x}} \in b(S)$ (where $b(S)$ is the boundary of $S$) is the closure, $\text{cl}(C)$, of the cone, $C$, made of all rays that start at $\bar{\mathbf{x}}$ and intersect with $S$ at at least one $\mathbf{y} \in S$ where $\mathbf{y} \neq \bar{\mathbf{x}}$. That is, the set $$\{ \bar{\mathbf{x}} + t \mathbf{y} \rvert \mathbf{y} \in K, t \in [0, +\infty) \}$$. -->
 
-
 ---
 
 ## Introduction
 
+In our setting, it is important to consider a one-sided alternative because variances are non-negative. As pointed out by Hall and Praestgaard (2001)[^fn-hall], omnibus tests like that of Lin (1997)[^fn-lin], which implicitly test against a two-sided alternative, have power against these impossible cases. They also explain that the claim that Lin's global test for homogeneity is locally asymptotically most stringest does not hold in particular boundary cases. Thus, it seems worthwhile to pursue explicitly one-sided tests, most of which are related to cones. 
+
+### All About Cones
 As an introduction into the theoretical/geometric setting we are interested in, I will cover some of the background and results in Shapiro[^fn-shapiro] This will give us a better foundation for what's to come.
 
 Shapiro restricts his attention to 
@@ -160,7 +214,67 @@ $$ -->
 
 ---
 
-## A One-Sided Test
+## A Multivariate One-Sided Test
+Some of the later literature is based upon mid-century work by Kudô (1963)[^fn-kudo] for testing the mean vector of a multivariate Gaussian distribution. Kudô's work has some very nice geometric interpretations that permit the derivation of the limiting distribution of his test statistic, and all of it begins with the likelihood ratio. 
+
+### Set-Up
+We have a multivariate Gaussian population with mean vector $\theta^\top = (\theta_1, \dots, \theta_k)$ and known, non-singular, positive definite variance-covariance matrix $\Sigma$. Given a sample of $n$ i.i.d. observations $\mathbf{X} = \{ \mathbf{X}^{(1)}, \dots, \mathbf{X}^{(n)} \}$, we wish to test:
+
+$$
+H_0: \theta_i = 0 \hspace{2mm} i = 1, 2, \dots, k
+\hspace{8mm} \text{vs.} \hspace{8mm}
+H_1: \theta_i \geq 0 \hspace{2mm} i = 1, 2, \dots, k
+$$
+
+where at least one inequality in the alternative hypothesis setting is strict. 
+
+Letting $\bar{\mathbf{X}} = \frac{1}{n} \sum_{i = 1}^n \mathbf{X}^{(i)}$, the sample mean vector, we can rewrite the likelihood of the sample under $H_1$ as:
+
+$$
+\begin{aligned}
+\mathcal{L}(\theta, \Sigma; \mathbf{X}) 
+&= \frac{1}{(\sqrt{2 \pi})^{kn} \rvert \Sigma \rvert^n} \exp\left(- \frac{1}{2} \sum_{i = 1}^n (\mathbf{X}^{(i)} - \theta)^\top \Sigma^{-1} (\mathbf{X}^{(i)} - \theta) \right)  \\
+&= \frac{1}{(\sqrt{2 \pi})^{kn} \rvert \Sigma \rvert^n} \exp\left(- \frac{1}{2} \sum_{i = 1}^n \left[ (\mathbf{X}^{(i)} - \bar{\mathbf{X}})^\top \Sigma^{-1} (\mathbf{X}^{(i)} - \bar{\mathbf{X}}) + n(\bar{\mathbf{X}} - \theta)^\top \Sigma^{-1}(\bar{\mathbf{X}} - \theta) \right] \right)  \\
+\end{aligned}
+$$
+
+The standard likelihood ratio test statistic is given by:
+
+$$
+\begin{aligned}
+t_{LRT} &= \frac{\underset{\theta_i = 0 \\ i = 1, \dots, k}{\max} \{ \mathcal{L}(\theta, \Sigma; \mathbf{X}) \}}{\underset{\theta_i \geq 0 \\ i = 1, \dots, k}{\max} \{ \mathcal{L}(\theta, \Sigma; \mathbf{X}) \}} 
+= \frac{\exp\left(-\frac{1}{2} n \bar{\mathbf{X}}^\top \Sigma^{-1}\bar{\mathbf{X}}\right)}{\underset{\theta_i \geq 0 \\ i = 1, \dots, k}{\max} \{ \exp\left(-\frac{1}{2}n(\bar{\mathbf{X}} - \theta)^\top \Sigma^{-1}(\bar{\mathbf{X}} - \theta)\right) \}}
+\end{aligned}
+$$
+
+Notice that the argument maximum of the above is equivalent to:
+
+$$
+\bar{\chi}^2 = n \left[ \bar{\mathbf{X}}^\top \Sigma^{-1}\bar{\mathbf{X}} - \underset{\theta_i \geq 0 \\ i = 1, \dots, k}{\arg\min} \left\{ (\bar{\mathbf{X}} - \theta)^\top \Sigma^{-1}(\bar{\mathbf{X}} - \theta) \right\} \right] 
+$$
+
+<details>
+<summary>Proof.</summary>
+$$
+\begin{aligned}
+\theta^* &= \frac{\exp\left(-\frac{1}{2} n \bar{\mathbf{X}}^\top \Sigma^{-1}\bar{\mathbf{X}}\right)}{\underset{\theta_i \geq 0 \\ i = 1, \dots, k}{\arg\max} \{ \exp\left(-\frac{1}{2}n(\bar{\mathbf{X}} - \theta)^\top \Sigma^{-1}(\bar{\mathbf{X}} - \theta)\right) \}} \\
+&= \underset{\theta_i \geq 0 \\ i = 1, \dots, k}{\arg\min} \left\{  \frac{\exp\left(-\frac{1}{2} n \bar{\mathbf{X}}^\top \Sigma^{-1}\bar{\mathbf{X}}\right)}{\exp\left(-\frac{1}{2}n(\bar{\mathbf{X}} - \theta)^\top \Sigma^{-1}(\bar{\mathbf{X}} - \theta)\right)} \right\} & \left(\text{maximize denom. = minimize quotient} \right) \\
+&= \underset{\theta_i \geq 0 \\ i = 1, \dots, k}{\arg\min} \left\{  \exp\left( -\frac{1}{2} n \bar{\mathbf{X}}^\top \Sigma^{-1}\bar{\mathbf{X}} + \frac{1}{2}n(\bar{\mathbf{X}} - \theta)^\top \Sigma^{-1}(\bar{\mathbf{X}} - \theta) \right) \right\} \\
+&= \underset{\theta_i \geq 0 \\ i = 1, \dots, k}{\arg\min} \left\{   -\frac{1}{2} n \bar{\mathbf{X}}^\top \Sigma^{-1}\bar{\mathbf{X}} + \frac{1}{2}n(\bar{\mathbf{X}} - \theta)^\top \Sigma^{-1}(\bar{\mathbf{X}} - \theta) \right\} & \left(\exp \text{ monotonic} \right)\\
+&= n \underset{\theta_i \geq 0 \\ i = 1, \dots, k}{\arg\min} \left\{ -\bar{\mathbf{X}}^\top \Sigma^{-1}\bar{\mathbf{X}} + (\bar{\mathbf{X}} - \theta)^\top \Sigma^{-1}(\bar{\mathbf{X}} - \theta) \right\} \\
+&= n \underset{\theta_i \geq 0 \\ i = 1, \dots, k}{\arg\max} \left\{ \bar{\mathbf{X}}^\top \Sigma^{-1}\bar{\mathbf{X}} - (\bar{\mathbf{X}} - \theta)^\top \Sigma^{-1}(\bar{\mathbf{X}} - \theta) \right\} & \left( \text{minimize = maximize negative} \right)\\
+&= n \left[ \bar{\mathbf{X}}^\top \Sigma^{-1}\bar{\mathbf{X}} - \underset{\theta_i \geq 0 \\ i = 1, \dots, k}{\arg\min} \left\{ (\bar{\mathbf{X}} - \theta)^\top \Sigma^{-1}(\bar{\mathbf{X}} - \theta) \right\} \right] & \left(\text{ maximize quantity = minimize positive subtraction} \right)
+\end{aligned}
+\nonumber
+$$
+</details>
+
+so we can just look at this quantity. 
+
+
+---
+
+## A One-Sided Score Test
 I'll next dip into the work of Silvapulle and Silvapulle[^fn-silvapulle], who present a score-type test statistic for one-side alternative hypotheses based upon estimating functions instead of the true score function.
 
 ### Set-Up
@@ -225,30 +339,180 @@ for large enough $n$ because $\lambda$ is a nuisance parameter, so we can take t
 
 ---
 
-### Example
+### Use
+How do we use this test statistic in practice? This is pretty much just a question of what function, $\mathbf{U}_0$, of our data we want to pick. Silvapulle and Silvapulle explain how to construct a score-type test statistic using their general statistic.  
+
+Let's define $\mathbf{S}_n(\theta)$ as any $k \times 1$ vector estimating equation (so it should have expectation zero) for $\theta$ (e.g. the score function or something else). We need this vector to satisfy a couple of conditions.
+
+<div class="definition">
+  <body>
+  <strong>Conditions.</strong>
+  <br>
+  Suppose $\mathbf{S}_n(\theta)$ is such that there exist non-singular $\mathbf{G}(\theta)$ and $\mathbf{V}(\theta)$ satisfying for any $a > 0$:
+  $$
+  \frac{1}{\sqrt{n}}\mathbf{S}_n(\theta) \rightsquigarrow \mathcal{N}(\mathbf{0}, \mathbf{V}(\theta))
+  \label{eq:condition-a1}
+  $$
+  and
+  $$
+  \underset{\rvert \rvert \mathbf{h} \rvert \rvert \leq a}{\sup} \left\{ \frac{1}{\sqrt{n}} \left( \mathbf{S}_n\left(\theta + \frac{1}{\sqrt{n}} \mathbf{h}\right) - \mathbf{S}_n(\theta) \right)  + \mathbf{G}(\theta) \mathbf{h} \right\} = o_p(1)
+  \label{eq:condition-a2}
+  $$
+  where $o_p(1)$ is stochastic order notation for convergence in probability to $0$.
+  </body>
+</div>
+
+The first condition basically states that $\mathbf{S}_n(\theta)$ is asymptotically Gaussian when suitably scaled. Let's take a closer look at the second condition (this will be kind of hand-wavy).
+
+Suppose we fix $\mathbf{h}$. The directional derivative of $\mathbf{S}_n(\theta)$ at $\theta$ along $\mathbf{h}$ is given by the limit:
+
+$$
+\nabla_{\mathbf{h}} \mathbf{S}_n(\theta) = \underset{s \rightarrow 0}{\lim} \left[ \frac{\mathbf{S}_n(\theta + s \mathbf{h}) - \mathbf{S}_n(\theta)}{s \rvert \rvert \mathbf{h} \rvert \rvert} \right]
+$$
+
+Technically, this is the definition for a scalar function, but we can just use the above notation to mean the limits are taken element-wise to get the result for a vector-valued function.
+
+If we let $s = \frac{1}{\sqrt{n}}$, then we can rewrite the above as the limit as $n \rightarrow \infty$:
+
+$$
+\nabla_{\mathbf{h}} \mathbf{S}_n(\theta) = \underset{n \rightarrow \infty}{\lim} \left[  \frac{\sqrt{n}}{\rvert \rvert \mathbf{h} \rvert \rvert} \left( \mathbf{S}_n \left(\theta + \frac{1}{\sqrt{n}} \mathbf{h} \right) - \mathbf{S}_n(\theta) \right) \right]
+$$
+
+Scaling by $- \frac{1}{n}$, we get:
+
+$$
+\nabla_{\mathbf{h}} \left[ -\frac{1}{n} \mathbf{S}_n(\theta)\right] = -\frac{1}{\rvert \rvert \mathbf{h} \rvert \rvert} \underset{n \rightarrow \infty}{\lim} \left[  \frac{1}{\sqrt{n} } \left( \mathbf{S}_n \left(\theta + \frac{1}{\sqrt{n}} \mathbf{h} \right) - \mathbf{S}_n(\theta) \right) \right]
+$$
+
+Recall that for differentiable functions, the directional derivative is equal to the dot product between the gradient and the normalized direction vector. That is:
+
+$$
+\begin{aligned}
+&\nabla_{\mathbf{h}} \left[ -\frac{1}{n} \mathbf{S}_n(\theta)\right] = \frac{\partial}{\partial \theta} \left[ - \frac{1}{n} \mathbf{S}_n(\theta) \right] \cdot \frac{\mathbf{h}}{\rvert \rvert \mathbf{h}\rvert \rvert} \\
+\implies &-\underset{n \rightarrow \infty}{\lim} \left[  \frac{1}{\sqrt{n} } \left( \mathbf{S}_n \left(\theta + \frac{1}{\sqrt{n}} \mathbf{h} \right) - \mathbf{S}_n(\theta) \right) \right] = \frac{\partial}{\partial \theta} \left[ - \frac{1}{n} \mathbf{S}_n(\theta) \right] \cdot \mathbf{h}
+\end{aligned}
+$$
+
+Let's subtract $\mathbf{G}(\theta) \mathbf{h}$ from both sides.
+
+$$
+\begin{aligned}
+&- \mathbf{G}(\theta) \mathbf{h} - \underset{n \rightarrow \infty}{\lim} \left[  \frac{1}{\sqrt{n} } \left( \mathbf{S}_n \left(\theta + \frac{1}{\sqrt{n}} \mathbf{h} \right) - \mathbf{S}_n(\theta) \right) \right] = \left( \frac{\partial}{\partial \theta} \left[ - \frac{1}{n} \mathbf{S}_n(\theta) \right] - \mathbf{G}(\theta) \right) \mathbf{h} \\
+\implies & - \left(\underset{n \rightarrow \infty}{\lim} \left[  \frac{1}{\sqrt{n} } \left( \mathbf{S}_n \left(\theta + \frac{1}{\sqrt{n}} \mathbf{h} \right) - \mathbf{S}_n(\theta) \right) \right] + \mathbf{G}(\theta) \mathbf{h}  \right)  = \left( \frac{\partial}{\partial \theta} \left[ - \frac{1}{n} \mathbf{S}_n(\theta) \right] - \mathbf{G}(\theta) \right) \mathbf{h}
+\end{aligned}
+$$
+
+Notice that both $\mathbf{G}(\theta)$ and $\mathbf{h}$ are independent of $n$, so we can take them inside the limit:
+
+$$
+- \left(\underset{n \rightarrow \infty}{\lim} \left[  \frac{1}{\sqrt{n} } \left( \mathbf{S}_n \left(\theta + \frac{1}{\sqrt{n}} \mathbf{h} \right) - \mathbf{S}_n(\theta) \right) + \mathbf{G}(\theta) \mathbf{h}  \right] \right)  = \left( \frac{\partial}{\partial \theta} \left[ - \frac{1}{n} \mathbf{S}_n(\theta) \right] - \mathbf{G}(\theta) \right) \mathbf{h}
+$$
+
+Condition \eqref{eq:condition-a2} basically implies that the lefthand side will approach $0$, which itself implies that $\mathbf{G}(\theta) = \frac{\partial}{\partial \theta} \left[ - \frac{1}{n} \mathbf{S}_n(\theta) \right]$ in the limit. 
+
+Let's partition our vectors and matrices in the following ways:
+
+$$
+\mathbf{S}_n(\theta) =
+\begin{bmatrix}
+\mathbf{S}^\top_{n, \lambda}(\theta) & 
+\mathbf{S}^\top_{n, \psi}(\theta)
+\end{bmatrix}^\top
+\hspace{2mm} \text{ and } \hspace{2mm}
+\mathbf{G}(\theta) =
+\begin{bmatrix}
+\mathbf{G}_{\lambda, \lambda}(\theta) & 
+\mathbf{G}_{\lambda, \psi}(\theta) \\ 
+\mathbf{G}_{\psi, \lambda}(\theta) &
+\mathbf{G}_{\psi, \psi}(\theta)
+\end{bmatrix}
+\hspace{2mm} \text{ and } \hspace{2mm}
+\mathbf{V}(\theta) =
+\begin{bmatrix}
+\mathbf{V}_{\lambda, \lambda}(\theta) & 
+\mathbf{V}_{\lambda, \psi}(\theta) \\ 
+\mathbf{V}_{\psi, \lambda}(\theta) &
+\mathbf{V}_{\psi, \psi}(\theta)
+\end{bmatrix}
+$$
+
+Let $$\theta_0 = (\lambda : \mathbf{0})$$ denote the value of $\theta$ under the null hypothesis, and suppose the null is true. Define the quantities:
+
+$$
+\begin{aligned}
+\mathbf{Z}_n(\theta_0) &= n^{-1/2} \left( \mathbf{S}_{n, \psi}(\theta_0) - \mathbf{G}_{\psi, \lambda}(\theta_0) \mathbf{G}_{\lambda, \lambda}^{-1}(\theta_0) \mathbf{S}_{n, \lambda}(\theta_0) \right) \\
+\mathbf{C}(\theta_0) &= \mathbf{V}_{\psi, \psi}(\theta_0) - \mathbf{G}_{\psi, \lambda}(\theta_0) \mathbf{G}^{-1}_{\lambda, \lambda}(\theta_0) \mathbf{V}_{\lambda, \psi}(\theta_0) - \left( \mathbf{V}_{\psi, \lambda}(\theta_0) - \mathbf{G}_{\psi, \lambda}(\theta_0) \mathbf{G}_{\lambda, \lambda}^{-1}(\theta_0) \mathbf{V}_{\lambda, \lambda}(\theta_0) \right)\left(\mathbf{G}^{-1}_{\lambda, \lambda}(\theta_0)\right)^\top \mathbf{G}^\top_{\psi, \lambda}(\theta_0)
+\end{aligned}
+$$
+
+Since the above condition (Eq. \eqref{eq:condition-a1}) is assumed to be satisfied, and $\mathbf{Z}_n$ is just a function of $\mathbf{S}_n$:
+
+$$
+n^{-1/2} \mathbf{S}_n(\theta_0) \rightsquigarrow \mathcal{N}(\mathbf{0}, \mathbf{V}(\theta_0)) 
+\hspace{2mm} \implies \hspace{2mm}
+\mathbf{Z}_n(\theta_0) \rightsquigarrow \mathcal{N}(\mathbf{0}, \mathbf{C}(\theta_0))
+$$
+
+Denote consistent estimators for $\mathbf{G}(\theta_0)$ and $\mathbf{V}(\theta_0)$ with $\tilde{\mathbf{G}}(\theta_0)$ and $\tilde{\mathbf{V}}(\theta_0)$, respectively. Furthermore, let $\tilde{\lambda}$ denote a "suitable" estimator for $\lambda$ (where suitable is not really specific, but examples are given in the text), and let $\tilde{\theta}_0 = (\tilde{\lambda} : \mathbf{0})$. Define:
+
+$$
+\begin{aligned}
+\mathbf{G}^{\psi, \psi}(\theta) &= \left( \mathbf{G}_{\psi, \psi}(\theta) - \mathbf{G}_{\psi, \lambda}(\theta) \mathbf{G}^{-1}_{\lambda, \lambda}(\theta) \mathbf{G}_{\lambda, \psi}(\theta) \right)^{-1} \\
+\mathbf{A}(\theta) &= \left( \mathbf{G}^\top(\theta) \mathbf{V}^{-1}(\theta)\mathbf{G}(\theta) \right)^{-1} \\
+\tilde{\mathbf{Z}}_n(\tilde{\theta}_0) &= n^{-1/2} \left( \mathbf{S}_{n, \psi}(\tilde{\theta}_0) - \tilde{\mathbf{G}}_{\psi, \lambda}(\tilde{\theta}_0) \tilde{\mathbf{G}}_{\lambda, \lambda}^{-1}(\tilde{\theta}_0) \mathbf{S}_{n, \lambda}(\tilde{\theta}_0) \right) 
+\end{aligned}
+$$
+
+Using these, define:
+
+$$
+\mathbf{U}(\tilde{\theta}_0) = \tilde{\mathbf{G}}^{\psi, \psi}(\theta_0) \tilde{\mathbf{Z}}_n(\tilde{\theta}_0)
+$$
+
+where $\tilde{\mathbf{G}}^{\psi, \psi}$ is a consistent estimator for $\mathbf{G}^{\psi, \psi}(\theta_0)$.
+
+Let's partition $\mathbf{A}(\theta)$ in the same way that we did with $\mathbf{V}(\theta)$ and $\mathbf{G}(\theta)$. With some work, we can see that for a fixed $$\delta \in \mathcal{C}$$, $$\mathbf{U}(\tilde{\theta}_0) \rightsquigarrow \mathcal{N}(\delta, \mathbf{A}_{\psi, \psi}(\theta_0))$$ under the sequence of alternatives $H_n: \psi = n^{-1/2} \delta$ as we take $n \rightarrow \infty$. Thus, $\mathbf{U}$ is a function of the data satisfying the condition in Eq. \eqref{eq:U-condition} and can be used in our test statistic construction.
+
+<div id="test-statistic"></div>
+<div class="definition">
+  <body>
+  <strong>Definition (One-Sided Test Statistic).</strong>
+  <br>
+  The test statistic for $H_0: \psi = \mathbf{0}$ against $H_A: \psi \in \mathcal{C}$ is given by:
+  $$
+  T_s = \mathbf{U}^\top(\tilde{\theta}_0) \tilde{\mathbf{A}}_{\psi, \psi}^{-1}(\tilde{\theta}_0) \mathbf{U}(\tilde{\theta}_0) - \underset{\mathbf{b} \in \mathcal{C}}{\inf} \left\{ (\mathbf{U}(\tilde{\theta}_0) - \mathbf{b})^\top \tilde{\mathbf{A}}_{\psi, \psi}^{-1}(\tilde{\theta}_0) (\mathbf{U}(\tilde{\theta}_0) - \mathbf{b}) \right\}
+  \label{eq:test-stat-2}
+  $$
+  where $\tilde{\mathbf{A}}_{\psi, \psi}^{-1}(\tilde{\theta}_0)$ is the partition of $\mathbf{A}_{\psi, \psi}^{-1}(\tilde{\theta}_0)$ corresponding to $(\psi, \psi)$ and constructed using $\tilde{\mathbf{G}}(\tilde{\theta}_0)$ and $\tilde{\mathbf{V}}(\tilde{\theta}_0)$ (I think...the authors never define $\tilde{\mathbf{A}}$).
+  </body>
+</div>
+
+A large sample $p$-value can be obtained as:
+
+$$
+p \approx \underset{\lambda}{\sup} \left\{ \xi(t^*, \mathbf{A}_{\psi, \psi}(\theta_0), \mathcal{C}) \right\}
+$$
+
+where $\xi(\cdot, \cdot, \cdot)$ is defined as in Eq. \eqref{eq:xi-defn} and $t^*$ is the observed value of $T_s$.
+
+<details>
+<summary>A Long Example.</summary>
 Let's try going through a simple example situation where we can apply this one-sided test statistic. We'll do a random intercepts model.
-
-#### Main Ideas
+<br>
 Our goal is to test:
-
 $$
 H_0: \tau^2 = 0 
 \hspace{5mm} \text{vs.} \hspace{5mm} 
 H_A: \tau^2 > 0
 $$
-
 Since $\tau^2$ is a scalar, the alternative hypothesis is equivalent to $\tau^2 \in \mathcal{C}$ where $\mathcal{C}$ is the non-negative ray in $\mathbb{R}$. We will choose $\mathbf{S}_n(\theta)$ to be the score, so we need to do some derivations.
-
+<br>
 We will use the maximum likelihood estimator (assuming $H_0$ is true) to get our estimates for the nuisance parameters. Let $\theta_0$ denote our parameter vector under the null hypothesis, and let $\tilde{\theta}_0$ denote this same vector with the nuisance parameters replaced with their MLEs. The influence function for a maximum likelihood estimator is the score function, and I am pretty sure that maximum likelihood estimators are regular, so we should have that:
-
 $$
 \mathbf{S}(\theta_0) \rightsquigarrow \mathcal{N}\left(\mathbf{0}, \mathcal{I}^{-1}(\theta) \right)
 $$
-
 where $$\mathbf{S}(\theta_0)$$ is the gradient of the log-likelihood of $\theta$ given $\mathbf{y}$ (the score) evaluated under the null, and $\mathcal{I}(\theta) = \mathbb{E}_{\theta_0}\left[ \mathbf{S}(\theta_0) \mathbf{S}^\top(\theta_0) \right]$, the Fisher information. For some more explanation, see my <a href="/posts/2025/06/17/estimation-theory.html">estimation theory post</a>. 
-
 To match the notation in the previous sections, we have $\mathbf{D}(\lambda) = \mathcal{I}^{-1}(\theta_0)$, and $\mathbf{U}_0 = \mathbf{S}(\tilde{\theta}_0)$. Since we don't know the true values of the other components  We can then use a consistent estimate of the Fisher information, denote it by $\tilde{\mathcal{I}}(\tilde{\theta}_0)$, for $\tilde{\mathbf{D}}(\tilde{\theta}_0)$.
-
 <!-- 
 <div class="example">
   <body>
@@ -280,24 +544,16 @@ To match the notation in the previous sections, we have $\mathbf{D}(\lambda) = \
   $$
   </body>
 </div> -->
-
-#### Set-Up
 We assume to have $N$ total observations coming from $k$ different clusters. The $i$-th cluster will have $n_i$ observations, and we'll later assume that $n_i = n$ for all $i \in [k]$. We will assume independent clusters and that observations from the same cluster are i.i.d. Gaussian with mean $(\alpha + \beta_i)\mathbf{1}_{n_i}$ and variance $\sigma^2$:
-
 $$
 \mathbf{y}_i \rvert \beta_i \sim \mathcal{N}\left( (\alpha + \beta_i)\mathbf{1}_{n_i}, \sigma^2 \mathbb{I}_{n_i \times n_i}\right)
 $$
-
 Integrating out the random effects, which we assume to be i.i.d. Gaussian with mean zero and variance $\tau^2$, we get the marginal distribution of the observations as:
-
 $$
 \mathbf{y}_i \sim \mathcal{N}\left( (\alpha + \beta_i)\mathbf{1}_{n_i}, \sigma^2 \mathbb{I}_{n_i \times n_i} + \tau^2 \mathbf{1}_{n_i}\mathbf{1}_{n_i}^\top \right)
 $$
-
-
 <!-- #### Marginal Likelihood
 We need the <i>marginal</i> log-likelihood, which means we need to integrate out the random effects. This can be kind of difficult, so instead we will take the expectation (with respect to the random effects distribution) of a Taylor approximation of the conditional log-likelihood. For a deeper discussion, see <a href="/posts/2025/06/04/glmm">this post</a>. -->
-
 <!-- 
 <div class="example">
   <body>
@@ -471,10 +727,8 @@ We now need to derive the score vector, $\mathbf{S}(\theta)$. This is straightfo
   $$
   </body>
 </div> -->
-
 <!-- #### Information
 This become a bit tricky here as we need to compute the variance of the score under the null hypothesis. Unfortunately, we can't use the negative expected Hessian because there is no $\tau^2$ term in the second component of the score, so that would be zero. We'll have to take the variance directly. Luckily, the score has expectation zero, so we don't have to do any centering.
-
 <div class="example">
   <body>
   <strong>Example (Information).</strong>
@@ -499,23 +753,15 @@ This become a bit tricky here as we need to compute the variance of the score un
   </body>
 </div>
  -->
-
-
-#### Likelihood
 The complete marginal likelihood is given by:
-
 $$
 \ell(\theta; \mathbf{y}) = -\frac{1}{2} \sum_{i = 1}^k \left[ n_i \log(2 \pi) + \log(\rvert \Sigma \rvert) + (\mathbf{y}_i - \alpha \mathbf{1}_{n_i})^\top \Sigma^{-1} (\mathbf{y}_i - \alpha \mathbf{1}_{n_i}) \right]
 $$
-
 where $$\Sigma = \sigma^2 \mathbb{I}_{n_i \times n_i} + \tau^2 \mathbf{1}_{n_i} \mathbf{1}_{n_i}^\top$$.
-
 Note that the Sherman-Morrison formula gives us:
-
 $$
 \Sigma^{-1} = \frac{1}{\sigma^2} \mathbb{I}_{n \times n} -\frac{\tau^2}{\sigma^2(\sigma^2 + \tau^2 n)} \mathbf{1}_{n}  \mathbf{1}_{n}^\top
 $$
-
 <details>
 <summary>Proof.</summary>
 $$
@@ -531,9 +777,7 @@ $$
 \nonumber
 $$
 </details>
-
 We have:
-
 $$
 \mathbf{S}(\theta) = \frac{\partial}{\partial \theta} \left[ \ell(\theta; \mathbf{y})\right] 
 = 
@@ -549,7 +793,6 @@ $$
 - \frac{1}{2} \left[\frac{kn}{\sigma^2 + \tau^2 n} \right] +  \frac{1}{2(\sigma^2 + \tau^2 n)^2} \sum_{i = 1}^k  \left( \sum_{j = 1}^{n} (\mathbf{y}_{i,j} - \alpha) \right)^2 
 \end{bmatrix}
 $$
-
 <details>
 <summary>Proof.</summary>
 $$
@@ -704,10 +947,7 @@ $$
 $$
 </details>
 </details>
-
-#### Deriving $\tilde{\theta}_0$
 We will use the maximum likelihood estimates under $H_0$ as our "suitable" estimates for the nuisance parameters. Thus:
-
 $$
 \tilde{\theta}_0 
 =
@@ -723,7 +963,6 @@ $$
 0
 \end{bmatrix}
 $$
-
 <details>
 <summary>Proof.</summary>
 $$
@@ -783,9 +1022,7 @@ $$
 $$
 </details>
 </details>
-
 Thus:
-
 $$
 \mathbf{S}(\tilde{\theta}_0) = 
 \begin{bmatrix}
@@ -794,10 +1031,7 @@ $$
   - \frac{kn}{2 \hat{\sigma}^2} + \frac{1}{2(\hat{\sigma}^2)^2} \sum_{i = 1}^k \left(\sum_{j = 1}^n (\mathbf{y}_{i,j} - \hat{\alpha}) \right)^2
 \end{bmatrix}
 $$
-
-#### Deriving $\tilde{\mathcal{I}}(\tilde{\theta}_0)$
 We'll derive the components of the Hessian by each variable:
-
 $$
 \frac{\partial}{\partial \alpha} \left[ \frac{\partial}{\partial \theta}\left[\ell (\theta; \mathbf{y}) \right] \right] = 
 \begin{bmatrix}
@@ -806,7 +1040,6 @@ $$
 -\frac{n}{(\sigma^2 + \tau^2 n)^2}\sum_{i = 1}^k \sum_{j = 1}^n (\mathbf{y}_{i,j} - \alpha)
 \end{bmatrix}
 $$
-
 <details>
 <summary>Second Derivatives w.r.t. $\alpha$.</summary>
 $$
@@ -845,7 +1078,6 @@ $$
 \nonumber
 $$
 </details>
-
 $$
 \frac{\partial}{\partial \sigma^2} \left[ \frac{\partial}{\partial \theta}\left[\ell (\theta; \mathbf{y}) \right] \right] = 
 \begin{bmatrix}
@@ -854,7 +1086,6 @@ $$
 \frac{kn}{2(\sigma^2 + \tau^2 n)^2} - \frac{1}{(\sigma^2 + \tau^2n)^3}\sum_{i = 1}^k  \left( \sum_{j = 1}^{n} (\mathbf{y}_{i,j} - \alpha) \right)^2
 \end{bmatrix}
 $$
-
 <details>
 <summary>Second Derivatives w.r.t. $\sigma^2$.</summary>
 $$
@@ -885,7 +1116,6 @@ $$
 \nonumber
 $$
 </details>
-
 $$
 \frac{\partial}{\partial \tau^2} \left[ \frac{\partial}{\partial \theta}\left[\ell (\theta; \mathbf{y}) \right] \right] = 
 \begin{bmatrix}
@@ -894,7 +1124,6 @@ $$
 \frac{kn^2}{2(\sigma^2 + \tau^2n)^2} - \frac{n}{(\sigma^2 + \tau^2 n)^3}\sum_{i = 1}^k  \left( \sum_{j = 1}^{n} (\mathbf{y}_{i,j} - \alpha) \right)^2
 \end{bmatrix}
 $$
-
 <details>
 <summary>Second Derivatives w.r.t. $\tau^2$.</summary>
 $$
@@ -926,9 +1155,7 @@ $$
 \nonumber
 $$
 </details>
-
 Taking the expectation, we get:
-
 $$
 \mathbb{E}\left[ \frac{\partial \ell(\theta; \mathbf{y})}{\partial \theta \partial \theta^\top} \right] =
 \begin{bmatrix}
@@ -937,7 +1164,6 @@ $$
 0 & -\frac{nk}{2(\sigma^2 + \tau^2 n)^2} & - \frac{n^2 k}{2(\sigma^2 + \tau^2 n)^2}
 \end{bmatrix}
 $$
-
 <details>
 <summary>Derivations.</summary>
 $$
@@ -1034,9 +1260,7 @@ $$
 \nonumber
 $$
 </details>
-
 Multiplying by $-1$ and evaluating at $\tilde{\theta}_0 = (\hat{\alpha}, \hat{\sigma}^2, 0)$ gives us the information matrix:
-
 $$
 \tilde{\mathcal{I}}(\tilde{\theta}_0) =
 \begin{bmatrix}
@@ -1045,7 +1269,6 @@ $$
 0 & \frac{nk}{2(\hat{\sigma}^2)^2} & \frac{n^2 k}{2(\sigma^2 + \tau^2 n)^2}-
 \end{bmatrix}
 $$
-
 <details>
 <summary>Derivations.</summary>
 $$
@@ -1069,11 +1292,7 @@ $$
 \end{aligned}
 $$
 </details>
-
-
-#### Deriving $\tilde{\mathcal{I}}^{-1}(\tilde{\theta}_0)$
 We'll partition $\tilde{\mathcal{I}}(\tilde{\theta}_0)$ into the nuisance parameter ($\lambda = (\alpha, \sigma^2)$) and the parameter of interest, $\tau^2$. 
-
 $$
 \tilde{\mathcal{I}}(\tilde{\theta}_0) =
 \begin{bmatrix}
@@ -1081,9 +1300,7 @@ $$
   \tilde{\mathcal{I}}_{\tau^2, \lambda}(\tilde{\theta}_0) & \tilde{\mathcal{I}}_{\tau^2, \tau^2}(\tilde{\theta}_0)
 \end{bmatrix}
 $$
-
 where we let:
-
 $$
 \begin{aligned}
 \tilde{\mathcal{I}}_{\lambda, \lambda}(\tilde{\theta}_0) &= 
@@ -1108,9 +1325,7 @@ $$
 \end{bmatrix} 
 \end{aligned}
 $$
-
 We only really need the block of the inverse Fisher information that corresponds to $(\tau^2, \tau^2)$. Using the <a href="https://chrisyeh96.github.io/2021/05/19/schur-complement.html#schur-complements">matrix inverse/Schur complement theorem</a>, we can find this pretty easily:
-
 $$
 \begin{aligned}
 \tilde{\mathcal{I}}^{-1}_{\tau^2, \tau^2} (\tilde{\theta}_0)
@@ -1126,180 +1341,16 @@ $$
 &= \left[\frac{n^2 k}{2(\hat{\sigma}^2)^2} - \frac{n^3 k^3}{8 (\hat{\sigma}^2)^6}\right]^{-1}
 \end{aligned}
 $$
-
-
-
-
-#### Test Statistic
 Following Eq. \eqref{eq:test-stat-1}, we get our one-sided test statistic:
-
 $$
 T = \mathbf{S}^\top(\tilde{\theta}_0) \tilde{\mathcal{I}}_{\tau^2, \tau^2}^{-1}(\tilde{\theta}_0) \mathbf{S}(\tilde{\theta}_0) - \underset{\mathbf{b} \in \mathcal{C}}{\inf} \left\{ \left(\mathbf{S}(\tilde{\theta}_0) - \mathbf{b}\right)^\top \tilde{\mathcal{I}}_{\tau^2, \tau^2}^{-1}(\tilde{\theta}_0) \left( \mathbf{S}(\tilde{\theta}_0)- \mathbf{b}\right) \right\}
 $$
-
-Since we are comparing a model with one random effect to one with zero, the large sample $p$-value is a fifty-fifty mixture of a $\chi^2_0$ and a $\chi^2_1$ distribution.[^fn-shapiro]
-
----
-
-### A Score-Type Test
-How do we use this test statistic in practice? This is pretty much just a question of what function, $\mathbf{U}_0$, of our data we want to pick. Silvapulle and Silvapulle explain how to construct a score-type test statistic using their general statistic.  
-
-Let's define $\mathbf{S}_n(\theta)$ as any $k \times 1$ vector estimating equation (so it should have expectation zero) for $\theta$ (e.g. the score function or something else). We need this vector to satisfy a couple of conditions.
-
-<div class="definition">
-  <body>
-  <strong>Conditions.</strong>
-  <br>
-  Suppose $\mathbf{S}_n(\theta)$ is such that there exist non-singular $\mathbf{G}(\theta)$ and $\mathbf{V}(\theta)$ satisfying for any $a > 0$:
-  $$
-  \frac{1}{\sqrt{n}}\mathbf{S}_n(\theta) \rightsquigarrow \mathcal{N}(\mathbf{0}, \mathbf{V}(\theta))
-  \label{eq:condition-a1}
-  $$
-  and
-  $$
-  \underset{\rvert \rvert \mathbf{h} \rvert \rvert \leq a}{\sup} \left\{ \frac{1}{\sqrt{n}} \left( \mathbf{S}_n\left(\theta + \frac{1}{\sqrt{n}} \mathbf{h}\right) - \mathbf{S}_n(\theta) \right)  + \mathbf{G}(\theta) \mathbf{h} \right\} = o_p(1)
-  \label{eq:condition-a2}
-  $$
-  where $o_p(1)$ is stochastic order notation for convergence in probability to $0$.
-  </body>
-</div>
-
-The first condition basically states that $\mathbf{S}_n(\theta)$ is asymptotically Gaussian when suitably scaled. Let's take a closer look at the second condition (this will be kind of hand-wavy).
-
-Suppose we fix $\mathbf{h}$. The directional derivative of $\mathbf{S}_n(\theta)$ at $\theta$ along $\mathbf{h}$ is given by the limit:
-
-$$
-\nabla_{\mathbf{h}} \mathbf{S}_n(\theta) = \underset{s \rightarrow 0}{\lim} \left[ \frac{\mathbf{S}_n(\theta + s \mathbf{h}) - \mathbf{S}_n(\theta)}{s \rvert \rvert \mathbf{h} \rvert \rvert} \right]
-$$
-
-Technically, this is the definition for a scalar function, but we can just use the above notation to mean the limits are taken element-wise to get the result for a vector-valued function.
-
-If we let $s = \frac{1}{\sqrt{n}}$, then we can rewrite the above as the limit as $n \rightarrow \infty$:
-
-$$
-\nabla_{\mathbf{h}} \mathbf{S}_n(\theta) = \underset{n \rightarrow \infty}{\lim} \left[  \frac{\sqrt{n}}{\rvert \rvert \mathbf{h} \rvert \rvert} \left( \mathbf{S}_n \left(\theta + \frac{1}{\sqrt{n}} \mathbf{h} \right) - \mathbf{S}_n(\theta) \right) \right]
-$$
-
-Scaling by $- \frac{1}{n}$, we get:
-
-$$
-\nabla_{\mathbf{h}} \left[ -\frac{1}{n} \mathbf{S}_n(\theta)\right] = -\frac{1}{\rvert \rvert \mathbf{h} \rvert \rvert} \underset{n \rightarrow \infty}{\lim} \left[  \frac{1}{\sqrt{n} } \left( \mathbf{S}_n \left(\theta + \frac{1}{\sqrt{n}} \mathbf{h} \right) - \mathbf{S}_n(\theta) \right) \right]
-$$
-
-Recall that for differentiable functions, the directional derivative is equal to the dot product between the gradient and the normalized direction vector. That is:
-
-$$
-\begin{aligned}
-&\nabla_{\mathbf{h}} \left[ -\frac{1}{n} \mathbf{S}_n(\theta)\right] = \frac{\partial}{\partial \theta} \left[ - \frac{1}{n} \mathbf{S}_n(\theta) \right] \cdot \frac{\mathbf{h}}{\rvert \rvert \mathbf{h}\rvert \rvert} \\
-\implies &-\underset{n \rightarrow \infty}{\lim} \left[  \frac{1}{\sqrt{n} } \left( \mathbf{S}_n \left(\theta + \frac{1}{\sqrt{n}} \mathbf{h} \right) - \mathbf{S}_n(\theta) \right) \right] = \frac{\partial}{\partial \theta} \left[ - \frac{1}{n} \mathbf{S}_n(\theta) \right] \cdot \mathbf{h}
-\end{aligned}
-$$
-
-Let's subtract $\mathbf{G}(\theta) \mathbf{h}$ from both sides.
-
-$$
-\begin{aligned}
-&- \mathbf{G}(\theta) \mathbf{h} - \underset{n \rightarrow \infty}{\lim} \left[  \frac{1}{\sqrt{n} } \left( \mathbf{S}_n \left(\theta + \frac{1}{\sqrt{n}} \mathbf{h} \right) - \mathbf{S}_n(\theta) \right) \right] = \left( \frac{\partial}{\partial \theta} \left[ - \frac{1}{n} \mathbf{S}_n(\theta) \right] - \mathbf{G}(\theta) \right) \mathbf{h} \\
-\implies & - \left(\underset{n \rightarrow \infty}{\lim} \left[  \frac{1}{\sqrt{n} } \left( \mathbf{S}_n \left(\theta + \frac{1}{\sqrt{n}} \mathbf{h} \right) - \mathbf{S}_n(\theta) \right) \right] + \mathbf{G}(\theta) \mathbf{h}  \right)  = \left( \frac{\partial}{\partial \theta} \left[ - \frac{1}{n} \mathbf{S}_n(\theta) \right] - \mathbf{G}(\theta) \right) \mathbf{h}
-\end{aligned}
-$$
-
-Notice that both $\mathbf{G}(\theta)$ and $\mathbf{h}$ are independent of $n$, so we can take them inside the limit:
-
-$$
-- \left(\underset{n \rightarrow \infty}{\lim} \left[  \frac{1}{\sqrt{n} } \left( \mathbf{S}_n \left(\theta + \frac{1}{\sqrt{n}} \mathbf{h} \right) - \mathbf{S}_n(\theta) \right) + \mathbf{G}(\theta) \mathbf{h}  \right] \right)  = \left( \frac{\partial}{\partial \theta} \left[ - \frac{1}{n} \mathbf{S}_n(\theta) \right] - \mathbf{G}(\theta) \right) \mathbf{h}
-$$
-
-Condition \eqref{eq:condition-a2} basically implies that the lefthand side will approach $0$, which itself implies that $\mathbf{G}(\theta) = \frac{\partial}{\partial \theta} \left[ - \frac{1}{n} \mathbf{S}_n(\theta) \right]$ in the limit. 
-
-Let's partition our vectors and matrices in the following ways:
-
-$$
-\mathbf{S}_n(\theta) =
-\begin{bmatrix}
-\mathbf{S}^\top_{n, \lambda}(\theta) & 
-\mathbf{S}^\top_{n, \psi}(\theta)
-\end{bmatrix}^\top
-\hspace{2mm} \text{ and } \hspace{2mm}
-\mathbf{G}(\theta) =
-\begin{bmatrix}
-\mathbf{G}_{\lambda, \lambda}(\theta) & 
-\mathbf{G}_{\lambda, \psi}(\theta) \\ 
-\mathbf{G}_{\psi, \lambda}(\theta) &
-\mathbf{G}_{\psi, \psi}(\theta)
-\end{bmatrix}
-\hspace{2mm} \text{ and } \hspace{2mm}
-\mathbf{V}(\theta) =
-\begin{bmatrix}
-\mathbf{V}_{\lambda, \lambda}(\theta) & 
-\mathbf{V}_{\lambda, \psi}(\theta) \\ 
-\mathbf{V}_{\psi, \lambda}(\theta) &
-\mathbf{V}_{\psi, \psi}(\theta)
-\end{bmatrix}
-$$
-
-Let $$\theta_0 = (\lambda : \mathbf{0})$$ denote the value of $\theta$ under the null hypothesis, and suppose the null is true. Define the quantities:
-
-$$
-\begin{aligned}
-\mathbf{Z}_n(\theta_0) &= n^{-1/2} \left( \mathbf{S}_{n, \psi}(\theta_0) - \mathbf{G}_{\psi, \lambda}(\theta_0) \mathbf{G}_{\lambda, \lambda}^{-1}(\theta_0) \mathbf{S}_{n, \lambda}(\theta_0) \right) \\
-\mathbf{C}(\theta_0) &= \mathbf{V}_{\psi, \psi}(\theta_0) - \mathbf{G}_{\psi, \lambda}(\theta_0) \mathbf{G}^{-1}_{\lambda, \lambda}(\theta_0) \mathbf{V}_{\lambda, \psi}(\theta_0) - \left( \mathbf{V}_{\psi, \lambda}(\theta_0) - \mathbf{G}_{\psi, \lambda}(\theta_0) \mathbf{G}_{\lambda, \lambda}^{-1}(\theta_0) \mathbf{V}_{\lambda, \lambda}(\theta_0) \right)\left(\mathbf{G}^{-1}_{\lambda, \lambda}(\theta_0)\right)^\top \mathbf{G}^\top_{\psi, \lambda}(\theta_0)
-\end{aligned}
-$$
-
-Since the above condition (Eq. \eqref{eq:condition-a1}) is assumed to be satisfied, and $\mathbf{Z}_n$ is just a function of $\mathbf{S}_n$:
-
-$$
-n^{-1/2} \mathbf{S}_n(\theta_0) \rightsquigarrow \mathcal{N}(\mathbf{0}, \mathbf{V}(\theta_0)) 
-\hspace{2mm} \implies \hspace{2mm}
-\mathbf{Z}_n(\theta_0) \rightsquigarrow \mathcal{N}(\mathbf{0}, \mathbf{C}(\theta_0))
-$$
-
-Denote consistent estimators for $\mathbf{G}(\theta_0)$ and $\mathbf{V}(\theta_0)$ with $\tilde{\mathbf{G}}(\theta_0)$ and $\tilde{\mathbf{V}}(\theta_0)$, respectively. Furthermore, let $\tilde{\lambda}$ denote a "suitable" estimator for $\lambda$ (where suitable is not really specific, but examples are given in the text), and let $\tilde{\theta}_0 = (\tilde{\lambda} : \mathbf{0})$. Define:
-
-$$
-\begin{aligned}
-\mathbf{G}^{\psi, \psi}(\theta) &= \left( \mathbf{G}_{\psi, \psi}(\theta) - \mathbf{G}_{\psi, \lambda}(\theta) \mathbf{G}^{-1}_{\lambda, \lambda}(\theta) \mathbf{G}_{\lambda, \psi}(\theta) \right)^{-1} \\
-\mathbf{A}(\theta) &= \left( \mathbf{G}^\top(\theta) \mathbf{V}^{-1}(\theta)\mathbf{G}(\theta) \right)^{-1} \\
-\tilde{\mathbf{Z}}_n(\tilde{\theta}_0) &= n^{-1/2} \left( \mathbf{S}_{n, \psi}(\tilde{\theta}_0) - \tilde{\mathbf{G}}_{\psi, \lambda}(\tilde{\theta}_0) \tilde{\mathbf{G}}_{\lambda, \lambda}^{-1}(\tilde{\theta}_0) \mathbf{S}_{n, \lambda}(\tilde{\theta}_0) \right) 
-\end{aligned}
-$$
-
-Using these, define:
-
-$$
-\mathbf{U}(\tilde{\theta}_0) = \tilde{\mathbf{G}}^{\psi, \psi}(\theta_0) \tilde{\mathbf{Z}}_n(\tilde{\theta}_0)
-$$
-
-where $\tilde{\mathbf{G}}^{\psi, \psi}$ is a consistent estimator for $\mathbf{G}^{\psi, \psi}(\theta_0)$.
-
-Let's partition $\mathbf{A}(\theta)$ in the same way that we did with $\mathbf{V}(\theta)$ and $\mathbf{G}(\theta)$. With some work, we can see that for a fixed $$\delta \in \mathcal{C}$$, $$\mathbf{U}(\tilde{\theta}_0) \rightsquigarrow \mathcal{N}(\delta, \mathbf{A}_{\psi, \psi}(\theta_0))$$ under the sequence of alternatives $H_n: \psi = n^{-1/2} \delta$ as we take $n \rightarrow \infty$. Thus, $\mathbf{U}$ is a function of the data satisfying the condition in Eq. \eqref{eq:U-condition} and can be used in our test statistic construction.
-
-<div id="test-statistic"></div>
-<div class="definition">
-  <body>
-  <strong>Definition (One-Sided Test Statistic).</strong>
-  <br>
-  The test statistic for $H_0: \psi = \mathbf{0}$ against $H_A: \psi \in \mathcal{C}$ is given by:
-  $$
-  T_s = \mathbf{U}^\top(\tilde{\theta}_0) \tilde{\mathbf{A}}_{\psi, \psi}^{-1}(\tilde{\theta}_0) \mathbf{U}(\tilde{\theta}_0) - \underset{\mathbf{b} \in \mathcal{C}}{\inf} \left\{ (\mathbf{U}(\tilde{\theta}_0) - \mathbf{b})^\top \tilde{\mathbf{A}}_{\psi, \psi}^{-1}(\tilde{\theta}_0) (\mathbf{U}(\tilde{\theta}_0) - \mathbf{b}) \right\}
-  \label{eq:test-stat-2}
-  $$
-  where $\tilde{\mathbf{A}}_{\psi, \psi}^{-1}(\tilde{\theta}_0)$ is the partition of $\mathbf{A}_{\psi, \psi}^{-1}(\tilde{\theta}_0)$ corresponding to $(\psi, \psi)$ and constructed using $\tilde{\mathbf{G}}(\tilde{\theta}_0)$ and $\tilde{\mathbf{V}}(\tilde{\theta}_0)$ (I think...the authors never define $\tilde{\mathbf{A}}$).
-  </body>
-</div>
-
-A large sample $p$-value can be obtained as:
-
-$$
-p \approx \underset{\lambda}{\sup} \left\{ \xi(t^*, \mathbf{A}_{\psi, \psi}(\theta_0), \mathcal{C}) \right\}
-$$
-
-where $\xi(\cdot, \cdot, \cdot)$ is defined as in Eq. \eqref{eq:xi-defn} and $t^*$ is the observed value of $T_s$.
+Since we are comparing a model with one random effect to one with zero, the large sample $p$-value is a fifty-fifty mixture of a $\chi^2_0$ and a $\chi^2_1$ distribution.<span markdown="1">[^fn-shapiro]</span>
+</details>
 
 ---
 
-## Results
+### Results
 
 <div class="theorem">
   <body>
@@ -1529,14 +1580,21 @@ $$
 </div>
 
 
-
-
 ---
 ## References
+
 [^fn-aleph]: AlephZero. “Does This Special Case of Convex Quadratic Programming Have a Partially-Unique Solution?” Mathematics Stack Exchange, February 12, 2019. https://math.stackexchange.com/questions/3108304/does-this-special-case-of-convex-quadratic-programming-have-a-partially-unique-s. 
 
 [^fn-shapiro]: Shapiro, A. (1988). Towards a Unified Theory of Inequality Constrained Testing in Multivariate Analysis. International Statistical Review / Revue Internationale de Statistique, 56(1), 49. https://doi.org/10.2307/1403361
 
 [^fn-silvapulle]: Silvapulle, M. J., & Silvapulle, P. (1995). A Score Test Against One-Sided Alternatives.
 
-[^fn-cox-hinkley] Cox, D. R., & Hinkley, D. V. (2017). Theoretical statistics. CRC Press, Taylor & Francis Group.
+[^fn-coxhinkley]: Cox, D. R., & Hinkley, D. V. (2017). Theoretical statistics. CRC Press, Taylor & Francis Group.
+
+[^fn-hall]: Hall, D. B., & Praestgaard, J. T. (2001). Order-restricted score tests for homogeneity in generalised linear and nonlinear mixed models. Biometrika, 88(3), 739–751. https://doi.org/10.1093/biomet/88.3.739
+
+[^fn-kudo]: Kudo, A. (1963). A Multivariate Analogue of the One-Sided Test. Biometrika, 50, 403–418.
+
+[^fn-lin]: Lin, X. (1997). Variance component testing in generalised linear models with random effects. Biometrika, 84(2), 309–326. https://doi.org/10.1093/biomet/84.2.309
+
+[^fn-dasgupta]: DasGupta, A. (2008). Asymptotic Theory of Statistics and Probability. Springer New York. https://doi.org/10.1007/978-0-387-75971-5.

@@ -11,4 +11,4 @@ Abdelhamid SS, Scioscia J, Vodovotz Y, Wu J, **Rosengart A**, Sung E, Rahman S, 
 
 ---
 
-That's just the abstract! Read the full journal article at the [MDPI](https://doi.org/10.3390/metabo12090774).
+That's just the abstract! Read the full journal article at [MDPI](https://doi.org/10.3390/metabo12090774).
