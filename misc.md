@@ -2,6 +2,7 @@
 layout: page
 title: More About Me
 permalink: misc
+category: header
 ---
 
 In my free time, I like to play and write music!

@@ -37,6 +37,7 @@ plugins:
   #- jekyll-toc
 markdown: kramdown
 
+
 # scholar:
 #   style: apa
 #   locale: en

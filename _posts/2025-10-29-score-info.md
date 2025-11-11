@@ -3,7 +3,7 @@ layout: post
 title:  "Score and Information - GLMMs"
 date: 29 October 2025
 categories: posts
-tags: ["likelihood", "information", "glmm"]
+tags: ["likelihood", "information", "generalized-models", "score-test"]
 use_math: true
 include_scripts: [
     "/assets/js/snackbar.js",

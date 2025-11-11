@@ -3,7 +3,7 @@ layout: post
 title:  "One-Sided Score Test"
 date: 18 February 2025
 categories: posts
-tags: ["theory", "likelihood", "score test"]
+tags: ["theory", "likelihood", "score-test"]
 use_math: true
 include_scripts: [
     "/assets/js/snackbar.js",
