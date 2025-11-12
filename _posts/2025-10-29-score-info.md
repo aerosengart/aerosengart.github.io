@@ -49,7 +49,7 @@ where we also assume the random effects and errors are independent. $$\mathbf{z}
 
 $$
 \Sigma_{y_i} =
-\sigma^2 \mathbb{I}_{n \times n} + \mathbf{z}_i \left[ \tau^2 \mathbb{I}_{n \times n} \right] \mathbf{z}_i^\top
+\sigma^2 \mathbb{I}_{n \times n} + \tau^2 \mathbf{z}_i \mathbf{z}_i^\top
 $$
 
 <details>
@@ -76,7 +76,7 @@ $$
 \vdots & \ddots & \vdots \\
 \tau^2 \mathbf{z}_{i,n} \mathbf{z}_{i, 1} & \dots & \sigma^2 + \tau^2 \mathbf{z}_{i, n}^2
 \end{bmatrix} =
-\sigma^2 \mathbb{I}_{n \times n} + \mathbf{z}_i \left[ \tau^2 \mathbb{I}_{n \times n} \right] \mathbf{z}_i^\top
+\sigma^2 \mathbb{I}_{n \times n} + \tau^2 \mathbf{z}_i \mathbf{z}_i^\top
 \nonumber
 $$
 </details>
@@ -584,11 +584,11 @@ $$
 \label{eq:neg-bin-mean}
 $$
 
-The likelihood based on a single observation, $\mathbf{y}^\star_{i,j}$, is given by:
+The likelihood based on a single observation, $\mathbf{y}_{i,j}$, is given by:
 
 $$
-\mathcal{L}(\mathbf{y}^\star_{i,j}; \alpha_i, \tau^2 \rvert \beta_i) = 
-\frac{\Gamma\left(\mathbf{y}^\star_{i,j} + \frac{1}{\phi}\right)}{\Gamma(\mathbf{y}^\star_{i,j} + 1) \Gamma\left(\frac{1}{\phi} \right)}\left(\frac{1}{1 + \phi \mathbf{y}^\star_{i,j}}\right)^{\frac{1}{\phi}} \left( \frac{\phi \mu_{i,j}}{1 + \phi \mu_{i,j}} \right)^{\mathbf{y}^\star_{i,j}}
+\mathcal{L}(\mathbf{y}_{i,j}; \alpha_i, \tau^2 \rvert \beta_i) = 
+\frac{\Gamma\left(\mathbf{y}_{i,j} + \frac{1}{\phi}\right)}{\Gamma(\mathbf{y}_{i,j} + 1) \Gamma\left(\frac{1}{\phi} \right)}\left(\frac{1}{1 + \phi \mathbf{y}_{i,j}}\right)^{\frac{1}{\phi}} \left( \frac{\phi \mu_{i,j}}{1 + \phi \mu_{i,j}} \right)^{\mathbf{y}_{i,j}}
 \label{eq:neg-bin-single-lik}
 $$
 
@@ -601,52 +601,59 @@ $$
 The above parametrization of the likelihood implies that the conditional variance of the responses is given by:
 
 $$
-\text{Var}(\mathbf{y}^\star_{i,j}) = \mu_{i,j} + \frac{1}{\phi} \mu_{i,j}^2
+V(\mu_{i,j}) = \mu_{i,j} + \frac{1}{\phi} \mu_{i,j}^2
 $$
 
 The conditional log-likelihood based on cluster $i$ is:
 
 $$
-\ell(\mathbf{y}^\star_i; \alpha_i, \tau^2 \rvert \beta_i) = \sum_{j = 1}^{n_i} \left[ \log \Gamma \left( \mathbf{y}^\star_{i,j} + \frac{1}{\phi} \right)  - \log \Gamma\left(\mathbf{y}^\star_{i,j} + 1\right) - \log\Gamma\left(\frac{1}{\phi} \right) - \frac{1}{\phi} \log\left(1 + \phi \mathbf{y}^\star_{i,j} \right) + \mathbf{y}^\star_{i,j} \left( \log(\phi \mu_{i,j}) - \log(1 + \phi \mu_{i,j}) \right) \right]
+\ell(\mathbf{y}_i; \alpha_i, \tau^2 \rvert \beta_i) = \sum_{j = 1}^{n_i} \left[ \log \Gamma \left( \mathbf{y}_{i,j} + \frac{1}{\phi} \right)  - \log \Gamma\left(\mathbf{y}_{i,j} + 1\right) - \log\Gamma\left(\frac{1}{\phi} \right) - \frac{1}{\phi} \log\left(1 + \phi \mathbf{y}_{i,j} \right) + \mathbf{y}_{i,j} \left( \log(\phi \mu_{i,j}) - \log(1 + \phi \mu_{i,j}) \right) \right]
 \label{eq:neg-bin-full-cond-ll}
 $$
 
 ### Pseudo-Likelihood Approach
-We assume to have the following generalized linear mixed model:
+We follow a pseudo-likelihood approach (see <a href="/posts/2025/06/04/glmm.html">here</a>). We assume to have the following generalized linear mixed model:
 
 $$
-\mathbf{y}^\star_{i,j} \rvert \beta_i \sim \text{NegBin}(\mu_{i,j}, \phi);
+\mathbf{y}_{i,j} \rvert \beta_i \sim \text{NegBin}(\mu_{i,j}, \phi);
 \hspace{10mm} \mu_{i,j} = \exp\left(\eta_{i,j}\right) = \exp\left(\alpha_i + \beta_i \mathbf{z}_{i,j}\right)
 \label{eq:glmm-y}
 $$
 
-We'll use a superscript $(c)$ to denote a quantity evaluated at the parameter estimates made under $H_0$ (i.e. $\tau^2 = \mathbf{0}$) at iteration $c$ (call these our "current" estimates). Our <i>working</i> responses and errors at iteration $c+1$ are:
+We'll use a superscript $\star$ to denote a quantity evaluated at the parameter estimates made under $H_0$ (i.e. $\tau^2 = \mathbf{0}$). Our <i>working</i> responses and errors are:
 
 $$
-\mathbf{y}^{(c+1)}_{i,j} = \frac{1}{\hat{\mu}^{(c)}_{i,j}} (\mathbf{y}_{i,j} - \hat{\mu}^{(c)}_{i,j}) + \hat{\eta}^{(c)}_{i,j};
+\mathbf{y}^\star_{i,j} = \alpha_i + \beta_i \mathbf{z}_{i,j} + \epsilon^\star_{i,j};
 \hspace{10mm}
-\epsilon^{(c+1)}_{i,j} = \mathbf{y}^\star_{i,j} - \hat{\mu}^{(c)}_{i,j} - \hat{\mu}_{i,j}^{(c)} (\eta_{i,j} - \hat{\eta}^{(c)}_{i,j})
+\epsilon^\star_{i,j} \sim \mathcal{N}\left(0, \frac{V(\hat{\mu}_{i,j})}{\delta^2(\hat{\eta}_{i,j})}\right)
 $$
 
-where the errors are Gaussian and satisfy:
+where $$\delta(\hat{\eta}_{i,j}) = \frac{\partial g^{-1}(\eta_{i,j})}{\partial \eta_{i,j}}\bigg\rvert_{\eta_{i,j} = \hat{\eta}_{i,j}}$$. We can then just apply all of the results we found in the previous section to this case but make $$\hat{\sigma}^2$$ different for each observation, where $$\hat{\sigma}^2_{i,j} = \text{Var}(\epsilon_{i,j})$$. 
+
+To do so, we need an estimate of $\alpha_i$ under $H_0$. In this case, the model for a cluster $i$ reduces down to:
 
 $$
-\mathbb{E}\left[ \epsilon^{(c+1)}_{i,j} \rvert \mu_{i,j}\right] = 0;
-\hspace{5mm}
-\text{Var}(\epsilon^{(c+1)}_{i,j} \rvert \mu_{i,j}) = \hat{\mu}^{(c)}_{i,j} + \frac{1}{\phi} (\hat{\mu}^{(c)}_{i,j})^2;
-\hspace{5mm}
-\text{Cov}(\epsilon^{(c+1)}_{i,j}, \epsilon^{(c+1)}_{i', j'} \rvert \mu_{i,j}, \mu_{i',j'} ) = 0
+\mathbf{y}^\star_{i} = \alpha_i \mathbf{1}_n + \epsilon^*_{i}
+\hspace{10mm}
+\mathbf{y}^\star_{i} = \begin{bmatrix} \mathbf{y}^*_{i, 1} \\ \vdots \\ \mathbf{y}^*_{i, n} \end{bmatrix};
+\hspace{2mm}
+\epsilon^*_{i} = \begin{bmatrix} \epsilon^*_{i, 1} \\ \vdots \\ \epsilon^*_{i,n} \end{bmatrix}
 $$
 
-Let $$\mathbf{y}_{i,j}$$ and $$\epsilon_{i,j}$$ denote the working response and errors, respectively, at the last iteration. Our LMM approximation is then:
+Thus, a solution can be found in closed form via <a href="/posts/2025/06/03/glm.html#weighted-least-squares">weighted least squares</a> as:
 
 $$
-\mathbf{y}_{i,j} = \alpha_i + \beta_i \mathbf{z}_{i,j} + \epsilon_{i,j}
+\hat{\alpha}_i = (\mathbf{1}_n^\top \mathbf{W}_i \mathbf{1}_n)^{-1} \mathbf{1}_n^\top \mathbf{W}_i \mathbf{y}_i;
+\hspace{8mm}
+\mathbf{W}_i =
+\begin{bmatrix}
+\frac{1}{\hat{\sigma}_{i,1}^2} & \dots & 0 \\
+\vdots & \ddots & \vdots \\
+0 & \dots & \frac{1}{\hat{\sigma}_{i,n}^2}
+\end{bmatrix}
 $$
 
-We can then just apply all of the results we found in the previous section to this case but make $\hat{\sigma}^2 = \text{Var}(\epsilon_{i,j} \rvert \mu_{i,j})$. 
-
-
+<!-- 
 ### Derivatives of the Conditional Log-Likelihood
 First, note that:
 
@@ -832,10 +839,8 @@ $$
 &= -\frac{\tau^2\sum_{j = 1}^{n_i}\xi_{i,j}^2 \mathbf{z}_{i,j}^2 \mathbf{y}_{i,j} \mathbf{x}_{i,j} \zeta_{i,j}(1 - 2 \xi_{i,j} \zeta_{i,j})}{2\left(1 + \tau^2 \sum_{j = 1}^{n_i} \xi_{i,j}^2 \mathbf{z}_{i,j} \mathbf{y}_{i,j} \zeta_{i,j}\right)} \left(1 + \frac{\tau^2\left(\sum_{j = 1}^{n_i} \xi_{i,j} \mathbf{y}_{i,j} \mathbf{z}_{i,j} \right)^2}{1 + \tau^2\sum_{j = 1}^{n_i} \xi_{i,j}^2 \mathbf{z}_{i,j} \mathbf{y}_{i,j} \zeta_{i,j}}\right) - \frac{\tau^2 \left(\sum_{j = 1}^{n_i} \xi_{i,j} \mathbf{y}_{i,j} \mathbf{z}_{i,j} \right) \left( \sum_{j = 1}^{n_i} \xi_{i,j}^2 \mathbf{y}_{i,j} \mathbf{z}_{i,j} \mathbf{x}_{i,j} \zeta_{i,j} \right) }{1 + \tau^2\sum_{j = 1}^{n_i} \xi_{i,j}^2 \mathbf{z}_{i,j} \mathbf{y}_{i,j} \zeta_{i,j}} + \sum_{j = 1}^{n_i} \xi_{i,j} \mathbf{y}_{i,j} \mathbf{x}_{i,j}
 \end{aligned}
 \nonumber
-$$
-
-
-
+$$ -->
+<!-- 
 
 ---
 
@@ -1501,14 +1506,13 @@ $$
 
 ---
 
-### Poisson Case - Pseudo-Likelihood Approach
-
-
+### Poisson Case - Pseudo-Likelihood Approach -->
 
 
 
 ---
 
+<!-- 
 ## References
 
-[^fn-fitzmaurice]: Fitzmaurice, G. M., Laird, N. M., & Ware, J. H. (2011). Applied longitudinal analysis (Second edition). Wiley.
+[^fn-fitzmaurice]: Fitzmaurice, G. M., Laird, N. M., & Ware, J. H. (2011). Applied longitudinal analysis (Second edition). Wiley. -->
