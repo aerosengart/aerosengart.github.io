@@ -44,11 +44,33 @@ ninja.data = [{
               handler: () => {
                 window.location.href = "/blog/";
               },
-            },{id: "post-clustering",
+            },{id: "post-score-and-information",
         
-          title: "clustering",
+          title: "Score and Information",
         
-        description: "an axiomatic approach",
+        description: "Calculations for GLMMs",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/score-info/";
+          
+        },
+      },{id: "post-one-sided-score-test",
+        
+          title: "One-Sided Score Test",
+        
+        description: "For Variance Components",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/score-test-one-sided/";
+          
+        },
+      },{id: "post-clustering",
+        
+          title: "Clustering",
+        
+        description: "An Axiomatic Approach",
         section: "Posts",
         handler: () => {
           
