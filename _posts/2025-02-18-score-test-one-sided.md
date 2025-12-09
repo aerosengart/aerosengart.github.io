@@ -289,7 +289,7 @@ A $p$-value for large sample sizes can be found by defining $\mathbf{Z} \sim \ma
 \xi(t, \mathbf{D}(\lambda), \mathcal{C}) = \mathbb{P}\left( \left[ \mathbf{Z}^\top \mathbf{D}(\lambda)^{-1} \mathbf{Z} - \underset{\mathbf{b} \in \mathcal{C}}{\inf} \left\\{ (\mathbf{Z} - \mathbf{b})^\top \mathbf{D}(\lambda)^{-1}(\mathbf{Z} - \mathbf{b}) \right\\} \right] \geq t \right)
 \end{equation}
 
-The quantity $1 - \xi(t, \mathbf{D}(\lambda), \mathcal{C})$ follows a chi-bar-squared distribution; that is, a mixture of chi-squared distributions as we introduced in the previous section.[^fn-shapiro] The weights for the mixture can be hard to find, but we can get around this using the fact that, for large enough $n$ and under $H_0$ (i.e. $\delta = \mathbf{0}$), $\mathbf{U}_0$ is approximately $\mathcal{N}(\mathbf{0}, \mathbf{D}(\lambda))$. Thus, $\mathbb{P}(T \geq t; \lambda) \approx \xi(t, \mathbf{D}(\lambda), \mathcal{C})$. 
+The quantity $1 - \xi(t, \mathbf{D}(\lambda), \mathcal{C})$ follows a chi-bar-squared distribution; that is, a mixture of chi-squared distributions as we introduced in the previous section. The weights for the mixture can be hard to find, but we can get around this using the fact that, for large enough $n$ and under $H_0$ (i.e. $\delta = \mathbf{0}$), $\mathbf{U}_0$ is approximately $\mathcal{N}(\mathbf{0}, \mathbf{D}(\lambda))$. Thus, $\mathbb{P}(T \geq t; \lambda) \approx \xi(t, \mathbf{D}(\lambda), \mathcal{C})$. 
 
 Suppose we observe a value of $T$, $t^*$. Define $$\mathbf{D}^*(\lambda)$$ as a consistent estimator of $\mathbf{D}(\lambda)$ for any $\lambda$. Then it follows that:
 
