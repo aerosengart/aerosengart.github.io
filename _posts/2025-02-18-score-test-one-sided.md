@@ -247,7 +247,7 @@ $$
 ---
 
 ## A One-Sided Score Test
-I'll next dip into the work of Silvapulle and Silvapulle[^fn-silvapulle], who present a score-type test statistic for one-side alternative hypotheses based upon estimating functions instead of the true score function.
+I'll next dip into the work of Silvapulle and Silvapulle<d-cite key="silvapulle1995"></d-cite>, who present a score-type test statistic for one-side alternative hypotheses based upon estimating functions instead of the true score function.
 
 ### Set-Up
 The authors present a fairly general setting where we do not assume we know the exact form of the distribution of the observations, only that they depend on some $k \times 1$-dimensional vector-valued parameter, $\theta$, that is partitioned into the nuisance parameters, $\lambda$, and the components of interest, $\psi$. We'll write the partitioned parameter vector as $(\lambda : \psi) = (\lambda^\top, \psi^\top)^\top$ where $\lambda$ is $(k - q) \times 1$ and $\psi$ is $q \times 1$.
