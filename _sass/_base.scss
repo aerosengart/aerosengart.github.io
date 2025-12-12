@@ -1497,3 +1497,52 @@ figure.cover {
 mjx-container[jax="CHTML"][display="true"] {
   overflow-x: auto;
 }
+
+// custom
+// Code from: https://www.w3schools.com/howto/howto_css_notes.asp
+.example {
+  border-right: 2px solid #f44336;
+  border-left: 2px solid #f44336;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 2px;
+  padding-bottom: 5px;
+  margin-bottom: 15px;
+  font-size: 90%;
+}
+
+.example > ul, li {
+  margin-top: 10px;
+}
+
+// Code from: https://www.w3schools.com/howto/howto_css_notes.asp
+.definition {
+  border-left: 2px solid #159911;
+  border-right: 2px solid #159911;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 2px;
+  padding-bottom: 5px;
+  margin-bottom: 15px;
+  font-size: 90%;
+}
+
+.definition > ul, li {
+  margin-top: 10px;
+}
+
+// Code from: https://www.w3schools.com/howto/howto_css_notes.asp
+.theorem {
+  border-left: 2px solid #2643FA;
+  border-right: 2px solid #2643FA;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 2px;
+  padding-bottom: 5px;
+  margin-bottom: 15px;
+  font-size: 90%;
+}
+
+.theorem > ul, li {
+  margin-top: 10px;
+}
