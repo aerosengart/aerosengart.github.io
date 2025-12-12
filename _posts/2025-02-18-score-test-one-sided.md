@@ -15,11 +15,16 @@ categories: glmms
 toc:
   - name: Some Intuition
   - name: Introduction
+    subsections:
+        - name: All About Cones
   - name: A Multivariate One-Sided Test
-  - name: A One-Sided Score Test
-  - subsections: 
-        - name: Lemma 1 (Silvapulle and Silvapulle)
-        - name: Theorem 1 (Silvapulle and Silvapulle)
+  - name: A One-Sided Test
+    subsections:
+        - name: Set-Up
+        - name: A General Test Statistic
+        - name: Use
+  - name: Results
+  
 bibliography: 2025-02-18-score-test-one-sided.bib
 ---
 
@@ -126,16 +131,19 @@ where $\mathbf{U}$ is any positive-definite matrix. This orthogonal projection m
 This brings us to the <i>dual</i> cone, which I have very little intuition...
 
 <div id="dual-cone"></div>
-> <strong>Definition (Dual Cone).</strong>
-> <br>
-> The <i>dual cone</i> is the set $C^0= \\{ \mathbf{y} \rvert \langle \mathbf{x}, \mathbf{y} \rangle \leq 0 \hspace{2mm} \forall \mathbf{x} \in C \\}$. 
->If $C$ is a vector subspace, then $C^0$ is the orthogonal complement of $C$, and if $C$ is closed and convex, then $(C^0)^0 = C$. 
+<div class="definition">
+<strong>Definition (Dual Cone).</strong>
+<body>
+The <i>dual cone</i> is the set $C^0= \\{ \mathbf{y} \rvert \langle \mathbf{x}, \mathbf{y} \rangle \leq 0 \hspace{2mm} \forall \mathbf{x} \in C \\}$. 
+<br>
+If $C$ is a vector subspace, then $C^0$ is the orthogonal complement of $C$, and if $C$ is closed and convex, then $(C^0)^0 = C$. 
+</body>
+</div>
 
 If we have another convex cone $K$, then:
 
 $$
 \rvert \rvert \mathbf{x} - P(\mathbf{x}, C) \rvert \rvert^2 = \rvert \rvert \mathbf{x} - P(\mathbf{x}, K) \rvert \rvert^2 + \rvert \rvert P(\mathbf{x}, K) - P(\mathbf{x}, C) \rvert \rvert^2
-\nonumber
 $$
 
 if $C$ or $K$ is a lienar space and $C \subset K$. 
@@ -143,25 +151,26 @@ if $C$ or $K$ is a lienar space and $C \subset K$.
 Furthermore, if $C$ is a vector subspace, then $\mathbf{x} - P(\mathbf{x}, C) = P(\mathbf{x}, C^0)$. That is, the difference between $\mathbf{x}$ and the orthogonal projection of $\mathbf{x}$ onto $C$ is equivalent to its orthogonal projection onto the dual cone $C^0$.
 
 <div id="chi-bar-squared"></div>
-> <strong>Definition ($\bar{\chi}^2$-Statistic).</strong>
-> <br>
-> Let $\mathbf{y} \sim \mathcal{N}(\mathbf{0}, \mathbf{V})$ be a Gaussian random vector of $m$ dimensions with some covariance matrix, $\mathbf{V}$, and let $C$ be a convex cone. A <i>$\bar{\chi}^2$-statistic</i> is given by the following:
-> $$
-> \begin{aligned}
-> \bar{\chi}^2 &= \mathbf{y}^\top \mathbf{V}^{-1} \mathbf{y} - \underset{\eta \in C}{\min} \left\{ (\mathbf{y} - \eta)^\top \mathbf{V}^{-1}(\mathbf{y} - \eta) \right\} \\
-> &= \mathbf{y}^\top \mathbf{V}^{-1} \mathbf{y} - (\mathbf{y} - P(\mathbf{y}, C))^\top \mathbf{V}^{-1}(\mathbf{y} - P(\mathbf{y}, C)) \\
-> &= (\mathbf{y} - \mathbf{y} + P(\mathbf{y}, C))^\top \mathbf{V}^{-1}(\mathbf{y} - \mathbf{y} + P(\mathbf{y}, C)) \\
-> &= \rvert \rvert P(\mathbf{y}, C) \rvert \rvert^2
-> \end{aligned}
-> \nonumber
-> $$
-> where in the above, the inner products/norms are taken using the matrix $\mathbf{V}^{-1}$.
+<div class="definition">
+<strong>Definition ($\bar{\chi}^2$-Statistic).</strong>
+<body>
+Let $\mathbf{y} \sim \mathcal{N}(\mathbf{0}, \mathbf{V})$ be a Gaussian random vector of $m$ dimensions with some covariance matrix, $\mathbf{V}$, and let $C$ be a convex cone. A <i>$\bar{\chi}^2$-statistic</i> is given by the following:
+$$
+\begin{aligned}
+\bar{\chi}^2 &= \mathbf{y}^\top \mathbf{V}^{-1} \mathbf{y} - \underset{\eta \in C}{\min} \left\{ (\mathbf{y} - \eta)^\top \mathbf{V}^{-1}(\mathbf{y} - \eta) \right\} \\
+&= \mathbf{y}^\top \mathbf{V}^{-1} \mathbf{y} - (\mathbf{y} - P(\mathbf{y}, C))^\top \mathbf{V}^{-1}(\mathbf{y} - P(\mathbf{y}, C)) \\
+&= (\mathbf{y} - \mathbf{y} + P(\mathbf{y}, C))^\top \mathbf{V}^{-1}(\mathbf{y} - \mathbf{y} + P(\mathbf{y}, C)) \\
+&= \rvert \rvert P(\mathbf{y}, C) \rvert \rvert^2
+\end{aligned}
+$$
+where in the above, the inner products/norms are taken using the matrix $\mathbf{V}^{-1}$.
+</body>
+</div>
 
 The chi-bar-squared statistic follows a mixture of $\chi^2$ distributions:
 
 $$
 \mathbb{P}(\bar{\chi}^2 \geq c) = \sum_{i = 1}^m w_i \mathbb{P}(\chi_i^2 \geq c)
-\nonumber
 $$
 
 where $\chi_i^2$ is a $\chi^2$ random variable with $i$ degrees of freedom, and $w_i$ are individuals weights that sum to $1$. As is standard, we let $\chi^2_0$ be a point mass at $0$. We'll denote this mixture distribution as $\mathcal{\bar{X}}^2(\mathbf{V}, C)$, since it depends on both $\mathbf{V}$ and the cone, $C$.
@@ -170,7 +179,6 @@ Note that, if we have the dual cone to $C$, then we can ignore the first term in
 
 $$
 \bar{\chi}^2 = \underset{\eta \in D}{\min} \left\{ (\mathbf{y} - \eta)^\top \mathbf{V}^{-1} (\mathbf{y} - \eta) \right\}
-\nonumber
 $$
 
 which follows a $\mathcal{\bar{X}}^2(\mathbf{V}, C^0)$ distribution. We can also note that the mixture's weights satisfy:

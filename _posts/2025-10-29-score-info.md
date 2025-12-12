@@ -1,5 +1,5 @@
 ---
-layout: distill
+layout: post
 title: Score and Information
 description: Calculations for GLMMs
 date: 2025-10-29
@@ -13,7 +13,7 @@ categories: glmm
 #   - we may want to automate TOC generation in the future using
 #     jekyll-toc plugin (https://github.com/toshimaru/jekyll-toc).
 toc:
-  beginning: true
+    beginning: true
     # if a section has subsections, you can add them as follows:
     # subsections:
     #   - name: Example Child Subsection 1
@@ -760,6 +760,8 @@ $$
 $$
 
 but using the working responses and their respective covariances and whatnot. 
+
+
 
 ### Score
 The marginal covariance matrix is very similar to the Gaussian outcome model above. The only thing that has changed is that each error has its own variance:
