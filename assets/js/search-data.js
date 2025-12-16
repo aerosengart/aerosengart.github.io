@@ -81,33 +81,66 @@ ninja.data = [{
             window.location.href = "/blog/2025/glm/";
           
         },
-      },{id: "post-one-sided-score-test",
+      },{id: "post-quasi-likelihood",
         
-          title: "One-Sided Score Test",
+          title: "Quasi-Likelihood",
         
-        description: "For Variance Components",
+        description: "A Primer",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/quasi-likelihood/";
+          
+        },
+      },{id: "post-one-sided-score-test-for-variance-components",
+        
+          title: "One-Sided Score Test For Variance Components",
+        
+        description: "",
         section: "Posts",
         handler: () => {
           
             window.location.href = "/blog/2025/score-test-one-sided/";
           
         },
-      },{id: "post-clustering",
+      },{id: "post-likelihood-and-large-sample-theory",
         
-          title: "Clustering",
+          title: "Likelihood and Large-Sample Theory",
         
-        description: "An Axiomatic Approach",
+        description: "A Primer",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/likelihood-theory/";
+          
+        },
+      },{id: "post-clustering-stability",
+        
+          title: "Clustering Stability",
+        
+        description: "What Does It Mean To Be Stable?",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/clustering-stability/";
+          
+        },
+      },{id: "post-clustering-an-axiomatic-approach",
+        
+          title: "Clustering - An Axiomatic Approach",
+        
+        description: "",
         section: "Posts",
         handler: () => {
           
             window.location.href = "/blog/2025/impossibility-clustering/";
           
         },
-      },{id: "music-the-godfather",
-          title: 'The Godfather',
-          description: "",
+      },{id: "music-just-in-time",
+          title: 'Just In Time',
+          description: "a big band arrangement",
           section: "Music",handler: () => {
-              window.location.href = "/music/the_godfather/";
+              window.location.href = "/music/just_in_time/";
             },},{
         id: 'social-cv',
         title: 'CV',
