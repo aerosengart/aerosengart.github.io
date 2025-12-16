@@ -1,11 +1,10 @@
 ---
 layout: distill
-title: Clustering
-description: An Axiomatic Approach
+title: Clustering - An Axiomatic Approach
+description: 
 date: 2025-01-13
 tabs: true
-tags: clustering philosophy
-categories: clustering
+tags: clustering philosophy paper-reviews
 toc:
     - name: Background
     - name: The Impossibility Theorem

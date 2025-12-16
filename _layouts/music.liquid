@@ -29,7 +29,7 @@ layout: page
             <img alt="{{ item.title }} cover" src="http://covers.openlibrary.org/b/isbn/{{ item.isbn }}-L.jpg?default=false" style="height:200px">
           {% endif %}
           {% if item.status %}
-            {% assign statuses = 'abandoned,finished,interested,paused,queued,reading,reread' | split: ',' %}
+            {% assign statuses = 'abandoned,finished,interested,paused,queued,listening,relistened' | split: ',' %}
             {% assign status = item.status | downcase | strip %}
             {% if statuses contains status %}
               <figcaption class="{{ status | downcase }}">{{ status | upcase }}</figcaption>

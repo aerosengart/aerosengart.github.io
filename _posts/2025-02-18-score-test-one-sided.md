@@ -1,11 +1,10 @@
 ---
 layout: distill
-title: One-Sided Score Test
-description: For Variance Components
+title: One-Sided Score Test For Variance Components
+description: 
 date: 2025-02-18
 tabs: true
-tags: score likelihood theory testing
-categories: glmms
+tags: likelihood theory score-test testing
 # Optionally, you can add a table of contents to your post.
 # NOTES:
 #   - make sure that TOC names match the actual section names
@@ -283,12 +282,13 @@ as our sample size $n \rightarrow \infty$. Notice that testing the alternative h
 ### A General Test Statistic
 The authors define a very general test statistic as the following.
 
-> <strong>Definition (Test Statistic).</strong>
-> <br>
-> Let $\tilde{\mathbf{D}}(\lambda)$ be any consistent estimator under the null hypothesis of $\mathbf{D}(\lambda)$, the asymptotic covariance matrix of $\mathbf{U}_0$. The test statistic for $H_0: \psi = \mathbf{0}$ against $H_A: \psi \in \mathcal{C}$ has the form:
-> $$
-> T = \mathbf{U}_0^\top \tilde{\mathbf{D}}(\lambda)^{-1}\mathbf{U}_0 - \underset{\mathbf{b} \in \mathcal{C}}{\inf} \left\{ (\mathbf{U}_0 - \mathbf{b})^\top \tilde{\mathbf{D}}(\lambda)^{-1}(\mathbf{U}_0 - \mathbf{b})\right\}
-> $$
+<div class="definition">
+<strong>Definition (Test Statistic).</strong>
+Let $\tilde{\mathbf{D}}(\lambda)$ be any consistent estimator under the null hypothesis of $\mathbf{D}(\lambda)$, the asymptotic covariance matrix of $\mathbf{U}_0$. The test statistic for $H_0: \psi = \mathbf{0}$ against $H_A: \psi \in \mathcal{C}$ has the form:
+$$
+T = \mathbf{U}_0^\top \tilde{\mathbf{D}}(\lambda)^{-1}\mathbf{U}_0 - \underset{\mathbf{b} \in \mathcal{C}}{\inf} \left\{ (\mathbf{U}_0 - \mathbf{b})^\top \tilde{\mathbf{D}}(\lambda)^{-1}(\mathbf{U}_0 - \mathbf{b})\right\}
+$$
+</div>
 
 A $p$-value for large sample sizes can be found by defining $\mathbf{Z} \sim \mathcal{N}(\mathbf{0}, \mathbf{D}(\lambda))$ and:
 
@@ -469,11 +469,12 @@ where $\xi(\cdot, \cdot, \cdot)$ is defined as in Eq. \eqref{eq:xi-defn} and $t^
 
 ## Results
 
-#### Lemma 1 (Silvapulle and Silvapulle)
+
+<div class="theorem">
+<strong> Lemma 1 (Silvapulle and Silvapulle)</strong>
 
 {% tabs lemma-1 %}
 {% tab lemma-1 statement %}
-
 Let $\hat{\theta}$ be an estimator of $\theta$ using the entire parameter space (no restrictions imposed). Let $\mathcal{P}$ denote a closed and convex cone with its vertex at the origin. Let $\mathbf{B}$ be a positive definite matrix independent of $\theta$, and let $$\mathbf{B}_{\psi, \psi \cdot \lambda} = \mathbf{B}_{\psi, \psi} - \mathbf{B}_{\psi, \lambda} \mathbf{B}_{\lambda, \lambda}^{-1} \mathbf{B}_{\lambda, \psi}$$. 
 
 Note that:
@@ -647,16 +648,15 @@ This implies any convex combination of $\bar{\psi}$ and $\psi^*$ achieves a valu
 
 {% endtab %}
 {% endtabs %}
+</div>
 
 
 With the above lemma, we can prove the following theorem.
 
-#### Theorem 1 (Silvapulle and Silvapulle)
-
+<div class="theorem">
+<strong>Theorem 1 (Silvapulle and Silvapulle)</strong>
 {% tabs theorem-1 %}
-
 {% tab theorem-1 statement %}
-
 Define $\mathbf{S}_n(\theta) = \frac{\partial}{\partial \theta} \left[ \ell(\theta) \right]$ as the score function (the derivative of the log-likelihood), and assume that it satisfies Condition \eqref{eq:condition-a1} and \eqref{eq:condition-a2}. Suppose we are testing $H_0: \psi = \mathbf{0}$  against $H_A: \psi \in \mathcal{C}$ for $\mathcal{C}$ as defined above. As $n \rightarrow \infty$, the likelihood ratio test statistic, $LR = -2 \left(\ell(\theta_0) - \ell(\hat{\theta}) \right)$ where $\hat{\theta}$ is the MLE of $\theta$ over the entire parameter space, satisfies:
 
 $$
@@ -705,9 +705,9 @@ T_s = \mathbf{U}^\top \tilde{\mathbf{A}}_{\psi, \psi}^{-1}\mathbf{U} - \underset
 $$
 
 <p style="color:red;">TODO: FINISH PROOF</p>
-
 {% endtab %}
 {% endtabs %}
+</div>
 
 
 
