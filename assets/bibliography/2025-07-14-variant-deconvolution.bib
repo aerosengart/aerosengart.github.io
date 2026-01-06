@@ -1,0 +1,97 @@
+
+@book{anderson1991,
+	address = {New York, NY},
+	series = {Springer Series in Statistics},
+	title = {Continuous-Time Markov Chains},
+	copyright = {http://www.springer.com/tdm},
+	isbn = {978-1-4612-7772-9 978-1-4612-3038-0},
+	url = {http://link.springer.com/10.1007/978-1-4612-3038-0},
+	language = {en},
+	urldate = {2025-08-22},
+	publisher = {Springer New York},
+	author = {Anderson, William J.},
+	editor = {Gani, J. and Heyde, C. C.},
+	year = {1991},
+	doi = {10.1007/978-1-4612-3038-0},
+}
+
+
+@misc{dreifuss2022,
+	title = {Tracking SARS-CoV-2 genomic variants in wastewater sequencing data with $\textit{LolliPop}$},
+	copyright = {http://creativecommons.org/licenses/by-nc/4.0/},
+	url = {http://medrxiv.org/lookup/doi/10.1101/2022.11.02.22281825},
+	doi = {10.1101/2022.11.02.22281825},
+	abstract = {During the COVID-19 pandemic, wastewater-based epidemiology has progressively taken a central role as a pathogen surveillance tool. Tracking viral loads and variant outbreaks in sewage offers advantages over clinical surveillance methods by providing unbiased estimates and enabling early detection. However, wastewater-based epidemiology poses new computational research questions that need to be solved in order for this approach to be implemented broadly and successfully. Here, we address the variant deconvolution problem, where we aim to estimate the relative abundances of genomic variants from next-generation sequencing data of a mixed wastewater sample. We introduce LolliPop, a computational method to solve the variant deconvolution problem. LolliPop is tailored to wastewater time series sequencing data and applies temporal regularization in the form of a fused ridge penalty. We show that this regularization is equivalent to kernel smoothing and that it makes abundance estimates robust to very high levels of missing data, which is common for wastewater sequencing. We use the bootstrap to produce confidence intervals, and develop analytical standard errors that can produce similar confidence intervals at a fraction of the computational cost. We demonstrate the application of our method to data from the Swiss wastewater surveillance efforts as well as on simulated data.},
+	language = {en},
+	urldate = {2025-07-14},
+	publisher = {Cold Spring Harbor Laboratory},
+	author = {Dreifuss, David and Topolsky, Ivan and Baykal, Pelin Icer and Beerenwinkel, Niko},
+	month = nov,
+	year = {2022},
+}
+
+
+@article{gafurov2022,
+	title = {VirPool: model-based estimation of SARS-CoV-2 variant proportions in wastewater samples},
+	volume = {23},
+	issn = {1471-2105},
+	shorttitle = {VirPool},
+	url = {https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-022-05100-3},
+	doi = {10.1186/s12859-022-05100-3},
+	abstract = {Background:  The genomes of SARS-CoV-2 are classified into variants, some of which are monitored as variants of concern (e.g. the Delta variant B.1.617.2 or Omicron variant B.1.1.529). Proportions of these variants circulating in a human population are typically estimated by large-scale sequencing of individual patient samples. Sequencing a mixture of SARS-CoV-2 RNA molecules from wastewater provides a cost-effective alternative, but requires methods for estimating variant proportions in a mixed sample.
+Results:  We propose a new method based on a probabilistic model of sequencing reads, capturing sequence diversity present within individual variants, as well as sequencing errors. The algorithm is implemented in an open source Python program called VirPool. We evaluate the accuracy of VirPool on several simulated and real sequencing data sets from both Illumina and nanopore sequencing platforms, including wastewater samples from Austria and France monitoring the onset of the Alpha variant.
+Conclusions:  VirPool is a versatile tool for wastewater and other mixed-sample analysis that can handle both short- and long-read sequencing data. Our approach does not require pre-selection of characteristic mutations for variant profiles, it is able to use the entire length of reads instead of just the most informative positions, and can also capture haplotype dependencies within a single read.},
+	language = {en},
+	number = {1},
+	urldate = {2025-08-21},
+	journal = {BMC Bioinformatics},
+	author = {Gafurov, Askar and Baláž, Andrej and Amman, Fabian and Boršová, Kristína and Čabanová, Viktória and Klempa, Boris and Bergthaler, Andreas and Vinař, Tomáš and Brejová, Broňa},
+	month = dec,
+	year = {2022},
+	pages = {551},
+}
+
+@article{jukes1969,
+  title     = {Evolution of protein molecules},
+  author    = {Jukes, T H and Cantor, C R},
+  editor    = {Munro, H N},
+  publisher = {Academic Press},
+  pages     = {21--132},
+  year      = 1969,
+  address   = {New York}
+}
+
+@misc{lefebvre2025,
+	title = {Unsupervised detection and fitness estimation of emerging SARS-CoV-2 variants. Application to wastewater samples},
+	url = {http://arxiv.org/abs/2501.06548},
+	doi = {10.48550/arXiv.2501.06548},
+	abstract = {Repeated waves of emerging variants during the SARS-CoV-2 pandemics have highlighted the urge of collecting longitudinal genomic data and developing statistical methods based on time series analyses for detecting new threatening lineages and estimating their fitness early in time. Most models study the evolution of the prevalence of particular lineages over time and require a prior classification of sequences into lineages. Such process is prone to induce delays and bias. More recently, few authors studied the evolution of the prevalence of mutations over time with alternative clustering approaches, avoiding specific lineage classification. Most of the aforementioned methods are however either non parametric or unsuited to pooled data characterizing, for instance, wastewater samples. In this context, we propose an alternative unsupervised method for clustering mutations according to their frequency trajectory over time and estimating group fitness from time series of pooled mutation prevalence data. Our model is a mixture of observed count data and latent group assignment and we use the expectation-maximization algorithm for model selection and parameter estimation. The application of our method to time series of SARS-CoV-2 sequencing data collected from wastewater treatment plants in France from October 2020 to April 2021 shows its ability to agnostically group mutations according to their probability of belonging to B.1.160, Alpha, Beta, B.1.177 variants with selection coefficient estimates per group in coherence with the viral dynamics in France reported by Nextstrain. Moreover, our method detected the Alpha variant as threatening as early as supervised methods (which track specific mutations over time) with the noticeable difference that, since unsupervised, it does not require any prior information on the set of mutations.},
+	language = {en},
+	urldate = {2025-07-11},
+	publisher = {arXiv},
+	author = {Lefebvre, Alexandra and Maréchal, Vincent and Gloaguen, Arnaud and Consortium, Obépine and Lambert, Amaury and Maday, Yvon},
+	month = jan,
+	year = {2025},
+	note = {arXiv:2501.06548 [q-bio]},
+	keywords = {Quantitative Biology - Quantitative Methods},
+	annote = {Comment: 45 pages, 19 figures and tables},
+}
+
+
+@article{pipes2022,
+	title = {Estimating the relative proportions of SARS-CoV-2 haplotypes from wastewater samples},
+	volume = {2},
+	issn = {26672375},
+	url = {https://linkinghub.elsevier.com/retrieve/pii/S266723752200203X},
+	doi = {10.1016/j.crmeth.2022.100313},
+	language = {en},
+	number = {10},
+	urldate = {2025-08-21},
+	journal = {Cell Reports Methods},
+	author = {Pipes, Lenore and Chen, Zihao and Afanaseva, Svetlana and Nielsen, Rasmus},
+	month = oct,
+	year = {2022},
+	pages = {100313},
+}
+
+

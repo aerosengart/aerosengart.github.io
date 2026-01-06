@@ -23,21 +23,21 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "dropdown-blog",
-              title: "blog",
-              description: "",
-              section: "Dropdown",
-              handler: () => {
-                window.location.href = "/blog/";
-              },
-            },{id: "dropdown-music",
-              title: "music",
-              description: "",
-              section: "Dropdown",
-              handler: () => {
-                window.location.href = "/music/";
-              },
-            },{id: "post-score-calcuations",
+        },{id: "nav-blog",
+          title: "blog",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/blog/";
+          },
+        },{id: "nav-music",
+          title: "music",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/music/";
+          },
+        },{id: "post-score-calcuations",
         
           title: "Score Calcuations",
         
@@ -57,6 +57,28 @@ ninja.data = [{
         handler: () => {
           
             window.location.href = "/blog/2025/score-info/";
+          
+        },
+      },{id: "post-variant-deconvolution",
+        
+          title: "Variant Deconvolution",
+        
+        description: "A Primer",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/variant-deconvolution/";
+          
+        },
+      },{id: "post-estimation-theory",
+        
+          title: "Estimation Theory",
+        
+        description: "A Primer",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/estimation-theory/";
           
         },
       },{id: "post-generalized-linear-mixed-models",
@@ -92,6 +114,50 @@ ninja.data = [{
             window.location.href = "/blog/2025/quasi-likelihood/";
           
         },
+      },{id: "post-betting-based-confidence-sequences",
+        
+          title: "Betting-Based Confidence Sequences",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/betting-bounds/";
+          
+        },
+      },{id: "post-martingales",
+        
+          title: "Martingales",
+        
+        description: "A Primer",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/martingales/";
+          
+        },
+      },{id: "post-measure-theory",
+        
+          title: "Measure Theory",
+        
+        description: "A Primer",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/measure-theory/";
+          
+        },
+      },{id: "post-splash-and-oasis",
+        
+          title: "SPLASH and OASIS",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/splash/";
+          
+        },
       },{id: "post-one-sided-score-test-for-variance-components",
         
           title: "One-Sided Score Test For Variance Components",
@@ -125,11 +191,11 @@ ninja.data = [{
             window.location.href = "/blog/2025/clustering-stability/";
           
         },
-      },{id: "post-clustering-an-axiomatic-approach",
+      },{id: "post-clustering",
         
-          title: "Clustering - An Axiomatic Approach",
+          title: "Clustering",
         
-        description: "",
+        description: "An Axiomatic Approach",
         section: "Posts",
         handler: () => {
           
