@@ -4,7 +4,7 @@ title: One-Sided Score Test For Variance Components
 description: 
 date: 2025-02-18
 tabs: true
-tags: likelihood theory score-test testing
+tags: likelihood theory score-test testing paper-review
 # Optionally, you can add a table of contents to your post.
 # NOTES:
 #   - make sure that TOC names match the actual section names
@@ -58,23 +58,20 @@ U(\theta^*) = \sum_{i = 1}^n \frac{\partial}{\partial \theta} \ell(\theta; \math
 \mathcal{I}(\theta^*) = \mathbb{E}\left[ U(\theta) U^\top(\theta) \right] \bigg\rvert_{\theta = \theta^*}
 $$
 
+
+<div class="theorem">
+<strong>Claim (Gaussianity of Score).</strong>
 {% tabs claim-1 %}
-
-{% tab claim-1 claim %}
-
-Assuming $U(\theta)$ has finite variance and mean zero (which it will under certain conditions — see <a href="/posts/2025/02/02/likelihood-theory.html">this post on likelihood theory</a>), it is asymptotically multivariate Gaussian when suitably centered and scaled (by the central limit theorem).<d-cite key="dasgupta2008"></d-cite> 
-
+{% tab claim-1 statement %}
+Assuming $U(\theta)$ has finite variance and mean zero (which it will under certain conditions — see <a href="/posts/2025/likelihood-theory">this post on likelihood theory</a>), it is asymptotically multivariate Gaussian when suitably centered and scaled (by the central limit theorem).<d-cite key="dasgupta2008"></d-cite> 
 {% endtab %}
-
 {% tab claim-1 proof %}
-
 Notice that $U(\theta_0)$ is the sum of (functions of) i.i.d. random variables. As we noted above, $U(\theta_0)$ has mean zero under certain regularity conditions. The CLT states that:
 
 $$
 \frac{\sqrt{n}\left(\frac{1}{n} \sum_{i = 1}^n X_i - \mu \right) }{\sigma} \rightsquigarrow \mathcal{N}(0, 1)
 \hspace{4mm} \iff \hspace{4mm}
 (\frac{1}{n} \sum_{i = 1}^n X_i - \mu_X) \rightsquigarrow \mathcal{N}\left(0, \frac{\sigma^2}{n}\right)
-\nonumber
 $$
 
 If $\mathcal{I}(\theta)$ is the covariance of $U(\theta)$, then $n^2 \mathcal{I}(\theta)$ is the covariance of $\frac{1}{n}U(\theta)$. Thus:
@@ -83,7 +80,6 @@ $$
 \sqrt{n} \left(\frac{1}{n} U^\top(\theta)\right) \rightsquigarrow \mathcal{N}\left(\mathbf{0}, \mathcal{I}(\theta) \right)
 \hspace{4mm} \iff \hspace{4mm}
 \sqrt{n} \left(\frac{1}{n} U^\top(\theta)\right)\mathcal{I}^{-1/2}(\theta) \rightsquigarrow \mathcal{N}\left(\mathbf{0}, \mathbb{I}\right)
-\nonumber
 $$
 
 This can then be used to derive the asymptotic null distribution of the score test statistic, since the distribution of a squared Gaussian random variable is $\chi^2$:
@@ -95,10 +91,9 @@ $$
 $$
 
 where $k$ is the dimension of $\theta$.
-
 {% endtab %}
-
 {% endtabs %}
+</div>
 
 The alternative for the above test is implicitly two-sided: $H_1: \theta \neq \theta_0$.
 
@@ -115,11 +110,21 @@ Shapiro restricts his attention to closed and convex cones, so I'll do the same 
 
 <aside><p>A set is <i>closed</i> if it contains all of its boundary points.</p></aside>  
 
-A <i>cone</i>, $C$, in $\mathbb{R}^m$ is defined as the set $$C := \\{ t\mathbf{x} \in C \rvert \mathbf{x} \in C \\}$$ for any $t > 0$. $C$ is called a <i>pointed cone</i> if $\mathbf{x} \in C$ and $-\mathbf{x} \in C$ implies $\mathbf{x} = \mathbf{0}$, the zero vector. 
+<div class="definition">
+<strong>Definition (Cone).</strong>
+<br>
+A <i>cone</i>, $C$, in $\mathbb{R}^m$ is defined as the set:
+
+$$
+C := \\{ t\mathbf{x} \in C \rvert \mathbf{x} \in C \\}
+$$
+ 
+for any $t > 0$. $C$ is called a <i>pointed cone</i> if $\mathbf{x} \in C$ and $-\mathbf{x} \in C$ implies $\mathbf{x} = \mathbf{0}$, the zero vector. 
+</div>
 
 <aside><p>A set, $S$, is <i>convex</i> if $tx + (1-t)y \in S$ for $x,y \in S$ and $t \in [0, 1]$.</p></aside>
 
-Shapiro denotes the orthogonal projection of a point onto $C$ with 
+Shapiro denotes the orthogonal projection of a point onto $C$ with:
 
 $$
 P(\mathbf{x}, C) = \underset{\eta \in C}{\arg\min} \left \{ (\mathbf{x} - \eta)^\top \mathbf{U} (\mathbf{x} - \eta) \right \}
@@ -132,11 +137,14 @@ This brings us to the <i>dual</i> cone, which I have very little intuition...
 <div id="dual-cone"></div>
 <div class="definition">
 <strong>Definition (Dual Cone).</strong>
-<body>
-The <i>dual cone</i> is the set $C^0= \\{ \mathbf{y} \rvert \langle \mathbf{x}, \mathbf{y} \rangle \leq 0 \hspace{2mm} \forall \mathbf{x} \in C \\}$. 
 <br>
-If $C$ is a vector subspace, then $C^0$ is the orthogonal complement of $C$, and if $C$ is closed and convex, then $(C^0)^0 = C$. 
-</body>
+The <i>dual cone</i> is the set:
+
+$$
+C^0= \\{ \mathbf{y} \rvert \langle \mathbf{x}, \mathbf{y} \rangle \leq 0 \hspace{2mm} \forall \mathbf{x} \in C \\}
+$$
+
+If $C$ is a vector subspace, then $C^0$ is the orthogonal complement of $C$, and if $C$ is closed and convex, then $(C^0)^0 = C$.
 </div>
 
 If we have another convex cone $K$, then:
@@ -145,15 +153,16 @@ $$
 \rvert \rvert \mathbf{x} - P(\mathbf{x}, C) \rvert \rvert^2 = \rvert \rvert \mathbf{x} - P(\mathbf{x}, K) \rvert \rvert^2 + \rvert \rvert P(\mathbf{x}, K) - P(\mathbf{x}, C) \rvert \rvert^2
 $$
 
-if $C$ or $K$ is a lienar space and $C \subset K$. 
+if $C$ or $K$ is a linenar space and $C \subset K$. 
 
 Furthermore, if $C$ is a vector subspace, then $\mathbf{x} - P(\mathbf{x}, C) = P(\mathbf{x}, C^0)$. That is, the difference between $\mathbf{x}$ and the orthogonal projection of $\mathbf{x}$ onto $C$ is equivalent to its orthogonal projection onto the dual cone $C^0$.
 
 <div id="chi-bar-squared"></div>
 <div class="definition">
 <strong>Definition ($\bar{\chi}^2$-Statistic).</strong>
-<body>
+<br>
 Let $\mathbf{y} \sim \mathcal{N}(\mathbf{0}, \mathbf{V})$ be a Gaussian random vector of $m$ dimensions with some covariance matrix, $\mathbf{V}$, and let $C$ be a convex cone. A <i>$\bar{\chi}^2$-statistic</i> is given by the following:
+
 $$
 \begin{aligned}
 \bar{\chi}^2 &= \mathbf{y}^\top \mathbf{V}^{-1} \mathbf{y} - \underset{\eta \in C}{\min} \left\{ (\mathbf{y} - \eta)^\top \mathbf{V}^{-1}(\mathbf{y} - \eta) \right\} \\
@@ -162,8 +171,8 @@ $$
 &= \rvert \rvert P(\mathbf{y}, C) \rvert \rvert^2
 \end{aligned}
 $$
+
 where in the above, the inner products/norms are taken using the matrix $\mathbf{V}^{-1}$.
-</body>
 </div>
 
 The chi-bar-squared statistic follows a mixture of $\chi^2$ distributions:
@@ -221,20 +230,18 @@ t_{LRT} &= \frac{\underset{\theta_i = 0 \\ i = 1, \dots, k}{\max} \{ \mathcal{L}
 \end{aligned}
 $$
 
+
+<div class="theorem">
+<strong>Claim.</strong>
 {% tabs claim-2 %}
-
-{% tab claim-2 claim %}
-
+{% tab claim-2 statement %}
 Notice that the argument maximum of the above is equivalent to:
 
 $$
 \bar{\chi}^2 = n \left[ \bar{\mathbf{X}}^\top \Sigma^{-1}\bar{\mathbf{X}} - \underset{\theta_i \geq 0 \\ i = 1, \dots, k}{\arg\min} \left\{ (\bar{\mathbf{X}} - \theta)^\top \Sigma^{-1}(\bar{\mathbf{X}} - \theta) \right\} \right] 
 $$
-
 {% endtab %}
-
 {% tab claim-2 proof %}
-
 $$
 \begin{aligned}
 \theta^* &= \frac{\exp\left(-\frac{1}{2} n \bar{\mathbf{X}}^\top \Sigma^{-1}\bar{\mathbf{X}}\right)}{\underset{\theta_i \geq 0 \\ i = 1, \dots, k}{\arg\max} \{ \exp\left(-\frac{1}{2}n(\bar{\mathbf{X}} - \theta)^\top \Sigma^{-1}(\bar{\mathbf{X}} - \theta)\right) \}} \\
@@ -246,10 +253,9 @@ $$
 &= n \left[ \bar{\mathbf{X}}^\top \Sigma^{-1}\bar{\mathbf{X}} - \underset{\theta_i \geq 0 \\ i = 1, \dots, k}{\arg\min} \left\{ (\bar{\mathbf{X}} - \theta)^\top \Sigma^{-1}(\bar{\mathbf{X}} - \theta) \right\} \right] & \left(\text{ maximize quantity = minimize positive subtraction} \right)
 \end{aligned}
 $$
-
 {% endtab %}
-
 {% endtabs %}
+</div>
 
 ---
 
@@ -263,7 +269,6 @@ We're interested in testing hypotheses of the form:
 
 $$
 H_0: \psi = \mathbf{0}_q \hspace{10mm} H_A: \psi \in \mathcal{C}
-\nonumber
 $$
 
 where $\mathbf{0}_q$ is a $q$-dimensional vector of zeros and $\mathcal{C}$ is the $q$-dimensional Euclidean space, or a closed, convex cone in $q$-dimensional Euclidean space with its vertex at the origin. The latter case encompasses alternatives of the form $\psi \geq \mathbf{0}_q$, which is the alternative hypothesis I am interested in for variance component testing.
@@ -272,10 +277,12 @@ Define $\mathbf{D}(\lambda)$ as some (fixed) matrix-valued function of the nuisa
 
 Suppose under the sequence of alternatives $K_n: \psi = n^{-1/2}\delta$, $\mathbf{U}_0$ satisfies:
 
+$$
 \begin{equation}
 \label{eq:U-condition}
 \mathbf{U}_0 \rightsquigarrow \mathcal{N}(\delta, \mathbf{D}(\lambda))
 \end{equation}
+$$
 
 as our sample size $n \rightarrow \infty$. Notice that testing the alternative hypothesis that $\psi \geq 0$ is equivalent to testing $\delta \geq \mathbf{0}_q$, which implies that the null hypothesis is equivalent to $\delta = \mathbf{0}_q$. 
 
@@ -284,18 +291,22 @@ The authors define a very general test statistic as the following.
 
 <div class="definition">
 <strong>Definition (Test Statistic).</strong>
+<br>
 Let $\tilde{\mathbf{D}}(\lambda)$ be any consistent estimator under the null hypothesis of $\mathbf{D}(\lambda)$, the asymptotic covariance matrix of $\mathbf{U}_0$. The test statistic for $H_0: \psi = \mathbf{0}$ against $H_A: \psi \in \mathcal{C}$ has the form:
+
 $$
 T = \mathbf{U}_0^\top \tilde{\mathbf{D}}(\lambda)^{-1}\mathbf{U}_0 - \underset{\mathbf{b} \in \mathcal{C}}{\inf} \left\{ (\mathbf{U}_0 - \mathbf{b})^\top \tilde{\mathbf{D}}(\lambda)^{-1}(\mathbf{U}_0 - \mathbf{b})\right\}
 $$
 </div>
 
-A $p$-value for large sample sizes can be found by defining $\mathbf{Z} \sim \mathcal{N}(\mathbf{0}, \mathbf{D}(\lambda))$ and:
+A $p$-value for large sample sizes can be found by defining $$\mathbf{Z} \sim \mathcal{N}(\mathbf{0}, \mathbf{D}(\lambda))$$ and:
 
+$$
 \begin{equation}
 \label{eq:xi-defn}
-\xi(t, \mathbf{D}(\lambda), \mathcal{C}) = \mathbb{P}\left( \left[ \mathbf{Z}^\top \mathbf{D}(\lambda)^{-1} \mathbf{Z} - \underset{\mathbf{b} \in \mathcal{C}}{\inf} \left\\{ (\mathbf{Z} - \mathbf{b})^\top \mathbf{D}(\lambda)^{-1}(\mathbf{Z} - \mathbf{b}) \right\\} \right] \geq t \right)
+\xi(t, \mathbf{D}(\lambda), \mathcal{C}) = \mathbb{P}\left( \left[ \mathbf{Z}^\top \mathbf{D}(\lambda)^{-1} \mathbf{Z} - \underset{\mathbf{b} \in \mathcal{C}}{\inf} \left\{ (\mathbf{Z} - \mathbf{b})^\top \mathbf{D}(\lambda)^{-1}(\mathbf{Z} - \mathbf{b}) \right\} \right] \geq t \right)
 \end{equation}
+$$
 
 The quantity $1 - \xi(t, \mathbf{D}(\lambda), \mathcal{C})$ follows a chi-bar-squared distribution; that is, a mixture of chi-squared distributions as we introduced in the previous section. The weights for the mixture can be hard to find, but we can get around this using the fact that, for large enough $n$ and under $H_0$ (i.e. $\delta = \mathbf{0}$), $\mathbf{U}_0$ is approximately $\mathcal{N}(\mathbf{0}, \mathbf{D}(\lambda))$. Thus, $\mathbb{P}(T \geq t; \lambda) \approx \xi(t, \mathbf{D}(\lambda), \mathcal{C})$. 
 
@@ -303,7 +314,6 @@ Suppose we observe a value of $T$, $t^*$. Define $$\mathbf{D}^*(\lambda)$$ as a 
 
 $$
 p \approx \underset{\lambda}{\sup} \left\{ \xi(t^*, \mathbf{D}^*(\lambda), \mathcal{C}) \right\}
-\nonumber
 $$
 
 for large enough $n$ because $\lambda$ is a nuisance parameter, so we can take the "best" probability over all of its values. 
@@ -316,18 +326,21 @@ Let's define $\mathbf{S}_n(\theta)$ as any $k \times 1$ vector estimating equati
 #### Conditions
 Suppose $\mathbf{S}_n(\theta)$ is such that there exist non-singular $\mathbf{G}(\theta)$ and $\mathbf{V}(\theta)$ satisfying for any $a > 0$:
 
-
+$$
 \begin{equation}
 \label{eq:condition-a1}
 \frac{1}{\sqrt{n}}\mathbf{S}_n(\theta) \rightsquigarrow \mathcal{N}(\mathbf{0}, \mathbf{V}(\theta))
 \end{equation}
+$$
 
-and
+and:
 
+$$
 \begin{equation}
 \label{eq:condition-a2}
-\underset{\rvert \rvert \mathbf{h} \rvert \rvert \leq a}{\sup} \left\\{ \frac{1}{\sqrt{n}} \left( \mathbf{S}_n\left(\theta + \frac{1}{\sqrt{n}} \mathbf{h}\right) - \mathbf{S}_n(\theta) \right) + \mathbf{G}(\theta) \mathbf{h} \right\\} = o_p(1)
+\underset{\rvert \rvert \mathbf{h} \rvert \rvert \leq a}{\sup} \left\{ \frac{1}{\sqrt{n}} \left( \mathbf{S}_n\left(\theta + \frac{1}{\sqrt{n}} \mathbf{h}\right) - \mathbf{S}_n(\theta) \right) + \mathbf{G}(\theta) \mathbf{h} \right\} = o_p(1)
 \end{equation}
+$$
 
 where $o_p(1)$ is stochastic order notation for convergence in probability to $0$.
 
@@ -383,27 +396,27 @@ Condition \eqref{eq:condition-a2} basically implies that the lefthand side will 
 Let's partition our vectors and matrices in the following ways:
 
 $$
-\mathbf{S}_n(\theta) =
+\begin{aligned}
+\mathbf{S}_n(\theta) &=
 \begin{bmatrix}
 \mathbf{S}^\top_{n, \lambda}(\theta) & 
 \mathbf{S}^\top_{n, \psi}(\theta)
-\end{bmatrix}^\top
-\hspace{2mm} \text{ and } \hspace{2mm}
-\mathbf{G}(\theta) =
+\end{bmatrix}^\top \\
+\mathbf{G}(\theta) &=
 \begin{bmatrix}
 \mathbf{G}_{\lambda, \lambda}(\theta) & 
 \mathbf{G}_{\lambda, \psi}(\theta) \\ 
 \mathbf{G}_{\psi, \lambda}(\theta) &
 \mathbf{G}_{\psi, \psi}(\theta)
-\end{bmatrix}
-\hspace{2mm} \text{ and } \hspace{2mm}
-\mathbf{V}(\theta) =
+\end{bmatrix} \\
+\mathbf{V}(\theta) &=
 \begin{bmatrix}
 \mathbf{V}_{\lambda, \lambda}(\theta) & 
 \mathbf{V}_{\lambda, \psi}(\theta) \\ 
 \mathbf{V}_{\psi, \lambda}(\theta) &
 \mathbf{V}_{\psi, \psi}(\theta)
 \end{bmatrix}
+\end{aligned}
 $$
 
 Let $$\theta_0 = (\lambda : \mathbf{0})$$ denote the value of $\theta$ under the null hypothesis, and suppose the null is true. Define the quantities:
@@ -445,16 +458,18 @@ Let's partition $\mathbf{A}(\theta)$ in the same way that we did with $\mathbf{V
 
 <div id="test-statistic"></div>
 <div class="definition">
-  <body>
   <strong>Definition (One-Sided Test Statistic).</strong>
   <br>
   The test statistic for $H_0: \psi = \mathbf{0}$ against $H_A: \psi \in \mathcal{C}$ is given by:
+
   $$
-  T_s = \mathbf{U}^\top(\tilde{\theta}_0) \tilde{\mathbf{A}}_{\psi, \psi}^{-1}(\tilde{\theta}_0) \mathbf{U}(\tilde{\theta}_0) - \underset{\mathbf{b} \in \mathcal{C}}{\inf} \left\{ (\mathbf{U}(\tilde{\theta}_0) - \mathbf{b})^\top \tilde{\mathbf{A}}_{\psi, \psi}^{-1}(\tilde{\theta}_0) (\mathbf{U}(\tilde{\theta}_0) - \mathbf{b}) \right\}
+  \begin{equation}
   \label{eq:test-stat-2}
+  T_s = \mathbf{U}^\top(\tilde{\theta}_0) \tilde{\mathbf{A}}_{\psi, \psi}^{-1}(\tilde{\theta}_0) \mathbf{U}(\tilde{\theta}_0) - \underset{\mathbf{b} \in \mathcal{C}}{\inf} \left\{ (\mathbf{U}(\tilde{\theta}_0) - \mathbf{b})^\top \tilde{\mathbf{A}}_{\psi, \psi}^{-1}(\tilde{\theta}_0) (\mathbf{U}(\tilde{\theta}_0) - \mathbf{b}) \right\}
+  \end{equation}
   $$
+
   where $\tilde{\mathbf{A}}_{\psi, \psi}^{-1}(\tilde{\theta}_0)$ is the partition of $\mathbf{A}_{\psi, \psi}^{-1}(\tilde{\theta}_0)$ corresponding to $(\psi, \psi)$ and constructed using $\tilde{\mathbf{G}}(\tilde{\theta}_0)$ and $\tilde{\mathbf{V}}(\tilde{\theta}_0)$ (I think...the authors never define $\tilde{\mathbf{A}}$).
-  </body>
 </div>
 
 A large sample $p$-value can be obtained as:
@@ -469,15 +484,11 @@ where $\xi(\cdot, \cdot, \cdot)$ is defined as in Eq. \eqref{eq:xi-defn} and $t^
 
 ## Results
 
-
 <div class="theorem">
-<strong> Lemma 1 (Silvapulle and Silvapulle)</strong>
-
+<strong> Lemma 1.<d-cite key=silvapulle1995></d-cite></strong>
 {% tabs lemma-1 %}
 {% tab lemma-1 statement %}
-Let $\hat{\theta}$ be an estimator of $\theta$ using the entire parameter space (no restrictions imposed). Let $\mathcal{P}$ denote a closed and convex cone with its vertex at the origin. Let $\mathbf{B}$ be a positive definite matrix independent of $\theta$, and let $$\mathbf{B}_{\psi, \psi \cdot \lambda} = \mathbf{B}_{\psi, \psi} - \mathbf{B}_{\psi, \lambda} \mathbf{B}_{\lambda, \lambda}^{-1} \mathbf{B}_{\lambda, \psi}$$. 
-
-Note that:
+Let $\hat{\theta}$ be an estimator of $\theta$ using the entire parameter space (no restrictions imposed). Let $\mathcal{P}$ denote a closed and convex cone with its vertex at the origin. Let $\mathbf{B}$ be a positive definite matrix independent of $\theta$, and let $$\mathbf{B}_{\psi, \psi \cdot \lambda} = \mathbf{B}_{\psi, \psi} - \mathbf{B}_{\psi, \lambda} \mathbf{B}_{\lambda, \lambda}^{-1} \mathbf{B}_{\lambda, \psi}$$. Note that:
 
 $$
 \begin{aligned}
@@ -486,7 +497,6 @@ $$
 \begin{bmatrix} \mathbf{B}_{\psi, \psi} & \mathbf{B}_{\psi, \lambda} \\ \mathbf{B}_{\lambda, \psi} & \mathbf{B}_{\lambda, \lambda} \end{bmatrix}
 \left(  \begin{bmatrix} \hat{\psi} \\ \hat{\lambda} \end{bmatrix} - \begin{bmatrix} \psi \\ \lambda \end{bmatrix} \right)
 \end{aligned}
-\nonumber
 $$
 
 The minimum of the above expression over just $\psi \in \mathcal{P}$ is equivalent to $$\underset{\psi \in \mathcal{P}}{\min} \left \{ (\hat{\psi} - \psi)^\top \mathbf{B}_{\psi, \psi \cdot \lambda}(\hat{\psi} - \psi) \right \}$$ where we get $$\mathbf{B}_{\psi, \psi \cdot \lambda}$$ by adjusting $\mathbf{B}_{\psi, \psi}$ for the uncertainty in $\hat{\lambda}$. 
@@ -620,7 +630,6 @@ We also know that $f(\psi)$ and $g(\psi)$ are strictly convex and convex, respec
 <summary>Proofs Of Convexity.</summary>
 First, let's look at $f(\psi)$, in which the middle portion is the Schur complement of $\mathbf{B}_{\lambda, \lambda}$. The positive definiteness of $\mathbf{B}$ implies that the Schur complement is also positive definite (since we also assume $\mathbf{B}_{\lambda, \lambda}$ is invertible). Since $f(\psi)$ has a quadratic form associated with a positive definite matrix, it is strictly convex.
 <br>
-<br>
 Looking at $g(\psi)$, we see that the middle portion, $\mathbf{B}_{\lambda, \lambda}^{-1}$ is positive definite due to the fact that the principal sub-matrices of a positive definite matrix are also positive definite and the inverse of a positive definite matrix is also positive definite. Secondly, we know that pre- and post-multiplying a positive definite matrix by another matrix will yield a positive semi-definite matrix. Thus, $g(\psi)$ is positive semi-definite, which implies that it is convex since it is a quadratic form associated with a positive semi-definite matrix.
 </details>
 
@@ -644,7 +653,7 @@ $$
 
 This implies any convex combination of $\bar{\psi}$ and $\psi^*$ achieves a value smaller than the minimum, which is a contradiction. Thus, $\bar{\psi} = \psi^*$. 
 
-<p style="color:red;">TODO: FINISH PROOF</p>
+Proof to be completed.
 
 {% endtab %}
 {% endtabs %}
@@ -654,20 +663,17 @@ This implies any convex combination of $\bar{\psi}$ and $\psi^*$ achieves a valu
 With the above lemma, we can prove the following theorem.
 
 <div class="theorem">
-<strong>Theorem 1 (Silvapulle and Silvapulle)</strong>
+<strong>Theorem 1.<d-cite key=silvapulle1995></d-cite></strong>
 {% tabs theorem-1 %}
 {% tab theorem-1 statement %}
 Define $\mathbf{S}_n(\theta) = \frac{\partial}{\partial \theta} \left[ \ell(\theta) \right]$ as the score function (the derivative of the log-likelihood), and assume that it satisfies Condition \eqref{eq:condition-a1} and \eqref{eq:condition-a2}. Suppose we are testing $H_0: \psi = \mathbf{0}$  against $H_A: \psi \in \mathcal{C}$ for $\mathcal{C}$ as defined above. As $n \rightarrow \infty$, the likelihood ratio test statistic, $LR = -2 \left(\ell(\theta_0) - \ell(\hat{\theta}) \right)$ where $\hat{\theta}$ is the MLE of $\theta$ over the entire parameter space, satisfies:
 
 $$
 LR = T_s + o_p(1)
-\nonumber
 $$
 
 under the null hypothesis.
-
 {% endtab %}
-
 {% tab theorem-1 proof %}
 We'll assume we're in the setting where the null hypothesis is true ($\theta_0 = (\lambda : \mathbf{0})$). Since we've taken our estimating equation, $\mathbf{S}_n(\theta)$, as the score, we can take $\mathbf{G}(\theta_0)$ to be the Fisher information under the null (WHY?).
 
@@ -675,7 +681,6 @@ First, let's rewrite the log-likelihood, $\ell(\theta)$, with a Taylor expansion
 
 $$
 \ell(\theta) = \ell(\hat{\theta}) + \frac{n}{2}(\hat{\theta} - \theta)^\top \mathbf{G}(\theta_0) (\hat{\theta} -\theta) + \Delta(\theta)
-\nonumber
 $$
 
 where, for any $a > 0$, $\underset{\rvert \rvert \theta - \theta_0 \rvert \rvert \leq \frac{a}{\sqrt{n}}}{\sup} \left\{ \rvert \Delta(\theta) \rvert \right\} = o_p(1)$. This last term is just a bound on all of the terms in the Taylor expansion that are of a higher order than two, written with stochastic order notation. A related proof can be found in my post "A Score Test Primer". The multiplication by $n$ is just because we assume we have $n$ i.i.d. observations, so we can just multiply the value for a single observation by the number we have.
@@ -684,7 +689,6 @@ From this expansion, we can rewrite the likelihood ratio test statistic as:
 
 $$
 LR = n\left[ \underset{\psi = \mathbf{0}}{\min} \left\{ (\hat{\theta} - \theta)^\top \mathbf{G}(\theta_0) (\hat{\theta} - \theta)\right\} - \underset{\psi \in \mathcal{C}}{\min}\left\{ (\hat{\theta} - \theta)^\top \mathbf{G}(\theta_0) (\hat{\theta} - \theta) \right\} \right] + o_p(1)
-\nonumber
 $$
 
 Using Lemma 1, we can see that:
@@ -695,16 +699,15 @@ LR &= n\left[ \underset{\psi = \mathbf{0}}{\min} \left\{ (\hat{\psi} - \psi)^\to
 &= n \left[ \underset{\psi = \mathbf{0}}{\min} \left\{ \hat{\psi}^\top \mathbf{G}_{\psi, \psi \cdot \lambda}(\theta_0) \hat{\psi}\right\} + \underset{\psi \in \mathcal{C}}{\min}\left\{(\hat{\psi} - \psi)^\top \mathbf{G}_{\psi, \psi \cdot \lambda}(\theta_0) (\hat{\psi} - \psi) \right\}\right] + o_p(1) \\
 &= n \left[ \hat{\psi}^\top \mathbf{G}_{\psi, \psi \cdot \lambda}(\theta_0) \hat{\psi} + \underset{\psi \in \mathcal{C}}{\inf}\left\{(\hat{\psi} - \psi)^\top \mathbf{G}_{\psi, \psi \cdot \lambda}(\theta_0) (\hat{\psi} - \psi) \right\}\right] + o_p(1)  \hspace{15mm} \mathcal{C} \text{ is closed, so } \min \text{ is same as } \inf \\
 \end{aligned}
-\nonumber
 $$
 
-Notice that $\sqrt{n} \mathbf{G}(\theta_0) (\hat{\theta} - \theta_0) = \frac{1}{\sqrt{n}} \mathbf{S}_n(\theta_0) + o_p(1)$ because 
+Notice that $\sqrt{n} \mathbf{G}(\theta_0) (\hat{\theta} - \theta_0) = \frac{1}{\sqrt{n}} \mathbf{S}_n(\theta_0) + o_p(1)$ because:
 
 $$
 T_s = \mathbf{U}^\top \tilde{\mathbf{A}}_{\psi, \psi}^{-1}\mathbf{U} - \underset{\mathbf{b} \in \mathcal{C}}{\inf} \left\{ (\mathbf{U} - \mathbf{b})^\top \tilde{\mathbf{A}}_{\psi, \psi}^{-1}(\mathbf{U} - \mathbf{b}) \right\}
 $$
 
-<p style="color:red;">TODO: FINISH PROOF</p>
+Proof to be completed.
 {% endtab %}
 {% endtabs %}
 </div>

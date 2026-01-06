@@ -4,7 +4,7 @@ title: Likelihood and Large-Sample Theory
 description: A Primer
 date: 2025-02-02
 tabs: true
-tags: theory likelihood
+tags: theory likelihood primer
 toc:  
   - name: Background
   - name: Score and Information
@@ -40,7 +40,7 @@ We'll first define a <strong>very</strong> important quantity in likelihood theo
 
 <div class="definition">
 <strong>Definition (Score).</strong>
-<body>
+<br>
 Suppose $\Theta$ is $k$-dimensional, let $f_{X \rvert \Theta}(x; \theta)$ denote the density of $X$ given $\Theta = \theta$. The <i>score function</i> (or <i>score statistic</i>) is given by:
 
 $$
@@ -49,14 +49,13 @@ $$
 U_\Theta(x; \theta) = \frac{\partial \log f_{X \rvert \Theta}(x; \Theta)}{\partial \Theta} \bigg\rvert_{\Theta = \theta} = \frac{\partial \log f_{X \rvert \Theta}(x; \theta)}{\partial \theta}
 \end{equation}
 $$
-</body>
 </div>
 
 The score function is the gradient of the log density of the data with respect to the parameter. It describes the curvature of the log density at a particular value of the parameter $\Theta$. 
 
 <div class="definition">
 <strong>Definition (Fisher Information).</strong>
-<body>
+<br>
 Suppose $\Theta$ is $k$-dimensional, let $f_{X \rvert \Theta}(x; \theta)$ denote the density of $X$ given $\Theta = \theta$. The <i>Fisher information</i> is the expectation of the squared gradient of the log density of the data:
 
 $$
@@ -65,7 +64,6 @@ $$
 \mathcal{I}_X(\theta) = \mathbb{E}_\Theta \left[ U_\Theta(x; \theta) U_\theta(x; \theta)^\top \right]
 \end{equation}
 $$
-</body>
 </div>
 
 The Fisher information describes the amount of information about $\Theta$ held by $X$. It is also the variance of the score function under conditions when the score has expectation zero.
@@ -84,15 +82,18 @@ Condition 1 requires that the partial derivatives with respect to all coordinate
 Intuitively (and a bit hand-wavily), this means that the derivatives must exist for all possible values of $\theta$ for pretty much any sample. This implies that log-likelihood functions that have cusps or points will not be differentiable at the particular value of $\theta$ where the feature occurs, implying a violation of this condition. 
 
 <div class="example">
-  <body>
   <strong>Example.</strong>
   Suppose we have $n$ i.i.d. samples $x_1, \dots, x_n \sim Unif(0, \theta)$ for some value $\theta$. The log-likelihood is given by:
+
   $$
-  \ell(\theta; x_1, \dots, x_n) = \log \left( \prod_{i = 1}^n  \frac{1}{\theta} \mathbb{I}(0 \leq x_i \leq \theta) \right) = \log \left( \frac{1}{\theta^n} \mathbb{I}(0 \leq x_i \leq \theta; \forall i) \right) = \log \left(\frac{1}{\theta^n}\mathbb{I}(\min_i x_i \geq 0) \mathbb{I}(\max_i x_i \leq \theta) \right)
-  \nonumber
+  \begin{aligned}
+  \ell(\theta; x_1, \dots, x_n) &= \log \left( \prod_{i = 1}^n  \frac{1}{\theta} \mathbb{I}(0 \leq x_i \leq \theta) \right) \\
+  &= \log \left( \frac{1}{\theta^n} \mathbb{I}(0 \leq x_i \leq \theta; \forall i) \right) \\
+  &= \log \left(\frac{1}{\theta^n}\mathbb{I}(\min_i x_i \geq 0) \mathbb{I}(\max_i x_i \leq \theta) \right)
+  \end{aligned}
   $$
+
   The MLE is $\max_i x_i$. Clearly, the above is not differentiable at this point.
-  </body>
 </div>
 
 #### Condition 2
@@ -104,16 +105,21 @@ Intuitively (and a bit hand-wavily), this means that the derivatives must exist 
 Condition 2 states the order of integration of differentiation can be exchanged. Since differentiation is basically just a particular limit, we can use results about the interchanging of the integral and limit to get results about interchaing the integral with differentiation.
 
 <div class="theorem">
-  <body>
-  <strong>Theorem 1. (Dominated Convergence Theorem)</strong>
-  <br>
+  <strong>Theorem 1 (Dominated Convergence Theorem).</strong>
+  {% tabs dom-conv %}
+  {% tab dom-conv statement %}
   For a sequence of measurable functions $\{f_n\}_{n = 1}^\infty$ and measurable functions $f$ and $g$ satisfying $f_n(x) \rightarrow f(x)$ almost everywhere, $\rvert f_n(x) \rvert \leq g(x)$ almost everywhere, and $\int g(x) d\mu(x) < \infty$:
+
   $$
   \underset{n \rightarrow \infty}{\lim} \int f_n(x) d\mu(x) = \int f(x) d\mu(x)
-  \nonumber
   $$
+
   The dominated convergence theorem states that the integral of the limit of a sequence of measurable functions equals the limit of the integral of each element in the sequence.
-  </body>
+  {% endtab %}
+  {% tab dom-conv proof %}
+  Proof to be completed.
+  {% endtab %}
+  {% endtabs %}
 </div>
 
 The Dominated Convergence Theorem states that we can interchange the order of limits and integrals for (certain) functions that are always smaller than (in absolute value) some other function with finite integral. If we define a function that mimics the form of the derivative as a limit (something along the lines of $h(x) = \frac{f(x + \delta) - f(x)}{\delta}$), then we can use this theorem to get results for derivatives and integrals.
@@ -121,9 +127,9 @@ The Dominated Convergence Theorem states that we can interchange the order of li
 This is the basic idea of the Leibniz integral rule:
 
 <div class="theorem">
-  <body>
-  <strong>Theorem 2. (Leibniz Integral Rule)</strong>
-  <br>
+  <strong>Theorem 2 (Leibniz Integral Rule).</strong>
+  {% tabs leibniz %}
+  {% tab leibniz statement %}
   Let $\Omega$ be an open subset of $\mathbb{R}$ and $(S, \mathcal{A}, \mu) =: \mathcal{M}$ be a measure space. Let $f: \Omega \times \mathcal{M} \rightarrow \mathbb{R}$ be a function that satisfies:
   <ul>
   <li>$f(x, \theta)$ is Lebesgue-integrable in $x$ for all $\theta \in \Omega$</li>
@@ -134,7 +140,11 @@ This is the basic idea of the Leibniz integral rule:
   $$
   \frac{d}{d\theta} \int_\mathcal{M} f(x, \theta) dx = \int_{\mathcal{M}} \frac{\partial}{\partial \theta} f(x, \theta) dx
   $$
-  </body>
+  {% endtab %}
+  {% tab leibniz proof %}
+  Proof to be completed.
+  {% endtab %}
+  {% endtabs %}
 </div>
 
 In summary, if our log-likelihood/density satisfies the (Lebesgue version of the) Leibniz Rule conditions, then it will satisfy Condition 2. 
@@ -147,8 +157,10 @@ Condition 3 states that the support of $f_X(x; \theta)$ should not depend on $\t
 ### Implications
 The FI conditions allow us to obtain the following results that are pretty fundamental for later likelihood theory. 
 
+<div class="theorem">
+<strong>Claim (Score Expectation).</strong>
 {% tabs score-exp-0 %}
-{% tab score-exp-0 claim %}
+{% tab score-exp-0 statement %}
 When these conditions hold, the score has expectation $0$. 
 {% endtab %}
 {% tab score-exp-0 proof %}
@@ -164,11 +176,14 @@ $$
 $$
 {% endtab %}
 {% endtabs %}
+</div>
 
 Furthermore, we have the following result under additional constraints.
 
+<div class="theorem">
+<strong>Claim (Fisher Information).</strong>
 {% tabs fisher-info-1 %}
-{% tab fisher-info-1 claim %}
+{% tab fisher-info-1 statement %}
 If the log-likelihood is twice differentiable with respect to $\theta$, then the Fisher information is equal to:
 
 $$
@@ -204,6 +219,7 @@ $$
 In $(i)$, we rely on the regularity conditions (specifically number 2 above) so we can interchange the order of differentiation and integration.
 {% endtab %}
 {% endtabs %}
+</div>
 
 ---
 
@@ -211,36 +227,38 @@ In $(i)$, we rely on the regularity conditions (specifically number 2 above) so 
 If we consider the observations $x$ as fixed, then we can define the <i>likelihood function</i> as a function of $\Theta$:
 
 $$
-\mathcal{L}(\theta; x) = f_{X \rvert \Theta}(x; \theta)
+\begin{equation}
 \label{eq:lik-func}
+\mathcal{L}(\theta; x) = f_{X \rvert \Theta}(x; \theta)
+\end{equation}
 $$
 
 One of the most common settings in which the likelihood function will be useful is in statistical inference. A good starting point is in point estimation. Intuitively, it seems reasonable to judge the quality of a parameter estimate by how probable it is one would observe the sample at hand under the assumption that the estimate is the true parameter value. Or, in another way, we might think that the best estimate we could come up with is the one that is most likely to result in the observations we have. Thus, maximum likelihood estimation is born. 
 
 <div class="definition">
-  <body>
-  <strong>Definition. (Maximum Likelihood Estimator).</strong>
+  <strong>Definition (Maximum Likelihood Estimator).</strong>
+  <br>
   Let $X$ be a random variable with density $f_{X \rvert \Theta}(x; \theta)$, and let $x$ be some realization of $X$. A <i>maximum likelihood estimator (MLE)</i> is any random quantity:
+
   $$
   \hat{\theta} = \underset{\theta \in \Omega}{\arg\max}\left\{ f_{X \rvert \Theta}(x; \theta) \right\} 
                = \underset{\theta \in \Omega}{\arg \max}\left\{ \mathcal{L}(\theta; x) \right\}
   $$
+
   The MLE is a function $\hat{\theta}: \mathcal{X} \rightarrow \Omega$ mapping from the sample space to the parameter space. 
-  </body>
 </div>
 
 If the parameter space $\Omega$ is compact and the likelihood function is continuous over $\Omega$, then maximum likelihood estimate will exist for a given sample (i.e. the supremum of the maximum likelihood estimator will be achieved in $\Omega$). If the parameter space is open, then the likelihood may increase and never reach a supremum. 
 
 <div class="example">
-  <body>
   <strong>Example.</strong>
   Consider $x$ distributed uniformly on the open interval $(0, \theta)$. The likelihood is:
+
   $$
   \mathcal{L}(\theta; x) = \frac{1}{\theta} \mathbb{I}(x > 0) \mathbb{I}(x < \theta)
-  \nonumber
   $$ 
+
   This function is decreasing on the interval $(0, \theta)$, and the maximum is never achieved. 
-  </body>
 </div>
 
 MLEs exhibit the <i>invariance property</i>, which is, in words, that a function of an MLE is the MLE of that function.
@@ -287,13 +305,17 @@ $$
 The easiest way to find an MLE is to use set the log-likelihood equal to zero (since monotonic transformations will not affect the $\arg \max$ or $\arg \min$). 
 
 <div class="theorem">
-  <body>
-  <strong>Theorem 3. (Fermat's Interior Extremem Theorem)</strong>
-  <br>
+  <strong>Theorem 3 (Fermat's Interior Extremem Theorem).</strong>
+  {% tabs fermat %}
+  {% tab fermat statement %}
   For function $f: A \rightarrow \mathbb{R}$, let $x_0 \in A$ be a local extremum of $f$. If $f$ is differentiable at $x_0$, then $f'(x_0) = 0$.
-  <br>
+
   A simple corollary states that a global extremum $x_0$ of $f$ must fall into one of the following cases: (1) $x_0$ is on the boundary of $A$; (2) $f$ is not differentiable at $x_0$; (3) $x_0$ is a stationary point of $f$.
-  </body>
+  {% endtab %}
+  {% tab fermat proof %}
+  Proof to be completed.
+  {% endtab %}
+  {% endtabs %}
 </div>
 
 For Fermat's Theorem to apply, the log-likelihood must be differentiable in $\Omega$. The previous example is one such where this is not the case. This theorem also implies that this $x_0$ occurs on the _interior_ of the domain of $f$. We would have to also check the boundary points if $A$ were closed.
@@ -302,23 +324,29 @@ For Fermat's Theorem to apply, the log-likelihood must be differentiable in $\Om
 The MLE is asymptotically normal under suitable conditions.
 
 <div class="theorem">
-  <body>
-  <strong>Theorem 4. (Asymptotic Normality of MLEs)</strong>
-  <br>
+  <strong>Theorem 4 (Asymptotic Normality of MLEs).</strong>
+  {% tabs asymp-norm-mle %}
+  {% tab asymp-norm-mle statement %}
   Let $\Omega \subseteq \mathbb{R}^p$ and $\{ X_n \}_{i = 1}^\infty$ be conditionally i.i.d. random variables given $\Theta = \theta^*$ with distribution $P_{\theta^*}$. Let $\hat{\theta}_n$ be an MLE for $\Theta$ and assume $\hat{\theta}_n \overset{p}{\rightarrow} \theta^*$. 
-  <br>
+
   Further assume that the second partial derivatives with respect to $\Theta$ of the densities are continuous and that the order of differentiation and integration can be exchanged. Suppose there exists function $H_r(x, \theta)$ such that, for $\theta^*$ in the interior of $\Omega$ and each $k,j$, the following is satisfied with $\underset{r \rightarrow 0}{\lim} \mathbb{E}_{\theta^*} \left[ H_r(X, \theta^*) \right] = 0$:
+
   $$
   \underset{\rvert\rvert \theta - \theta^* \rvert \rvert \leq r}{\sup} \left\{  \frac{\partial^2 \ell(\theta^*; x)}{\partial \theta_k \partial \theta_j} - \frac{\partial^2 \ell(\theta; x)}{\partial \theta_k \partial \theta_j} \right\} \leq H_r(x, \theta^*)
-  \nonumber
   $$
+
   And finally, assume the Fisher information for a single data point, $\mathcal{I}_X(\theta)$, is finite and non-singular. Then, under $P_{\theta^*}$:
+
   $$
   \sqrt{n}\left( \hat{\theta}_n - \theta^* \right) \rightsquigarrow \mathcal{N}\left(0, \mathcal{I}^{-1}_{X}(\theta^*) \right)
-  \nonumber
   $$
+
   In words, this theorem states that the MLE (suitably centered and scaled) is asymptotically normal.
-  </body>
+  {% endtab %}
+  {% tab asymp-norm-mle %}
+  Proof to be completed.
+  {% endtab %}
+  {% endtabs %}
 </div>
 
 The requirements are that the the true parameter value is on the interior of the parameter space (if it is restricted); the MLE is consistent; the density is nice enough (continuous second derivatives); the order of integration and differentiation can be exchanged; and that there is a function with finite mean that bounds the difference between the second derivatives of the log-likelihoods for two values of $\Theta$. This last condition is a uniform law of large numbers.

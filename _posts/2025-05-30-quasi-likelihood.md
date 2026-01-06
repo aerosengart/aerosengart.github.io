@@ -4,13 +4,7 @@ title: Quasi-Likelihood
 description: A Primer
 date: 2025-05-30
 tabs: true
-tags: glmm likelihood theory
-# Optionally, you can add a table of contents to your post.
-# NOTES:
-#   - make sure that TOC names match the actual section names
-#     for hyperlinks within the post to work correctly.
-#   - we may want to automate TOC generation in the future using
-#     jekyll-toc plugin (https://github.com/toshimaru/jekyll-toc).
+tags: glmm likelihood theory primer
 toc:
     - name: Set-Up
     - name: Connections To Likelihood
@@ -26,7 +20,6 @@ This post is a review of quasi-likelihood theory and mostly relies upon Wedderbu
 
 ---
 ## Set-Up
-
 Let $x_1, \dots, x_n$ denote our (independent) observations. Denote the expectation and variance of an arbitrary $x_i$ with $\mathbb{E}[x_i] = \mu_i$ and $\text{var}(x_i) = \phi V(\mu_i)$ where $\phi > 0$ is some scale parameter. $V(\mu_i)$ is some (known) function of the mean. 
 
 It's important to note that the expectations and variances need not be identical, but we enforce that the variances are proportional to some (shared) function of the expectations. We assume that $\mu_i = g(\beta_1, \dots, \beta_m)$. That is, the expectations are some (known) function of parameters $\beta_1, \dots, \beta_m$. 
@@ -34,47 +27,44 @@ It's important to note that the expectations and variances need not be identical
 The quasi-likelihood is easier to explain after defining the <i>quasi-score</i> function.
 
 <div class="definition">
-  <body>
-  <strong>Definition (Quasi-Score).</strong>
-   The <i>quasi-score</i> of $x_i$ is given by:
-    $$
-    \begin{equation}
-    \label{eq:quasi-score}
-    U(x_i; \mu_i) = \frac{x_i - \mu_i}{\phi V(\mu_i)}
-    \end{equation}
-    $$
-  </body>
-  <br>
+<strong>Definition (Quasi-Score).</strong>
+<br>
+  The <i>quasi-score</i> of $x_i$ is given by:
+  $$
+  \begin{equation}
+  \label{eq:quasi-score}
+  U(x_i; \mu_i) = \frac{x_i - \mu_i}{\phi V(\mu_i)}
+  \end{equation}
+  $$
 </div>
 
 In likelihood theory, the score function is the gradient of the log-likelihood function with respect to the parameters. In a similar fashion, the quasi-score is the gradient of the quasi-likelihood function with respect to the mean. 
 
 <div class="definition">
-  <body>
-  <strong>Definition (Quasi-Likelihood).</strong>
-   The <i>quasi-likelihood</i> (or, more precisely, the <i>quasi log-likelihood</i>) of $x_i$ is given by:
-    $$
-    \begin{equation}
-    \label{eq:quasi-likelihood}
-    \begin{aligned}
-    \ell_q(x_i; \mu_i) &= \int_{x_i}^{\mu_i} \frac{x_i - z}{\phi V(z)} dz \\
-    &\iff \\
-    \frac{\partial}{\partial \mu_i} [\ell_q(x_i; \mu_i)] &= U(x_i; \mu_i)
-    \end{aligned}
-    \end{equation}
-    $$
-  </body>
-  <br>
+<strong>Definition (Quasi-Likelihood).</strong>
+<br>
+  The <i>quasi-likelihood</i> (or, more precisely, the <i>quasi log-likelihood</i>) of $x_i$ is given by:
+  $$
+  \begin{equation}
+  \label{eq:quasi-likelihood}
+  \begin{aligned}
+  \ell_q(x_i; \mu_i) &= \int_{x_i}^{\mu_i} \frac{x_i - z}{\phi V(z)} dz \\
+  &\iff \\
+  \frac{\partial}{\partial \mu_i} [\ell_q(x_i; \mu_i)] &= U(x_i; \mu_i)
+  \end{aligned}
+  \end{equation}
+  $$
 </div>
 
 The quasi-score satisfies several of the properties that the score in likelihood theory satisfies, which justifies its name as a <i>quasi</i> score. 
 
 <div id="theorem-1"></div>
 <div class="theorem">
-<strong>Theorem 1 (Wedderburn (1974)).</strong>
+<strong>Theorem 1.<d-cite key=wedderburn1974></d-cite></strong>
 {% tabs theorem-1-wedderburn %}
 {% tab theorem-1-wedderburn theorem %}
 Let $x$ be some observation with expectation $\mu$ and variance $\phi V(\mu)$ for some $\phi > 0$. Suppose $\mu = g(\beta_1, \dots, \beta_m)$ for some (continuous and differentiable) funciton $g(\cdot)$. The quasi-score and quasi-likelihood, as defined in Eqs. \eqref{eq:quasi-score} and \eqref{eq:quasi-likelihood}, satisfy the following properties:
+
 <ol>
 <li>$\mathbb{E}\left[ U(x; \mu) \right] = 0$</li>
 <li>$\mathbb{E}\left[ \frac{\partial \ell_q(x; \mu) }{\partial \beta_i} \right] = 0$ for all $i \in [m]$</li>
@@ -163,11 +153,12 @@ $$
 
 ## Connections To Likelihood
 
-Suppose that the distribution of $x$ is a function of $\mu$ such that a log-likelihood can be explicitly written. Let $\ell(z; \mu)$ denote this log-likelihood. 
+Suppose that the distribution of $x$ is a function of $\mu$ such that a log-likelihood can be explicitly written. Let $\ell(z; \mu)$ denote this log-likelihood. The following property is due to the above theorem:
 
+<div class="theorem">
+<strong>Claim.</strong>
 {% tabs claim-lik1 %}
-{% tab claim-lik1 claim %}
-The following property is due to the above theorem:
+{% tab claim-lik1 statement %}
 
 $$
 \begin{equation}
@@ -194,12 +185,13 @@ $$
 Under certain regularity conditions (see <a href="/posts/2025/02/03/likelihood-theory.html">my likelihood post</a>), we have that $-\mathbb{E}\left[\frac{\partial^2 \ell(x; \mu)}{\partial \mu^2} \right]$ is the Fisher information. The result follows directly from the <a href="https://en.wikipedia.org/wiki/Cramér–Rao_bound">Cramér-Rao bound</a>.
 {% endtab %}
 {% endtabs %}
+</div>
 
 Wedderburn provides an additional connection between quasi-likelihood and likelihood functions for one-parameter distributions specified by the mean. 
 
 <div id="theorem-2"></div>
 <div class="theorem">
-<strong>Theorem 2 (Wedderburn (1974)).</strong>
+<strong>Theorem 2.<d-cite key=wedderburn1974></d-cite></strong>
 {% tabs theorem-2-wedderburn %}
 {% tab theorem-2-wedderburn statement %}
 Let $x$ be some observation with expectation $\mu$ and variance $\phi V(\mu)$ for some $\phi > 0$. Suppose $\mu = g(\beta_1, \dots, \beta_m)$ for some (continuous and differentiable) function $g(\cdot)$. The log-likelihood function, $\ell(x; \mu)$, for $x$ satisfies:
@@ -239,14 +231,13 @@ $$
 
 The theorem can be summarized quite nicely: the quasi-likelihood function will equal the log-likelihood function <i>if and only if</i> the distribution comes from an exponential family. 
 
-Extending the previous corollary, we see that for a one-parameter exponential family, Eq. \eqref{eq:corollary-1} obtains equality. Under certain regularity conditions (see <a href="/blog/2025/likelihood-theory.html">my likelihood post</a>), $-\mathbb{E}\left[\frac{\partial^2 \ell(x; \mu)}{\partial \mu^2} \right]$ is the Fisher information, which describes the amount of information about $\mu$ that is held in $x$.
+Extending the previous corollary, we see that for a one-parameter exponential family, Eq. \eqref{eq:corollary-1} obtains equality. Under certain regularity conditions (see <a href="/blog/2025/likelihood-theory">my likelihood post</a>), $-\mathbb{E}\left[\frac{\partial^2 \ell(x; \mu)}{\partial \mu^2} \right]$ is the Fisher information, which describes the amount of information about $\mu$ that is held in $x$.
 
 Since equality is obtained, we can also think of $-\mathbb{E}\left[\frac{\partial^2 \ell_q(x; \mu)}{\partial \mu^2} \right]$ as describing the amount of information about $\mu$ that is held in $x$. In addition, the difference between the former and the latter can be thought of as the amount of information gained by knowing, specifically, the distribution of $z$. 
 
 ---
 
 ## Estimation
-
 Let $x_{1:n}= (x_1, \dots, x_n)$ for independent observations $x_1, \dots, x_n$, and let $\mu_{1:n} = (\mu_1, \dots, \mu_n)$. We'll denote the gradient of the (full) quasi-likelihood with respect to the parameters $\beta_1, \dots, \beta_m$ with:
 
 $$
@@ -303,7 +294,7 @@ The <i>maximum quasi-likelihood estimates</i> of $\beta$, denoted by $\hat{\beta
 
 <div id="theorem-3"></div>
 <div class="theorem">
-<strong>Theorem 3 (Wedderburn (1974)).</strong>
+<strong>Theorem 3.<d-cite key=wedderburn1974></d-cite></strong>
 {% tabs theorem-3-wedderburn %}
 {% tab theorem-3-wedderburn theorem %}
 Let $x$ be some observation with expectation $\mu$ and variance $\phi V(\mu)$ for some $\phi > 0$. Suppose $\mu = g(\beta_1, \dots, \beta_m)$ for some (continuous and differentiable) function $g(\cdot)$. 
@@ -331,9 +322,11 @@ $$
 If we approximate the inverted matrix by its expectation, whose elements are given in <a href="#theorem-1">Theorem 1</a>, we get:
 
 $$
+\begin{aligned}
 &\beta - \hat{\beta} \approx  -\text{Cov}^{-1}(\mathbf{u})\mathbf{u} \\
 \implies
 &\hat{\beta} \approx \beta + \text{Cov}^{-1}(\mathbf{u})\mathbf{u} 
+\end{aligned}
 $$
 
 Since $\mathbf{u}$ has expectation zero, it is clear that $\mathbb{E}[\hat{\beta}] \approx \mathbf{0}$ as well.
@@ -346,6 +339,7 @@ $$
 &= \mathbb{E}\left[ \text{Cov}^{-1}(\mathbf{u})\mathbf{u} \left(\text{Cov}^{-1}(\mathbf{u})\mathbf{u}\right)^\top \right] \\
 &= \text{Cov}^{-1}(\mathbf{u})\mathbb{E}\left[ \mathbf{u} \mathbf{u}^\top\right] \text{Cov}^{-1}(\mathbf{u}) \\
 &= \text{Cov}^{-1}(\mathbf{u})
+\end{aligned}
 $$
 {% endtab %}
 {% endtabs %}

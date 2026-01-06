@@ -1,8 +1,9 @@
 ---
 layout: music
-title: Music
+title: music
 permalink: /music/
-nav: false
+nav: true
+nav_order: 6
 collection: music
 ---
 
