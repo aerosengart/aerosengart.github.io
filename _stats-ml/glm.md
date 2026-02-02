@@ -277,10 +277,12 @@ Generalized linear models are not that different from classical linear regressio
   <br>
     Let $\theta \in \mathbb{R}^{m \times 1}$ be a parameter vector. We say that the distribution of random vector $\mathbf{y} \in \mathbb{R}^{n \times 1}$ comes from an <i>overdispersed exponential family</i> if the probability density/mass function can be written as:
     $$
-    \begin{aligned}
+    \begin{equation}
     \label{eq:exp-fam}
+    \begin{aligned}
     f_Y(\mathbf{y} \rvert \theta, \tau) = \prod_{i = 1}^n h(\mathbf{y}_i, \tau_i) \exp\left(\frac{\mathbf{b}(\theta_i) \mathbf{T}(\mathbf{y}_i) - A(\theta_i)}{d(\tau_i)} \right) 
     \end{aligned}
+    \end{equation}
     $$
     <ul>
         <li>$\tau$ is the <i>dispersion parameter</i>, usually related to the variance somehow.</li>

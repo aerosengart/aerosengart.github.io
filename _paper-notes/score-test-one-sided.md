@@ -63,7 +63,7 @@ $$
 <strong>Claim (Gaussianity of Score).</strong>
 {% tabs claim-1 %}
 {% tab claim-1 statement %}
-Assuming $U(\theta)$ has finite variance and mean zero (which it will under certain conditions — see <a href="/posts/2025/likelihood-theory">this post on likelihood theory</a>), it is asymptotically multivariate Gaussian when suitably centered and scaled (by the central limit theorem).<d-cite key="dasgupta2008"></d-cite> 
+Assuming $U(\theta)$ has finite variance and mean zero (which it will under certain conditions — see <a href="/blog/2025/likelihood-theory">this post on likelihood theory</a>), it is asymptotically multivariate Gaussian when suitably centered and scaled (by the central limit theorem).<d-cite key="dasgupta2008"></d-cite> 
 {% endtab %}
 {% tab claim-1 proof %}
 Notice that $U(\theta_0)$ is the sum of (functions of) i.i.d. random variables. As we noted above, $U(\theta_0)$ has mean zero under certain regularity conditions. The CLT states that:
@@ -479,6 +479,81 @@ p \approx \underset{\lambda}{\sup} \left\{ \xi(t^*, \mathbf{A}_{\psi, \psi}(\the
 $$
 
 where $\xi(\cdot, \cdot, \cdot)$ is defined as in Eq. \eqref{eq:xi-defn} and $t^*$ is the observed value of $T_s$.
+
+<div class="example">
+<strong>Example.</strong>
+<br>
+Suppose we are testing an $m$-dimensional variance component $(\psi)$ in a generalized linear mixed effects model. We choose the score function as $\mathbf{U}_0$, and let $\mathcal{I}$ denote the Fisher information. Suppose we can partition it according to the blocks corresponding to the nuisance parameters $(\lambda)$ and parameters of interest ($\psi$) as:
+
+$$
+\mathcal{I}(\theta) = \begin{bmatrix}
+\mathcal{I}_{\lambda, \lambda}(\theta) & \mathcal{I}_{\lambda, \psi}(\theta) \\
+\mathcal{I}_{\psi, \lambda}(\theta) & \mathcal{I}_{\psi, \psi}(\theta)
+\end{bmatrix}
+$$
+
+Let a tilde denote a consistent estimator for a given quantity. Since variances are non-negative, we have that $\mathcal{C}$ is the non-negative orthant in $\mathbb{R}^m$. The test statistic for this case is:
+
+$$
+T_s = \underbrace{\mathbf{U}^\top (\tilde{\theta}_0) \tilde{\mathcal{I}}_{\psi, \psi}^{-1}(\tilde{\theta}_0) \mathbf{U}(\tilde{\theta}_0)}_{(a)} - \underbrace{\underset{\mathbf{b} \in \mathcal{C}}{\inf} \left\{ (\mathbf{U}(\tilde{\theta}_0) - \mathbf{b})^\top \tilde{\mathcal{I}}_{\psi, \psi}^{-1}(\tilde{\theta}_0) (\mathbf{U}(\tilde{\theta}_0) - \mathbf{b}) \right\}}_{(b)}
+$$
+
+In the above, $(a)$ is the "classical" score test with implicit two-sided alternative. $(b)$, on the other hand, can be thought of as a correction term that forces $T_s$ to equal $0$ when the constrained MLE for the parameter of interest does not provide interest against the alternative <i>in favor of the null</i>. 
+<br>
+We can use the <a href="https://en.wikipedia.org/wiki/Schur_complement">Schur complement</a> to find $\tilde{\mathcal{I}}_{\psi, \psi}^{-1}$:
+
+$$
+\tilde{\mathcal{I}}_{\psi, \psi}^{-1} = \tilde{\mathcal{I}}_{\lambda, \lambda} - \tilde{\mathcal{I}}_{\lambda, \psi} \left[ \tilde{\mathcal{I}}_{\psi, \psi} \right]^{-1} \tilde{\mathcal{I}}_{\psi, \lambda}
+$$
+
+This formula is helpful because it is almost always the case that $\psi$ has a much smaller dimension than $\lambda$, so inverting $\tilde{\mathcal{I}}_{\psi, \psi}$ will be fairly easy.
+<br>
+Notice, now, that $(b)$ is a convex optimization problem over a cone (i.e. the objective function is a quadratic form). We can use most any convex optimization package in the language of our choice to find $\mathbf{b}$.
+<details>
+<summary>Using CVXOPT.</summary>
+CVXOPT is a convex optimization package in Python. It has the ability to solve quadratic cone programs of the form:
+
+$$
+\begin{aligned}
+\text{minimize } &\frac{1}{2} \mathbf{x}^\top \mathbf{P} \mathbf{x} + \mathbf{q}^\top \mathbf{x} \\
+\text{subject to } &\mathbf{G}\mathbf{x} \preceq \mathbf{h} \\
+& \mathbf{A} \mathbf{x} = \mathbf{b}
+\end{aligned}
+$$
+
+Expanding out the objective function of $\mathbf{b}$ yields:
+
+$$
+\begin{aligned}
+&\underset{\mathbf{b} \in \mathcal{C}}{\arg \inf} \left\{ (\mathbf{U}(\tilde{\theta}_0) - \mathbf{b})^\top \tilde{\mathcal{I}}_{\psi, \psi}^{-1}(\tilde{\theta}_0) (\mathbf{U}(\tilde{\theta}_0) - \mathbf{b}) \right\} \\
+= &\underset{\mathbf{b} \in \mathcal{C}}{\arg \inf} \left\{ \mathbf{U}^\top (\tilde{\theta}_0) \tilde{\mathcal{I}}_{\psi, \psi}^{-1}(\tilde{\theta}_0)\mathbf{U}(\tilde{\theta}_0) - \mathbf{U}^\top(\tilde{\theta}_0) \tilde{\mathbf{I}}_{\psi, \psi}^{-1}(\tilde{\theta}_0) \mathbf{b} - \mathbf{b}^\top \tilde{\mathbf{I}}_{\psi, \psi}^{-1}(\tilde{\theta}_0) \mathbf{U}(\tilde{\theta}_0) + \mathbf{b}^\top \tilde{\mathbf{I}}_{\psi, \psi}^{-1}(\tilde{\theta}_0) \mathbf{b}^\top \right\} \\ 
+= &\underset{\mathbf{b} \in \mathcal{C}}{\arg \inf} \left\{-2\mathbf{b}^\top \tilde{\mathbf{I}}_{\psi, \psi}^{-1}(\tilde{\theta}_0) \mathbf{U}(\tilde{\theta}_0) + \mathbf{b}^\top \tilde{\mathbf{I}}_{\psi, \psi}^{-1}(\tilde{\theta}_0) \mathbf{b}^\top \right\} \\  
+= &\underset{\mathbf{b} \in \mathcal{C}}{\arg \inf} \left\{ \left[ - \mathbf{U}^\top (\tilde{\theta}_0) \tilde{\mathbf{I}}_{\psi, \psi}^{-1}(\tilde{\theta}_0)\right] \mathbf{b} + \frac{1}{2} \mathbf{b}^\top \tilde{\mathbf{I}}_{\psi, \psi}^{-1}(\tilde{\theta}_0) \mathbf{b}^\top \right\}
+\end{aligned}
+$$
+
+Thus, letting: 
+
+$$
+\begin{aligned}
+\mathbf{P} &= \tilde{\mathbf{I}}_{\psi, \psi}^{-1}(\tilde{\theta}_0) \\
+\mathbf{q}^\top &=  -\left(\tilde{\mathbf{I}}_{\psi, \psi}^{-1}(\tilde{\theta}_0)\mathbf{U}(\tilde{\theta}_0) \right)^\top
+\end{aligned}
+$$
+
+leads us to an equivalent optimization problem that has an objective function with the same form specified in CVXOPT.
+<br>
+Now let $\mathbf{G} = -\mathbb{I}_{m \times m}$ and $\mathbf{h} = \mathbf{0}_{m}$ so that the first constraint is:
+
+$$
+\mathbf{G} \mathbf{x} \preceq \mathbf{h} \iff
+- \mathbb{I}_{m \times m} \mathbf{x} \preceq \mathbf{0}_h \iff
+\mathbf{x} \succeq \mathbf{0}_h
+$$
+
+
+</details>
+</div>
 
 ---
 

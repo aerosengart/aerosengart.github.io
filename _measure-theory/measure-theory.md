@@ -4,7 +4,7 @@ title:  Measure Theory
 description: A Primer
 date: 2025-04-30
 tabs: true
-tags: theory likelihood  primer
+tags: theory likelihood
 toc:
   - name: Building Blocks
     subsections:
@@ -29,7 +29,7 @@ toc:
         - name: Vector Spaces
         - name: Helpful Definitions
         - name: Assorted Results
-bibliography: 2025-04-30-measure-theory.bib
+bibliography: measure.bib
 ---
 
 My work has become much more technical that I am used to, so I thought it would be good to take some notes on basic measure and probability theory in anticipation of working through several theoretical papers. A lot of the definitions below come from Wikipedia, Durrett<d-cite key=durrett2019></d-cite>, and Axler<d-cite key=axler2025></d-cite>, but I've added some more intuitive ways of thinking about these concepts that I've come up with or collected from some really helpful sites I've found.
@@ -955,21 +955,6 @@ We can define the <i>canonical norm</i> of an inner product space as $\rvert \rv
 
 By "complete", we mean that the space does not have any "holes" in it. Formally put, any Cauchy sequence taking values in $X$ converges to a point in $X$ as well.
 
-Norms can also induce what we call a <i>distance metric</i> or <i>function</i> (or just <i>metric</i> for short) which assigns a value to represent how "far apart" two vectors in our space are. 
-
-<div id="distance-metric"></div>
-<div class="definition">
-  <strong>Definition (Distance Metric).</strong>
-  <br>
-  Let $X$ be a set. A <i>distance metric</i> is any function $d: X \times X \rightarrow \mathbb{R}$ satisfying the following for all $x, y, z, \in X$:
-
-  <ol>
-    <li>$d(x, x) = 0$</li>
-    <li>Positivity: $x \neq y \implies d(x,y) > 0$ </li>
-    <li>Symmetry: $d(x,y) = d(y,x)$</li>
-    <li>Triangle inequality: $d(x,z) \leq d(x,y) + d(y, z)$</li>
-  </ol>
-</div>
 
 The <i>induced metric</i> (i.e. the distance metric induced by the norm of a vector space) is the function $d: V \times V \rightarrow \mathbb{R}$ satisfying $d(x, y) = \rvert \rvert x - y \rvert \rvert$ for all $x,y \in V$. If we combine a metric with a set, then we get a <i>metric space</i>, which is just a set on which we have a particular sense of distance between its elements.
 
@@ -1026,45 +1011,7 @@ Using our definitions of inner product and complete metric spaces, we can define
 </div>
 
 
-<div id="partial-order"></div>
-<div class="definition">
-  <strong>Definition (Partial Order).</strong>
-  <br>
-  A <i>partial order</i> is a binary relation, $\leq$, between a set, $X$, and itself satisfying the following for any $a, b, c \in X$:
 
-  <ol>
-    <li> Reflexivity: $a \leq a$ </li>
-    <li> Antisymmetry: $a \leq b$ and $b \leq a \implies a = b$ </li>
-    <li> Transitivity: $a \leq b$ and $b \leq c \implies a \leq c$ </li>
-  </ol>
-
-  Partial orders as defined above are sometimes called <i>reflexive</i>, <i>weak</i>, or <i>non-strict</i>. A <i>strict partial order</i> is a binary relation, $<$, between a set, $X$, and itself satisfying the following for all $a, b, c \in X$:
-
-  <ol>
-    <li> Irreflexivity: $\neg(a < a)$ </li>
-    <li> Asymmetry: $a < b \implies \neg (b < a)$ </li>
-    <li> Transitivity: $a < b$ and $b < c \implies a < c$ </li>
-  </ol>
-</div>
-
-
-<div id="total-order"></div>
-<div class="definition">
-  <strong>Definition (Total Order).</strong>
-  <br>
-  A <i>total order</i>, also called a <i>linear order</i>, is a partial order satisfying the additional property for all $a, b, c \in X$:
-
-  <ul>
-    <li> Totality: $a \leq b$ or $b \leq a$ </li>
-  </ul>
-
- 
-  Total orders as defined above are sometimes called <i>non-strict</i>. A <i>strict total order</i> is a strict partial order that satisfies the following additional proerpty for all $a, b \in X$:
-
-  <ul>
-    <li> Connectivity: $a \neq b \implies a < b$ or $b < a$ </li>
-  </ul>
-</div>
 
 ### Assorted Results
 

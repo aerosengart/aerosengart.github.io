@@ -36,7 +36,7 @@ Recently, I've run into some confusion in parameter estimation. In this post, I'
 <ol>
 <li>What is the <i>efficient information matrix</i>?</li>
 <li>When exactly are the quasi-likelihood estimators asymptotically normal and consistent?</li>
-<li>Are any regularity conditions violated in the variance componenet estimation scheme for generalized linear mixed models?</li>
+<li>Are any regularity conditions violated in the variance component estimation scheme for generalized linear mixed models?</li>
 </ol>
 
 ---
@@ -806,7 +806,7 @@ $$
 \end{bmatrix}
 $$
 
-Then we can use the <a href="https://en.wikipedia.org/wiki/Schur_complement">Schur complement formula</a> to get the varaince of the efficient influence function is:
+Then we can use the <a href="https://en.wikipedia.org/wiki/Schur_complement">Schur complement formula</a> to get the variance of the efficient influence function is:
 
 $$
 \begin{equation}

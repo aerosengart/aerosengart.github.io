@@ -138,6 +138,12 @@ newsletter:
 collections:
   music:
     output: true
+  measure-theory:
+    output: true
+  stats-ml:
+    output: true
+  paper-notes:
+    output: true
 
 # -----------------------------------------------------------------------------
 # Jekyll settings
@@ -166,6 +172,7 @@ exclude:
   - Dockerfile
   - docker-compose.yml
   - docker-compose-slim.yml
+  - drafts/
   - FAQ.md
   - Gemfile
   - Gemfile.lock
@@ -250,20 +257,33 @@ terser:
 # -----------------------------------------------------------------------------
 
 jekyll-archives:
-  posts:
-    enabled: [year, tags, categories] # enables year, tag and category archives (remove if you need to disable one of them).
-    permalinks:
-      year: "/blog/:year/"
-      tags: "/blog/:type/:name/"
-      categories: "/blog/:type/:name/"
+  # posts:
+  #   enabled: [year, tags, categories] # enables year, tag and category archives (remove if you need to disable one of them).
+  #   permalinks:
+  #     year: "/blog/:year/"
+  #     tags: "/blog/:type/:name/"
+  #     categories: "/blog/:type/:name/"
   music:
     enabled: [year, tags, categories] # enables year, tag and category archives (remove if you need to disable one of them).
     permalinks:
       year: "/music/:year/"
       tags: "/music/:type/:name/"
       categories: "/music/:type/:name/"
-
-display_tags: ["paper-review", "primer", "theory", "clustering", "models"] # these tags will be displayed on the front page of your blog
+  measure-theory:
+    enable: [tags]
+    permalinks:
+      tags: "/measure-theory/:type/:name/"
+  stats-ml:
+    enable: [tags]
+    permalinks:
+      tags: "/stats-ml/:type/:name/"
+  paper-notes:
+    enable: [tags]
+    permalinks:
+      tags: "/paper-notes/:type/:name/"
+  
+  
+#display_tags: ["paper-review",  # these tags will be displayed on the front page of your blog
 
 # -----------------------------------------------------------------------------
 # Jekyll Scholar

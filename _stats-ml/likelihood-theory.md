@@ -20,7 +20,7 @@ bibliography: 2025-02-02-likelihood-theory.bib
 
 The score test in non-standard conditions has been the motivation for much of my reading these past few months. However, it has led me to wonder about the small details of the test in standard conditions. What <i>exactly</i> are the regularity conditions and when are they usually satisfied? When can we appeal to large-sample theory for the score test? It is slightly more challenging than anticipated to get a straight answer to these questions, and this is the purpose of this post. 
 
-This post relies on some measure theory, which I've covered in <a href="/posts/2025/measure-theory">another post</a>. Most of the content comes from Moran (1971)<d-cite key=moran1971></d-cite> and Schervish (1995)<d-cite key=schervish1995></d-cite>.
+This post relies on some measure theory, which I've covered in <a href="/measure-theory">a series of posts</a>. Most of the content comes from Moran (1971)<d-cite key=moran1971></d-cite> and Schervish (1995)<d-cite key=schervish1995></d-cite>.
 
 ---
 

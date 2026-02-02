@@ -136,7 +136,7 @@ $$
 ---
 
 ## Likelihood
-We can write the conditional log-likelihood using the exponential family form (see my <a href="/posts/2025/06/03/glm.html">generalized linear models post</a>). 
+We can write the conditional log-likelihood using the exponential family form (see my <a href="/stats-ml/glm">generalized linear models post</a>). 
 
 $$
 \begin{equation}
@@ -175,7 +175,7 @@ $$
 \end{equation}
 $$
 
-When $\mathcal{F}$ <i>is</i> an exponential family distribution, the log-likelihood and log quasi-likelihood are equal. See my <a href="/posts/2025/05/30/quasi-likelihood.html">post on quasi-likelihood</a> for a more in-depth discussion.
+When $\mathcal{F}$ <i>is</i> an exponential family distribution, the log-likelihood and log quasi-likelihood are equal. See my <a href="/stats-ml/quasi-likelihood">post on quasi-likelihood</a> for a more in-depth discussion.
 
 Let $f$ denote the density associated with $\mathcal{F}$, the distribution of the random effects. The unconditional quasi-likelihood is then given by integrating out the random effects from the joint quasi-likelihood:
 
@@ -291,8 +291,8 @@ $$
 \kappa''_{k,k}(\beta) &= 
 \frac{\partial}{\partial \beta_k^\top} \left[ -\sum_{j = 1}^{n_k} \left(\frac{y_{k,j} - \mu_{k,j}}{\phi a_{k,j} V(\mu_{k,j})\frac{\partial g(\mu_{k,j})}{\partial \mu_{k,j}}}\right)\mathbf{z}_{k,j} + D^{-1}(\tau^2) \beta_k  \right] \\
 &= - \sum_{j = 1}^{n_k} \left( \frac{\mathbf{z}_{k,j}}{\phi a_{k,j} V(\mu_{k,j}) \frac{\partial g(\mu_{k,j})}{\partial \mu_{k,j}}} \frac{\partial}{\partial \beta_k^\top} \left[ y_{k,j} - \mu_{k,j} \right] + \mathbf{z}_{k,j}(y_{k,j} - \mu_{k,j})\frac{\partial}{\partial \beta_k^\top} \left[ \frac{1}{\phi a_{k,j} V(\mu_{k,j}) \frac{\partial g(\mu_{k,j})}{\partial \mu_{k,j}}} \right] \right) + D^{-1}(\tau^2) \\
-&= - \sum_{j = 1}^{n_k} \left( \frac{-\mathbf{z}_{k,j}\mathbf{z}_{k, j}^\top}{\phi a_{k,j} V(\mu_{k,j}) \left(\frac{\partial g(\mu_{k,j})}{\partial \mu_{k,j}}\right)^2} + \mathbf{z}_{k,j}(y_{k,j} - \mu_{k,j})\frac{\partial}{\partial \beta_k^\top} \left[ \frac{1}{\phi a_{k,j} V(\mu_{k,j}) \frac{\partial g(\mu_{k,j})}{\partial \mu_{k,j}}} \right] \right) + D^{-1}(\tau^2) \\
-&= \sum_{j = 1}^{n_k} \frac{\mathbf{z}_{k,j}\mathbf{z}_{k, j}^\top}{\phi a_{k,j} V(\mu_{k,j}) \left(\frac{\partial g(\mu_{k,j})}{\partial \mu_{k,j}}\right)^2} + D^{-1}(\tau^2) + R_k \\
+&\overset{(i)}{=} - \sum_{j = 1}^{n_k} \left( \frac{-\mathbf{z}_{k,j}\mathbf{z}_{k, j}^\top}{\phi a_{k,j} V(\mu_{k,j}) \left(\frac{\partial g(\mu_{k,j})}{\partial \mu_{k,j}}\right)^2} + \mathbf{z}_{k,j}(y_{k,j} - \mu_{k,j})\frac{\partial}{\partial \beta_k^\top} \left[ \frac{1}{\phi a_{k,j} V(\mu_{k,j}) \frac{\partial g(\mu_{k,j})}{\partial \mu_{k,j}}} \right] \right) + D^{-1}(\tau^2) \\
+&\overset{(ii)}{=} \sum_{j = 1}^{n_k} \frac{\mathbf{z}_{k,j}\mathbf{z}_{k, j}^\top}{\phi a_{k,j} V(\mu_{k,j}) \left(\frac{\partial g(\mu_{k,j})}{\partial \mu_{k,j}}\right)^2} + D^{-1}(\tau^2) + R_k \\
 &=(\tilde{\mathbf{Z}}^k)^\top \mathbf{W}_k \tilde{\mathbf{Z}}^k + D^{-1}(\tau^2) + R_k
 \end{aligned}
 $$

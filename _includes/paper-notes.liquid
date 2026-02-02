@@ -1,0 +1,39 @@
+{% if page.display_tags and page.display_tags.size > 0 %}
+  <div class="tag-category-list">
+    <ul class="p-0 m-0">
+      {% for tag in page.display_tags %}
+        <li>
+          <i class="fa-solid fa-hashtag fa-sm"></i> <a href="{{ tag | slugify | prepend: '/blog/tag/' | relative_url }}">{{ tag }}</a>
+        </li>
+        {% unless forloop.last %}
+          <p>&bull;</p>
+        {% endunless %}
+      {% endfor %}
+    </ul>
+  </div>
+{% endif %}
+
+
+<div class="post">
+  <article class="archive">
+    <div class="table-responsive">
+      <table class="table table-sm table-borderless">
+        {% assign paper_items = site.paper-notes | sort: 'date' | reverse %}
+        {% for document in paper_items %}
+          <tr>
+            <th scope="row">{{ document.date | date: '%b %d, %Y' }}</th>
+            <td>
+              {% if document.redirect == blank %}
+                <a class="post-link" href="{{ document.url | relative_url }}">{{ document.title }}</a>
+              {% elsif document.redirect contains '://' %}
+                <a class="post-link" href="{{ document.redirect }}" target="_blank">{{ document.title }}</a>
+              {% else %}
+                <a class="post-link" href="{{ document.redirect | relative_url }}">{{ document.title }}</a>
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+      </table>
+    </div>
+  </article>
+</div>

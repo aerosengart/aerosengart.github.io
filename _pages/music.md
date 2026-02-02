@@ -3,7 +3,7 @@ layout: music
 title: music
 permalink: /music/
 nav: true
-nav_order: 6
+nav_order: 5
 collection: music
 ---
 
@@ -11,4 +11,3 @@ collection: music
 >
 > -- Stephen Sondheim, Moments in the Woods, Into the Woods (1986)
 
-## Music that I have listened to or wrote

@@ -1,13 +1,16 @@
 ---
 layout: page
 title: submenus
-nav: false
-nav_order: 8
+nav: true
+nav_order: 6
 dropdown: true
 children:
-  - title: blog
-    permalink: /blog/
+  - title: stats & ml
+    permalink: /stats-ml/
   - title: divider
-  - title: music
-    permalink: /music/
+  - title: measure theory
+    permalink: /measure-theory/
+  - title: divider
+  - title: paper notes
+    permalink: /paper-notes/
 ---

@@ -231,7 +231,7 @@ $$
 
 The theorem can be summarized quite nicely: the quasi-likelihood function will equal the log-likelihood function <i>if and only if</i> the distribution comes from an exponential family. 
 
-Extending the previous corollary, we see that for a one-parameter exponential family, Eq. \eqref{eq:corollary-1} obtains equality. Under certain regularity conditions (see <a href="/blog/2025/likelihood-theory">my likelihood post</a>), $-\mathbb{E}\left[\frac{\partial^2 \ell(x; \mu)}{\partial \mu^2} \right]$ is the Fisher information, which describes the amount of information about $\mu$ that is held in $x$.
+Extending the previous corollary, we see that for a one-parameter exponential family, Eq. \eqref{eq:corollary-1} obtains equality. Under certain regularity conditions (see <a href="/stats-ml/likelihood-theory">my likelihood post</a>), $-\mathbb{E}\left[\frac{\partial^2 \ell(x; \mu)}{\partial \mu^2} \right]$ is the Fisher information, which describes the amount of information about $\mu$ that is held in $x$.
 
 Since equality is obtained, we can also think of $-\mathbb{E}\left[\frac{\partial^2 \ell_q(x; \mu)}{\partial \mu^2} \right]$ as describing the amount of information about $\mu$ that is held in $x$. In addition, the difference between the former and the latter can be thought of as the amount of information gained by knowing, specifically, the distribution of $z$. 
 
