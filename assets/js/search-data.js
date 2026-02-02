@@ -23,13 +23,6 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "nav-blog",
-          title: "blog",
-          description: "",
-          section: "Navigation",
-          handler: () => {
-            window.location.href = "/blog/";
-          },
         },{id: "nav-music",
           title: "music",
           description: "",
@@ -37,176 +30,147 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/music/";
           },
-        },{id: "post-score-calcuations",
-        
-          title: "Score Calcuations",
-        
-        description: "The Negative Binomial Case",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2025/score-test-neg-binom/";
-          
-        },
-      },{id: "post-score-and-information",
-        
-          title: "Score and Information",
-        
-        description: "Calculations for GLMMs",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2025/score-info/";
-          
-        },
-      },{id: "post-variant-deconvolution",
-        
-          title: "Variant Deconvolution",
-        
-        description: "A Primer",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2025/variant-deconvolution/";
-          
-        },
-      },{id: "post-estimation-theory",
-        
-          title: "Estimation Theory",
-        
-        description: "A Primer",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2025/estimation-theory/";
-          
-        },
-      },{id: "post-generalized-linear-mixed-models",
-        
-          title: "Generalized Linear Mixed Models",
-        
-        description: "A Primer",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2025/glmm/";
-          
-        },
-      },{id: "post-generalized-linear-models",
-        
-          title: "Generalized Linear Models",
-        
-        description: "A Primer",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2025/glm/";
-          
-        },
-      },{id: "post-quasi-likelihood",
-        
-          title: "Quasi-Likelihood",
-        
-        description: "A Primer",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2025/quasi-likelihood/";
-          
-        },
-      },{id: "post-betting-based-confidence-sequences",
-        
-          title: "Betting-Based Confidence Sequences",
-        
-        description: "",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2025/betting-bounds/";
-          
-        },
-      },{id: "post-martingales",
-        
-          title: "Martingales",
-        
-        description: "A Primer",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2025/martingales/";
-          
-        },
-      },{id: "post-measure-theory",
-        
-          title: "Measure Theory",
-        
-        description: "A Primer",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2025/measure-theory/";
-          
-        },
-      },{id: "post-splash-and-oasis",
-        
-          title: "SPLASH and OASIS",
-        
-        description: "",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2025/splash/";
-          
-        },
-      },{id: "post-one-sided-score-test-for-variance-components",
-        
-          title: "One-Sided Score Test For Variance Components",
-        
-        description: "",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2025/score-test-one-sided/";
-          
-        },
-      },{id: "post-likelihood-and-large-sample-theory",
-        
-          title: "Likelihood and Large-Sample Theory",
-        
-        description: "A Primer",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2025/likelihood-theory/";
-          
-        },
-      },{id: "post-clustering-stability",
-        
-          title: "Clustering Stability",
-        
-        description: "What Does It Mean To Be Stable?",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2025/clustering-stability/";
-          
-        },
-      },{id: "post-clustering",
-        
-          title: "Clustering",
-        
-        description: "An Axiomatic Approach",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2025/impossibility-clustering/";
-          
-        },
-      },{id: "music-just-in-time",
+        },{id: "dropdown-stats-amp-ml",
+              title: "stats &amp; ml",
+              description: "",
+              section: "Dropdown",
+              handler: () => {
+                window.location.href = "/stats-ml/";
+              },
+            },{id: "dropdown-measure-theory",
+              title: "measure theory",
+              description: "",
+              section: "Dropdown",
+              handler: () => {
+                window.location.href = "/measure-theory/";
+              },
+            },{id: "dropdown-paper-notes",
+              title: "paper notes",
+              description: "",
+              section: "Dropdown",
+              handler: () => {
+                window.location.href = "/paper-notes/";
+              },
+            },{id: "measure-theory-measure-theory",
+          title: 'Measure Theory',
+          description: "A Primer",
+          section: "Measure-theory",handler: () => {
+              window.location.href = "/measure-theory/measure-theory/";
+            },},{id: "measure-theory-chapter-1",
+          title: 'Chapter 1',
+          description: "Riemann Integrals",
+          section: "Measure-theory",handler: () => {
+              window.location.href = "/measure-theory/chapter1/";
+            },},{id: "measure-theory-useful-definitions",
+          title: 'Useful Definitions',
+          description: "",
+          section: "Measure-theory",handler: () => {
+              window.location.href = "/measure-theory/useful-definitions/";
+            },},{id: "music-just-in-time",
           title: 'Just In Time',
           description: "a big band arrangement",
           section: "Music",handler: () => {
               window.location.href = "/music/just_in_time/";
+            },},{id: "paper-notes-clustering",
+          title: 'Clustering',
+          description: "An Axiomatic Approach",
+          section: "Paper-notes",handler: () => {
+              window.location.href = "/paper-notes/impossibility-clustering/";
+            },},{id: "paper-notes-clustering-stability",
+          title: 'Clustering Stability',
+          description: "What Does It Mean To Be Stable?",
+          section: "Paper-notes",handler: () => {
+              window.location.href = "/paper-notes/clustering-stability/";
+            },},{id: "paper-notes-one-sided-score-test-for-variance-components",
+          title: 'One-Sided Score Test For Variance Components',
+          description: "",
+          section: "Paper-notes",handler: () => {
+              window.location.href = "/paper-notes/score-test-one-sided/";
+            },},{id: "paper-notes-splash-and-oasis",
+          title: 'SPLASH and OASIS',
+          description: "",
+          section: "Paper-notes",handler: () => {
+              window.location.href = "/paper-notes/splash/";
+            },},{id: "paper-notes-betting-based-confidence-sequences",
+          title: 'Betting-Based Confidence Sequences',
+          description: "",
+          section: "Paper-notes",handler: () => {
+              window.location.href = "/paper-notes/betting-bounds/";
+            },},{id: "paper-notes-variant-deconvolution",
+          title: 'Variant Deconvolution',
+          description: "A Primer",
+          section: "Paper-notes",handler: () => {
+              window.location.href = "/paper-notes/variant-deconvolution/";
+            },},{id: "paper-notes-cellular-deconvolution",
+          title: 'Cellular Deconvolution',
+          description: "A Primer",
+          section: "Paper-notes",handler: () => {
+              window.location.href = "/paper-notes/cell-deconvolution/";
+            },},{id: "paper-notes-a-score-test-for-variance-components-in-generalized-linear-models",
+          title: 'A Score Test for Variance Components in Generalized Linear Models',
+          description: "",
+          section: "Paper-notes",handler: () => {
+              window.location.href = "/paper-notes/score-test-lin/";
+            },},{id: "stats-ml-likelihood-and-large-sample-theory",
+          title: 'Likelihood and Large-Sample Theory',
+          description: "A Primer",
+          section: "Stats-ml",handler: () => {
+              window.location.href = "/stats-ml/likelihood-theory/";
+            },},{id: "stats-ml-martingales",
+          title: 'Martingales',
+          description: "A Primer",
+          section: "Stats-ml",handler: () => {
+              window.location.href = "/stats-ml/martingales/";
+            },},{id: "stats-ml-quasi-likelihood",
+          title: 'Quasi-Likelihood',
+          description: "A Primer",
+          section: "Stats-ml",handler: () => {
+              window.location.href = "/stats-ml/quasi-likelihood/";
+            },},{id: "stats-ml-generalized-linear-models",
+          title: 'Generalized Linear Models',
+          description: "A Primer",
+          section: "Stats-ml",handler: () => {
+              window.location.href = "/stats-ml/glm/";
+            },},{id: "stats-ml-generalized-linear-mixed-models",
+          title: 'Generalized Linear Mixed Models',
+          description: "A Primer",
+          section: "Stats-ml",handler: () => {
+              window.location.href = "/stats-ml/glmm/";
+            },},{id: "stats-ml-estimation-theory",
+          title: 'Estimation Theory',
+          description: "A Primer",
+          section: "Stats-ml",handler: () => {
+              window.location.href = "/stats-ml/estimation-theory/";
+            },},{id: "stats-ml-lasso",
+          title: 'LASSO',
+          description: "",
+          section: "Stats-ml",handler: () => {
+              window.location.href = "/stats-ml/lasso/";
+            },},{id: "stats-ml-linear-regression",
+          title: 'Linear Regression',
+          description: "",
+          section: "Stats-ml",handler: () => {
+              window.location.href = "/stats-ml/regression/";
+            },},{id: "stats-ml-ridge-regression",
+          title: 'Ridge Regression',
+          description: "",
+          section: "Stats-ml",handler: () => {
+              window.location.href = "/stats-ml/ridge/";
+            },},{id: "stats-ml-time-series",
+          title: 'Time Series',
+          description: "A Primer",
+          section: "Stats-ml",handler: () => {
+              window.location.href = "/stats-ml/time-series/";
+            },},{id: "stats-ml-hypothesis-testing",
+          title: 'Hypothesis Testing',
+          description: "A Primer",
+          section: "Stats-ml",handler: () => {
+              window.location.href = "/stats-ml/hypothesis-testing/";
+            },},{id: "stats-ml-permutation-testing",
+          title: 'Permutation Testing',
+          description: "A Primer",
+          section: "Stats-ml",handler: () => {
+              window.location.href = "/stats-ml/permutation-testing/";
             },},{
         id: 'social-cv',
         title: 'CV',
