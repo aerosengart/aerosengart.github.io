@@ -161,16 +161,21 @@ ninja.data = [{
           description: "A Primer",
           section: "Stats-ml",handler: () => {
               window.location.href = "/stats-ml/time-series/";
-            },},{id: "stats-ml-hypothesis-testing",
-          title: 'Hypothesis Testing',
-          description: "A Primer",
-          section: "Stats-ml",handler: () => {
-              window.location.href = "/stats-ml/hypothesis-testing/";
             },},{id: "stats-ml-permutation-testing",
           title: 'Permutation Testing',
           description: "A Primer",
           section: "Stats-ml",handler: () => {
               window.location.href = "/stats-ml/permutation-testing/";
+            },},{id: "stats-ml-decision-theory",
+          title: 'Decision Theory',
+          description: "A Primer",
+          section: "Stats-ml",handler: () => {
+              window.location.href = "/stats-ml/decision-theory/";
+            },},{id: "stats-ml-quadrature",
+          title: 'Quadrature',
+          description: "A Primer",
+          section: "Stats-ml",handler: () => {
+              window.location.href = "/stats-ml/quadrature/";
             },},{
         id: 'social-cv',
         title: 'CV',
