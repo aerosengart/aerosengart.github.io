@@ -280,19 +280,19 @@ Generalized linear models are not that different from classical linear regressio
     \begin{equation}
     \label{eq:exp-fam}
     \begin{aligned}
-    f_Y(\mathbf{y} \rvert \theta, \tau) = \prod_{i = 1}^n h(\mathbf{y}_i, \tau_i) \exp\left(\frac{\mathbf{b}(\theta_i) \mathbf{T}(\mathbf{y}_i) - A(\theta_i)}{d(\tau_i)} \right) 
+    f_Y(\mathbf{y} \rvert \theta, \tau) = \prod_{i = 1}^n h(y_i, \tau_i) \exp\left(\frac{\mathbf{b}(\theta_i) \mathbf{T}(y_i) - A(\theta_i)}{\delta(\tau_i)} \right) 
     \end{aligned}
     \end{equation}
     $$
     <ul>
         <li>$\tau$ is the <i>dispersion parameter</i>, usually related to the variance somehow.</li>
-        <li>$d(\tau_i)$ is some function of $\tau_i$ used to introduce the overdispersion, often taken to be $\frac{\tau}{\omega_i}$.</li>
+        <li>$\delta(\tau_i)$ is some function of $\tau_i$ used to introduce the overdispersion, often taken to be $\frac{\tau}{\omega_i}$.</li>
         <li>$h(\mathbf{y}, \tau)$ is a non-negative function. </li>
         <li>The vector $\mathbf{b}(\theta)$ is a function of the parameter vector. If $\mathbf{b}(\theta) = \theta$, then we say the distribution is in <i>canonical form</i>. Any distribution can be written in canonical form by letting $\theta' = \theta$ and then using $\mathbf{b}(\theta') = \theta$.</li>
         <li>The vector $\mathbf{T}(\mathbf{y})$ is a sufficient statistic, meaning $f_Y(\mathbf{f} \rvert \mathbf{T}(\mathbf{y}))$ is independent of $\theta$.</li>
         <li>The scalar $A(\theta)$ is the <i>log-partition function</i> and is the natural logarithm of the normalization constant needed so that the above function integrates to one.</li>
     </ul>
-    All $h(\mathbf{y}, \tau)$, $\mathbf{b}(\theta)$, $\mathbf{T}(\mathbf{y})$, $A(\theta)$, and $d(\tau)$ are assumed to be known. However, these functions are non-unique! For example, you can easily scale $\mathbf{T}(\theta)$ one by a constant and scale $\mathbf{b}(\theta)$ by the reciprocal.
+    All $h(\mathbf{y}, \tau)$, $\mathbf{b}(\theta)$, $\mathbf{T}(\mathbf{y})$, $A(\theta)$, and $\delta(\tau)$ are assumed to be known. However, these functions are non-unique! For example, you can easily scale $\mathbf{T}(\theta)$ one by a constant and scale $\mathbf{b}(\theta)$ by the reciprocal.
 </div>
 
 ### Model
@@ -303,7 +303,7 @@ $$
 \label{eq:log-lik-glm}
 \begin{aligned}
 \ell(\mathbf{y}; \theta, \tau) &= \log(f_Y(\mathbf{y} \rvert \theta, \tau)) \\
-&= \sum_{i = 1}^n \left[ \frac{\theta_i \mathbf{y}_i - A(\theta_i)}{d(\tau_i)} + \log(h(\mathbf{y}_i, \tau_i))\right]
+&= \sum_{i = 1}^n \left[ \frac{\theta_i y_i - A(\theta_i)}{\delta(\tau_i)} + \log(h(y_i, \tau_i))\right]
 \end{aligned}
 \end{equation}
 $$ 
@@ -316,20 +316,20 @@ $$
 \begin{aligned}
 \frac{\partial \ell(\mathbf{y}; \theta, \tau)}{\partial \theta} &= 
 \begin{bmatrix}
-\frac{\mathbf{y}_1 - \frac{d A(\theta_1)}{d \theta_1}}{d(\tau_1)} \\
+\frac{y_1 - \frac{d A(\theta_1)}{d \theta_1}}{\delta(\tau_1)} \\
 \vdots \\
-\frac{\mathbf{y}_n - \frac{d A(\theta_n)}{d \theta_1}}{d(\tau_n)} \\
+\frac{y_n - \frac{d A(\theta_n)}{d \theta_n}}{\delta(\tau_n)} \\
 \end{bmatrix} \\
-&= \text{diag}\left( \frac{1}{d(\tau)} \right) \left[ \mathbf{y} - \frac{\partial A(\theta)}{\partial \theta}\right] 
+&= \text{diag}\left( \frac{1}{\delta(\tau)} \right) \left[ \mathbf{y} - \frac{\partial A(\theta)}{\partial \theta}\right] 
 \\
 \frac{\partial^2 \ell(\mathbf{y}; \theta, \tau)}{\partial \theta \partial \theta^\top} &=
-\text{diag}\left( \frac{1}{d(\tau)} \right)
+\text{diag}\left( \frac{1}{\delta(\tau)} \right)
 \begin{bmatrix}
 - \frac{d^2(A(\theta_1))}{d \theta_1 d \theta_1} & \dots & - \frac{d^2(A(\theta_1))}{d \theta_1 d \theta_n} \\
 \vdots & \ddots & \vdots \\
 - \frac{d^2(A(\theta_n))}{d \theta_n d \theta_1} & \dots & - \frac{d^2(A(\theta_n))}{d \theta_n d \theta_n}  
 \end{bmatrix} \\
-&= -\text{diag}\left( \frac{1}{d(\tau)} \right)\frac{\partial^2 A(\theta)}{\partial \theta \partial \theta^\top}
+&= -\text{diag}\left( \frac{1}{\delta(\tau)} \right)\frac{\partial^2 A(\theta)}{\partial \theta \partial \theta^\top}
 \end{aligned}
 \end{equation}
 $$
@@ -347,7 +347,7 @@ $$
 \label{eq:mean-var-glm}
 \begin{aligned}
 \mu &= \mathbb{E}[\mathbf{y}] = \frac{\partial A(\theta)}{\partial \theta} \\
-\text{Cov}(\mathbf{y}) &= \text{diag}\left( d(\tau) \right) \underbrace{\frac{\partial^2 A(\theta)}{\partial \theta \partial \theta^\top}}_{= V(\mu)}
+\text{Cov}(\mathbf{y}) &= \text{diag}\left( \delta(\tau) \right) \underbrace{\frac{\partial^2 A(\theta)}{\partial \theta \partial \theta^\top}}_{= V(\mu)}
 \end{aligned}
 \end{equation}
 $$
@@ -359,7 +359,7 @@ $$
 \begin{aligned}
 &\mathbb{E}\left[ \frac{\partial \ell(\mathbf{y}; \theta, \tau)}{\partial \theta}  \right] = \mathbf{0} \\
 \implies
-&\text{diag}\left( \frac{1}{d(\tau)} \right) \left(\mathbb{E}[\mathbf{y}] - \frac{\partial A(\theta)}{\partial \theta} \right) = \mathbf{0} \\
+&\text{diag}\left( \frac{1}{\delta(\tau)} \right) \left(\mathbb{E}[\mathbf{y}] - \frac{\partial A(\theta)}{\partial \theta} \right) = \mathbf{0} \\
 \implies
 &\mathbb{E}[\mathbf{y}] =  \frac{\partial A(\theta)}{\partial \theta}
 \end{aligned}
@@ -370,9 +370,9 @@ Under these conditions, we also have that the Fisher information (the variance o
 $$
 \begin{aligned}
 &\mathbb{E}\left[  \frac{\partial \ell(\mathbf{y}; \theta, \tau)}{\partial \theta}  \frac{\partial \ell(\mathbf{y}; \theta, \tau)}{\partial \theta^\top} \right] = -\mathbb{E}\left[\frac{\partial^2 \ell(\mathbf{y}; \theta, \tau)}{\partial \theta \partial \theta^\top}  \right] \\
-\implies &\mathbb{E}\left[ \text{diag}\left( \frac{1}{d^2(\tau)} \right) \left(\mathbf{y}  - \frac{\partial A(\theta)}{\partial \theta}\right)\left(\mathbf{y} - \frac{\partial A(\theta)}{\partial \theta}\right)^\top\right] = - \mathbb{E}\left[ -\text{diag}\left( \frac{1}{d(\tau)} \right)\frac{\partial^2 A(\theta)}{\partial \theta \partial \theta^\top} \right] \\
-\implies & \text{diag}\left( \frac{1}{d^2(\tau)} \right)\mathbb{E}\left[ \left(\mathbf{y} -\mathbb{E}[\mathbf{y}]\right)\left(\mathbf{y} - \mathbb{E}[\mathbf{y}]\right)^\top\right] = \text{diag}\left( \frac{1}{d(\tau)} \right)\frac{\partial^2 A(\theta)}{\partial \theta \partial \theta^\top} \\
-\implies &\text{Cov}(\mathbf{y}) = \text{diag}\left(d(\tau)\right) \frac{\partial^2 A(\theta)}{\partial \theta \partial \theta^\top}
+\implies &\mathbb{E}\left[ \text{diag}\left( \frac{1}{\delta^2(\tau)} \right) \left(\mathbf{y}  - \frac{\partial A(\theta)}{\partial \theta}\right)\left(\mathbf{y} - \frac{\partial A(\theta)}{\partial \theta}\right)^\top\right] = - \mathbb{E}\left[ -\text{diag}\left( \frac{1}{\delta(\tau)} \right)\frac{\partial^2 A(\theta)}{\partial \theta \partial \theta^\top} \right] \\
+\implies & \text{diag}\left( \frac{1}{\delta^2(\tau)} \right)\mathbb{E}\left[ \left(\mathbf{y} -\mathbb{E}[\mathbf{y}]\right)\left(\mathbf{y} - \mathbb{E}[\mathbf{y}]\right)^\top\right] = \text{diag}\left( \frac{1}{\delta(\tau)} \right)\frac{\partial^2 A(\theta)}{\partial \theta \partial \theta^\top} \\
+\implies &\text{Cov}(\mathbf{y}) = \text{diag}\left(\delta(\tau)\right) \frac{\partial^2 A(\theta)}{\partial \theta \partial \theta^\top}
 \end{aligned}
 $$
 {% endtab %}
@@ -381,23 +381,39 @@ $$
 
 Eq. \eqref{eq:mean-var-glm} shows that the covariance matrix of $\mathbf{y}$ is the product of a function of the dispersion parameter and a function of the parameter vector $\theta$. In the literature, $\frac{\partial^2 A(\theta)}{\partial \theta \partial \theta^\top}$ is often referred to as the <i>variance function</i> and denoted by $V(\mu)$ (where $\mu$ is the mean $\mathbb{E}[\mathbf{y}]$) since a function of the parameters is just a function of the mean as $\mathbf{X}$ is fixed. 
 
-Arguably more importantly, the righthand side of $\mu = \frac{\partial A(\theta)}{\partial \theta}$ is some function of $\theta$, which we'll denote by $s^{-1}(\theta)$. This lets us link the mean with the canonical parameter through the expression:
+The above implies that we can rewrite the gradient and Hessian as:
+
+$$
+\begin{equation}
+\label{eq:grad-hessian-2}
+\begin{aligned}
+\frac{\partial \ell(\mathbf{y}; \theta, \tau)}{\partial \theta} &= \text{diag}\left(\frac{1}{\delta(\tau)}\right) (\mathbf{y} - \mu) \\
+\frac{\partial^2 \ell(\mathbf{y}; \theta, \tau)}{\partial \theta \partial \theta^\top} &=
+\text{diag}\left( \frac{1}{\delta(\tau)} \right) V(\mu)
+\end{aligned}
+\end{equation}
+$$
+
+
+The righthand side of $\mu = \frac{\partial A(\theta)}{\partial \theta}$ is some function of $\theta$, which we'll denote by $s^{-1}(\theta)$. This lets us link the mean with the canonical parameter through the expression:
 
 $$
 \begin{equation}
 \label{eq:link-mean-param}
-\theta = s(\mu)
+\mu = \frac{\partial A(\theta)}{\partial \theta} = s^{-1}(\theta)
 \end{equation}
 $$
 
-Recall that we assumed that $\mathbb{E}\left[ g(\mathbf{y}) \rvert \mathbf{X} \right] = \mathbf{X} \beta$, which is equivalent to the assumption that $\mu = g^{-1}(\mathbf{X}\beta)$. Thus, we can relate the likelihood parameter, $\theta$, to the regression parameters, $\beta$, by:
+Recall that we assumed that $\mu = \mathbb{E}\left[ \mathbf{y} \right] = g^{-1}\left(\mathbf{X} \beta\right)$. Thus, we can relate the likelihood parameter, $\theta$, to the regression parameters, $\beta$, by:
 
 $$
 \begin{equation}
 \label{eq:link-param-beta}
-\theta = s(g^{-1}(\mathbf{X}\beta))
+\theta = s(g^{-1}(\mathbf{X}\beta)) = s(\eta)
 \end{equation}
 $$
+
+<aside><p>If $s = g$ such that $\theta = \eta$, then $g$ is called the <strong>canonical link function</strong></p></aside>
 
 Now we have everything we need for our generalized linear model! 
 
@@ -405,152 +421,150 @@ Now we have everything we need for our generalized linear model!
 The parameter estimates for generalized linear models are generally found through maximum likelihood methods. Since we assume a distribution from an exponential family, we can (usually) write a likelihood function as in Eq. \eqref{eq:log-lik-glm}:
 
 $$
-\ell(\mathbf{y}; \theta, \tau) = \sum_{i = 1}^n \left[ \frac{\theta_i^\top \mathbf{y}_i - A(\theta_i)}{d(\tau_i)} + \log(h(\mathbf{y}_i, \tau_i)) \right]
+\ell(\mathbf{y}; \theta, \tau) = \sum_{i = 1}^n \left[ \frac{y_i \theta_i - A(\theta_i)}{\delta(\tau_i)} + \log(h(y_i, \tau_i)) \right]
 $$
 
-As we usually do, we want to take the gradient with respect to the parameters of interest, $\beta$. However, this expression is not in terms of $\beta$, so we use the chain rule. The maximum likelihood estimate of $\beta$ is a solution to:
+As we usually do, we want to take the gradient with respect to the parameters of interest, $\beta$, then set that equal to zero and solve for $\beta$. However, this expression is not in terms of $\beta$, so we use the chain rule. For simplicity, we'll restrict ourselves to canonical link functions. 
 
-$$
-\begin{equation}
-\label{eq:score-beta}
-\begin{aligned}
-\frac{\partial \ell(\mathbf{y}; \theta, \tau)}{\partial \beta} &= \frac{\partial \theta}{\partial \beta} \frac{\partial \ell(\mathbf{y}; \theta, \tau)}{\partial \theta} = \mathbf{0} \\
-\implies \frac{\partial \ell(\mathbf{y}; \theta, \tau)}{\partial \beta} &= \text{diag}\left( d(\tau) \right)\frac{\partial \theta}{\partial \beta} \left(\mathbf{y} - \frac{\partial A(\theta)}{\partial \theta}\right) = \mathbf{0} & \left(\text{Eq. }\eqref{eq:grad-hessian} \right) \\
-\implies \frac{\partial \ell(\mathbf{y}; \theta, \tau)}{\partial \beta} &= 
-\text{diag}\left( d(\tau) \right)\frac{\partial \theta}{\partial \beta} \left(\mathbf{y} - g^{-1}(\mathbf{X} \beta) \right) = \mathbf{0} & \left(\text{Eq. }\eqref{eq:mean-var-glm} \right)
-\end{aligned}
-\end{equation}
-$$
-
+<!-- #region d-theta-d-beta -->
 <div class="theorem">
 <strong>Claim (Derivatives).</strong>
 {% tabs d-theta-d-beta %}
 {% tab d-theta-d-beta statement %}
-To find $\frac{\partial \theta}{\partial \beta}$, we use the chain rule again:
-
 $$
 \begin{equation}
 \label{eq:d-theta-d-beta}
-\frac{\partial \theta}{\partial \beta} = \frac{\partial \eta}{\partial \beta} \frac{\partial \theta}{\partial \eta} = \text{diag}\left( \frac{1}{d(\tau)} \right)\mathbf{X}^\top \text{Cov}^{-1}(\mathbf{y})\left[ \frac{\partial g(\mu)}{\partial \mu} \right]^{-1}
+\begin{aligned}
+\frac{\partial \ell(y_i; \theta_i, \tau_i)}{\partial \beta_j}
+&= \left(\frac{(y_i - \mu_i)x_{i,j}}{\delta(\tau_i) V(\mu_i) } \right) \left(\frac{\partial \mu_i}{\partial \eta_i} \right) \\
+&\implies \\
+\frac{\partial \ell(\mathbf{y}; \theta, \tau)}{\partial \beta_j}
+&= \mathbf{X}_{\cdot, j}^\top \left[ \frac{\mathbf{y} - \mu}{\delta(\tau) V(\mu)}\right] \frac{\partial \mu}{\partial \eta}
+\end{aligned}
 \end{equation}
 $$
+
+where $\mathbf{X}_{\cdot, j}$ is the $n$-dimensional vector equal to the $j$-th column of $\mathbf{X}$, and $\frac{\mathbf{y} - \mu}{\delta(\tau) V(\mu)}$ is the $n$-dimensional vector whose $i$-th coordinate equals $\frac{\mathbf{y}_i - \mu_i}{\delta(\tau_i) V(\mu_i)}$.
 {% endtab %}
 {% tab d-theta-d-beta proof %}
-The first derivative is easy:
+For a single observation and one component of $\beta$, we have:
 
 $$
-\frac{\partial \eta}{\partial \beta} = \frac{\partial}{\partial \beta} [\mathbf{X} \beta] = \mathbf{X}^\top
+\frac{\partial \ell(y_i; \theta_i, \tau_i)}{\partial \beta_j} = \frac{\partial \ell(y_i; \theta_i, \tau_i)}{\partial \theta_i} \frac{\partial \theta_i}{\partial \mu_i} \frac{\partial \mu_i}{\partial \eta_i} \frac{\partial \eta_i}{\partial \beta_j}
 $$
 
-The second is a bit trickier. By the chain rule:
-
-$$
-\frac{\partial \theta}{\partial \eta} = \frac{\partial \theta}{\partial \mu} \frac{\partial \mu}{\partial \eta}
-$$
-
-Using the fact that $\theta = s(\mu)$ and $\mu = \frac{\partial A(\theta)}{\partial \theta}$, we get:
+The easy pieces are:
 
 $$
 \begin{aligned}
-&\theta = s(\mu) \\
-\implies 
-&\frac{\partial \theta}{\partial \theta} = \frac{\partial s(\mu)}{\partial \theta} = \frac{\partial s(\mu)}{\partial \mu} \frac{\partial \mu}{\partial \theta} \\
-\implies
-&\mathbb{I}_{n \times n} = \frac{\partial s(\mu)}{\partial \mu} \frac{\partial}{\partial \theta} \left[ \frac{\partial A(\theta)}{\partial \theta} \right] = \frac{\partial s(\mu)}{\partial \mu} \frac{\partial^2 A(\theta)}{\partial \theta \partial \theta^\top} 
+\frac{\partial \ell(y_i; \theta_i, \tau_i)}{\partial \theta_i} &= \frac{y_i - \mu_i}{\delta(\tau_i)} \\
+\frac{\partial \mu_i}{\partial \eta_i} &= \frac{\partial g^{-1}\left(\eta_i\right)}{\partial \eta_i} \\
+\frac{\partial \eta_i}{\partial \beta_j} &= \frac{\partial}{\partial \beta_j} [\mathbf{x}_{i,j} \beta_j] = \mathbf{x}_{i,j}
 \end{aligned}
 $$
 
-Using Eq. \eqref{eq:mean-var-glm}, we get:
+From Eq. \eqref{eq:link-param-beta}, we have:
 
 $$
 \begin{aligned}
-&\mathbb{I}_{n \times n} = \frac{\partial s(\mu)}{\partial \mu}  \\
-\implies
-&\text{diag}\left( \frac{1}{d(\tau)} \right) \text{Cov}(\mathbf{y})  \\
-\implies
-&\text{diag}\left( d(\tau) \right) \text{Cov}^{-1}(\mathbf{y}) = \frac{\partial s(\mu)}{\partial \mu} = \frac{\partial \theta}{\partial \mu}
+\theta_i &= s(s^{-1}(\theta_i)) \\
+\implies 1 &= \frac{\partial}{\partial \theta_i} \left[ s(s^{-1}(\theta_i)) \right] \\
+\implies 1 &= s'(s^{-1}(\theta_i)) \frac{\partial s^{-1}(\theta_i)}{\partial \theta_i} \\
+\implies \frac{1}{\frac{\partial s^{-1}(\theta_i)}{\partial \theta_i}} &= s'(\mu_i) \\
+\implies  \frac{1}{\frac{\partial \mu_i}{\partial \theta_i}} &= \frac{\partial \theta_i}{\partial \mu_i} \\
+\implies \frac{1}{\frac{\partial^2 A(\theta_i)}{\partial \theta_i^2}} &= \frac{\partial \theta_i}{\partial \mu_i} \\
+\implies \frac{1}{V(\mu_i)} &= \frac{\partial \theta_i}{\partial \mu_i}
 \end{aligned}
 $$
 
-We can do the same sort of trick for $\frac{\partial \mu}{\partial \eta}$:
+Then putting all of these together, we get:
 
 $$
 \begin{aligned}
-&\mu = g^{-1}(\eta)  \\
-\implies
-&\eta = g(\mu) \\
-\implies
-&\frac{\partial \eta}{\partial \eta} = \frac{\partial g(\mu)}{\partial \eta} = \frac{\partial g(\mu)}{\partial \mu} \frac{\partial \mu}{\partial \eta} \\
-\implies
-&\mathbb{I}_{n \times n} = \frac{\partial g(\mu)}{\partial \mu} \frac{\partial \mu}{\partial \eta} \\
-\implies 
-&\frac{\partial \mu}{\partial \eta} = \left[ \frac{\partial g(\mu)}{\partial \mu} \right]^{-1}
+\frac{\partial \ell(y_i; \theta_i, \tau_i)}{\partial \beta_j}
+&= \frac{\partial \ell(y_i; \theta_i, \tau_i)}{\partial \theta_i} \frac{\partial \mu_i}{\partial \theta_i}\frac{\partial \mu_i}{\partial \eta_i}\frac{\partial \eta_i}{\partial \beta_j} \\
+&= \left(\frac{y_i - \mu_i}{\delta(\tau_i)}\right)\left(\frac{1}{V(\mu_i)}\right)\left(\frac{\partial g^{-1}\left(\eta_i\right)}{\partial \eta_i}\right)\mathbf{x}_{i,j} \\
+&= \left(\frac{(y_i - \mu_i)x_{i,j}}{\delta(\tau_i) V(\mu_i)} \right) \left(\frac{\partial \mu_i}{\partial \eta_i} \right)
 \end{aligned}
-$$
-
-Putting the two results together, we get:
-$$
-\frac{\partial \theta}{\partial \eta} = 
-\text{diag}\left( d(\tau) \right) \text{Cov}^{-1}(\mathbf{y}) \left[ \frac{\partial g(\mu)}{\mu} \right]^{-1}
 $$
 {% endtab %}
 {% endtabs %}
 </div>
+<!-- #endregion -->
 
-Using the fact that each component of $g(\mu)$ uses only the corresponding component in $\mu$, we see that $\left[ \frac{\partial g(\mu)}{\partial \mu} \right]^{-1}$ is diagonal, so the inverse is the matrix where we take the reciprocal of the diagonal elements. The same goes for $\text{Cov}^{-1}(\mathbf{y})$ since we assumed independent data (i.i.d. errors). 
-
-Plugging Eq. \eqref{eq:d-theta-d-beta} into Eq. \eqref{eq:score-beta}, our objective becomes solving:
+Using the above, our new estimating equation becomes:
 
 $$
 \begin{equation}
 \label{eq:new-obj}
-\frac{\partial \ell(\mathbf{y}; \theta, \tau)}{\partial \beta} =  \mathbf{X}^\top \text{Cov}^{-1}(\mathbf{y})\left[ \frac{\partial g(\mu)}{\partial \mu} \right]^{-1} \left(\mathbf{y} - g^{-1}(\mathbf{X} \beta) \right) = \mathbf{0}
+\frac{\partial \ell(\mathbf{y}; \theta, \tau)}{\partial \beta} = \mathbf{X}^\top \left[ \frac{\mathbf{y} - \mu}{\delta(\tau) V(\mu)} \right] \frac{\partial \mu}{\partial \eta} = \mathbf{0}
 \end{equation}
 $$
 
-Unfortunately, there may not be a closed form solution to the above equation since $g^{-1}(\cdot)$ may be non-linear. To get around this problem, we do a linear approximation of $g^{-1}(\mathbf{X}\beta)$ and optimize this instead.
-
-Let $\hat{\beta}^{(t)}$ be a guess for the optimal value of $\beta$. Also let $$\eta^{(t)} = \mathbf{X}\beta^{(t)}$$ be the linear predictor evaluated at this value. We can then write the first order Taylor approximation of $$g^{-1}(\eta)$$ as:
+Unfortunately, there may not be a closed form solution to the above equation since $g^{-1}(\cdot)$ may be non-linear. There are a couple of popular ways to get around this. One way is to use (Fisher's) scoring algorithm. <a href="https://en.wikipedia.org/wiki/Newton%27s_method#Applications">Newton's method</a> allows us to iteratively approach the root of a function $f$ with the updates:
 
 $$
-\begin{equation}
-\label{eq:taylor-mu}
-g^{-1}(\eta) 
-\approx g^{-1}(\eta^{(t)}) + \frac{\partial g^{-1}(\eta)}{\partial \eta} \bigg\rvert_{\eta = \eta^{(t)}} (\eta - \eta^{(t)}) = g^{-1}(\eta^{(t)}) + \mathbf{W}^{(t)}(\eta - \eta^{(t)})
-\end{equation}
+x^{(t +1)} = x^{(t)} - \frac{f(x^{(t)})}{f'(x^{(t)})}
 $$
 
-where $\mathbf{W}^{(t)} = \frac{\partial g^{-1}(\eta)}{\partial \eta} \bigg\rvert_{\eta = \eta^{(t)}}$ is the matrix of first order partial derivatives of $\mu$ with respect to $\eta$ evaluated at our guess for $\eta$, $\eta^{(t)}$. This matrix is diagonal since any component, $\mu_i$, of the mean vector is only a function of one corresponding component of the linear predictor $\eta_i$. 
-
-We now use this approximation into Eq. \eqref{eq:new-obj}:
+Let $\beta^{(t)}$ be some guess at the value of $\beta$ at iteration $t$, and let $\beta^*$ be the MLE. We apply Newton's method to Eq. \eqref{eq:new-obj}:
 
 $$
-\begin{aligned}
-\frac{\partial \ell(\mathbf{y}; \theta, \tau)}{\partial \beta} &\approx \mathbf{X}^\top \text{Cov}^{-1}(\mathbf{y})\left[ \frac{\partial g(\mu)}{\partial \mu} \right]^{-1}\bigg\rvert_{\eta = \eta^{(t)}} \left(\mathbf{y} - g^{-1}(\eta^{(t)}) + \mathbf{W}^{(t)} \left( \eta^{(t)} - \eta \right) \right) \\
-&= \mathbf{X}^\top \text{Cov}^{-1}(\mathbf{y})\left[ \frac{\partial g(\mu)}{\partial \mu} \right]^{-1}\bigg\rvert_{\eta = \eta^{(t)}} \mathbf{W}^{(t)} \left([\mathbf{W}^{(t)}]^{-1} (\mathbf{y} - g^{-1}(\eta^{(t)})) + \eta^{(t)} - \eta \right) \\
-&= \mathbf{X}^\top \text{Cov}^{-1}(\mathbf{y})\left[ \frac{\partial g(\mu)}{\partial \mu} \right]^{-2} \bigg\rvert_{\eta = \eta^{(t)}} \left(\frac{\partial g(\mu)}{\partial \mu}\bigg\rvert_{\eta = \eta^{(t)}} (\mathbf{y} - g^{-1}(\eta^{(t)})) + \eta^{(t)} - \eta \right) & \left(\frac{\partial \mu}{\partial \eta} \bigg\rvert_{\eta = \eta^{(t)}} = \frac{\partial g^{-1}(\eta)}{\partial \eta} \bigg\rvert_{\eta = \eta^{(t)}}  = \mathbf{W}^{(t)} = \left[\frac{\partial g(\mu)}{\partial \mu} \right]^{-1} \bigg\rvert_{\eta = \eta^{(t)}} \right)
-\end{aligned}
+\beta^{(t+1)} = \beta^{(t)} - \left. \left[ \frac{\partial \ell(\mathbf{y}; \theta, \tau)}{\partial \beta \partial \beta^\top} \right] \right\rvert_{\beta = \beta^{(t)}} U_\beta(\beta^{(t)})
 $$
 
-Letting $\mathbf{z}^{(t)} = \frac{\partial g(\mu)}{\partial \mu} \bigg\rvert_{\eta = \eta^{(t)}} (\mathbf{y} - g^{-1}(\eta^{(t)})) + \eta^{(t)}$, and defining $\tilde{\mathbf{W}}^{(t)} = \text{Cov}^{-1}(\mathbf{y})\left[ \frac{\partial g(\mu)}{\partial \mu} \right]^{-2}\bigg\rvert_{\eta = \eta^{(t)}}$, we can rewrite this as:
+Recall that the <strong>observed information matrix</strong> is equal to the negative Hessian (under certain regularity conditions); that is:
 
 $$
-\frac{\partial \ell(\mathbf{y}; \theta, \tau)}{\partial \beta} \approx \mathbf{X}^\top \tilde{\mathbf{W}}^{(t)}  \left(\mathbf{z}^{(t)} - \eta \right)
+\mathcal{J}(\beta^{(t)}) = - \left. \left[ \frac{\partial \ell(\mathbf{y}; \theta, \tau)}{\partial \beta \partial \beta^\top} \right] \right\rvert_{\beta = \beta^{(t)}}
 $$
 
-Notice that setting the above equal to zero is exactly Eq. \eqref{eq:wls-obj} with $\mathbf{z}^{(t)}$ instead of $\mathbf{y}$, so we can use weighted least squares. Though we have a closed form solution, since we are using an approximation, we need to iterate the above process until convergence. So at iteration $t + 1$, we will set:
+This leads us to the following updates:
+
+$$
+\beta^{(t+1)} = \beta^{(t)} + \mathcal{J}^{-1}(\beta^{(t)}) U_\beta(\beta^{(t)})
+$$
+
+If we instead used the Fisher information (rather than the observed information), it would be called <strong>Fisher scoring</strong>. Now, recall that:
 
 $$
 \begin{aligned}
-\eta^{(t+1)} &= \mathbf{X} \beta^{(t)} \\
-\mu^{(t+1)} &= g^{-1} \eta^{(t+1)} \\
-\mathbf{W}^{(t+1)} &= \text{Cov}^{-1}(\mathbf{y}) \left[ \frac{\partial g(\mu)}{\partial \mu} \right]^{-2} \bigg\rvert_{\eta = \eta^{(t+1)}} \\
-\mathbf{z}^{(t+1)} &= \eta^{(t+1)} + \frac{ \partial g(\mu)}{\partial \mu}\bigg\rvert_{\eta = \eta^{(t+1)}}(\mathbf{y} - g^{-1}(\eta^{(t+1)})) \\
-\beta^{(t+1)} &= (\mathbf{X}^\top \tilde{\mathbf{W}}^{(t+1)} \mathbf{X})^{-1} \mathbf{X}^\top \tilde{\mathbf{W}}^{(t+1)} \mathbf{z}^{(t+1)} 
+\frac{\partial \ell(y_i; \theta_i, \tau_i)}{\partial \beta_j}
+&= x_{i,j}\left(\frac{y_i - \mu_i}{\delta(\tau_i) V(\mu_i)}\right) \left(\frac{\partial \mu_i}{\partial \eta_i}\right) \\
+\implies \frac{\partial \ell(\mathbf{y}; \theta, \tau)}{\partial \beta_j} &= \mathbf{X}_{\cdot, j}^\top \left(\frac{\partial \mu}{\partial \eta}\right) \left(\frac{\mathbf{y} - \mu}{\delta(\tau) V(\mu)}\right) \\
+\implies \frac{\partial \ell(\mathbf{y}; \theta, \tau)}{\partial \beta} &= \mathbf{X}^\top \mathbf{q} \\
 \end{aligned}
 $$
 
-This process is called <a href="https://en.wikipedia.org/w/index.php?title=Iteratively_reweighted_least_squares&oldid=1279139010">iteratively reweighted least squares</a>.
+where we let $\mathbf{q}$ be the $n$-dimensional vector with elements $\left(\frac{y_i - \mu_i}{\delta(\tau_i) V(\mu_i)}\right) \left(\frac{\partial \mu_i}{\partial \eta_i}\right)$. We also have:
+
+$$
+\begin{aligned}
+\frac{\partial^2 \ell(y_i; \theta_i, \tau_i)}{\partial \beta_j \partial \beta_l} 
+&= x_{i,j} \frac{\partial}{\partial \beta_l} \left[ \left(\frac{y_i - \mu_i}{\delta(\tau_i) V(\mu_i)}\right) \left(\frac{\partial \mu_i}{\partial \eta_i}\right) \right] \\
+&= x_{i,j} \frac{\partial}{\partial \eta_i} \frac{\partial \eta_i}{\partial \beta_l} \left[ \left(\frac{y_i - \mu_i}{\delta(\tau_i) V(\mu_i)}\right) \left(\frac{\partial \mu_i}{\partial \eta_i}\right) \right] \\
+&= x_{i,j} \frac{\partial}{\partial \eta_i} \left[ \left(\frac{y_i - \mu_i}{\delta(\tau_i) V(\mu_i)}\right) \left(\frac{\partial \mu_i}{\partial \eta_i}\right) \right] x_{i,l} \\
+\implies \frac{\partial^2 \ell(y; \theta, \tau)}{\partial \beta_j \partial \beta_l} 
+&= \sum_{i = 1}^n x_{i,j} \frac{\partial}{\partial \beta_l} \left[ \left(\frac{y_i - \mu_i}{\delta(\tau_i) V(\mu_i)}\right) \left(\frac{\partial \mu_i}{\partial \eta_i}\right) \right] \\
+\implies
+\frac{\partial^2 \ell(y; \theta, \tau)}{\partial \beta \partial \beta^\top} 
+&= \mathbf{X}^\top \mathbf{W} \mathbf{X}
+\end{aligned}
+$$
+
+where $\mathbf{W}$ is the $n \times n$ diagonal matrix with diagonal elements equal to $\frac{\partial}{\partial \eta_i} \left[ \left(\frac{y_i - \mu_i}{\delta(\tau_i) V(\mu_i)}\right) \left(\frac{\partial \mu_i}{\partial \eta_i}\right) \right]$. 
+
+Suppose we evaluate $\mathbf{W}$ and $\mathbf{q}$ at $\beta = \beta^{(t)}$ and define $\mathbf{z}^{(t)} = (\mathbf{W}^{(t)})^{-1} \mathbf{q}^{(t)}$. We can then rewrite the scoring updates as:
+
+$$
+\begin{aligned}
+\beta^{(t+1)} &= \beta^{(t)} + \mathcal{J}^{-1}(\beta^{(t)}) U_\beta(\beta^{(t)}) \\
+&= \beta^{(t)} + \left. \left[ -\frac{\partial \ell(\mathbf{y}; \theta, \tau)}{\partial \beta \partial \beta^\top}\right]^{-1} \right\rvert_{\beta = \beta^{(t)}} \left.\frac{\partial \ell(\mathbf{y}; \theta, \tau)}{\partial \beta} \right\rvert_{\beta = \beta^{(t)}} \\
+&= \beta^{(t)} - \left(\mathbf{X}^\top \mathbf{W}^{(t)} \mathbf{X}\right)^{-1} \mathbf{X}^\top \mathbf{W}^{(t)}\mathbf{z}^{(t)}
+\end{aligned}
+$$
+
+Notice that the update involves a term that is exactly the <a href="#weighted-least-squares">weighted least squares</a> solution for regressing $\mathbf{z}^{(t)}$ on $\mathbf{X}$. Hence, this process is called <a href="https://en.wikipedia.org/w/index.php?title=Iteratively_reweighted_least_squares&oldid=1279139010">iteratively reweighted least squares</a>.
 
 ### Uncertainty Quantification 
 Due to the iterative nature of the estimation procedure, it is not so clear how to quantify our uncertainty in our estimates. Since there is no closed form solution to the MLEs, <a href=" https://statisticaloddsandends.wordpress.com/2020/11/20/variance-of-coefficients-for-linear-models-and-generalized-linear-models/">there is also no closed form for the variance of the MLEs</a>.

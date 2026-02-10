@@ -34,6 +34,10 @@ A test, denoted by $\phi$, is a decision rule with values in $[0, 1]$. If $\phi(
 ---
 
 
+### The Permutation Testing Principle
+Suppose we observe a sample, $\mathbf{x} = \{ x_1, \dots, x_n \}$, where each $x_i$ is an observation of the random variable $X \in \mathcal{X}$. We adopt a null hypothesis, $H_0$, which will assume that $X \sim P \in \mathcal{P}$ for some family of distributions, $\mathcal{P}$. Now, suppose we conduct two experiments that yield samples from distributions $P_1$ and $P_2$, respectively, with $P_1, P_2 \in \mathcal{P}$. 
+
+The <strong>permutation testing principle</strong> states that if the two experiments generate samples $\mathbf{x}_1$ and $\mathbf{x}_2$, respectively, such that $\mathbf{x}_1 = \mathbf{x}_2$, then the inferences made conditional on the dataset and using the same test statistic <i>must be the same</i> (given that samples are exchangeable under the null hypothesis). 
 
 
 
