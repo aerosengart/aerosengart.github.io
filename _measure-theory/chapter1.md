@@ -2,14 +2,13 @@
 layout: distill
 title: Chapter 1
 description: Riemann Integrals
-date: 2026-01-16
+date: 2026-01-17
 tabs: true
 tags: riemann
 toc:
   - name: Riemann Sums
   - name: Riemann Integrals
   - name: Limitations
-    
 bibliography: measure.bib
 ---
 
@@ -30,10 +29,13 @@ First, let's recall the building block of the Riemann integral: the <i>Riemann s
   Let $f: [a, b] \rightarrow \mathbb{R}$ be a bounded function, and let $P = \{ x_0, x_1, \dots, x_n \}$ denote a partition of $[a, b]$. The <i>lower Riemann sum</i> and <i>upper Riemann sum</i>, denoted respectively with $L(f, P, [a, b])$ and $U(f, P, [a, b])$, are given by:
 
   $$
+  \begin{equation}
+  \label{eq:lu-riemann-sum}
   \begin{aligned}
     L(f, P, [a, b]) &= \sum_{j = 1}^n (x_j - x_{j-1}) \underset{x \in [x_{j-1}, x_j]}{\inf} \left\{ f(x) \right\} \\
     U(f, P, [a, b]) &= \sum_{j = 1}^n (x_j - x_{j-1}) \underset{x \in [x_{j-1}, x_j]}{\sup} \left\{ f(x) \right\} \\
   \end{aligned}
+  \end{equation}
   $$
 </div>
 
@@ -59,8 +61,6 @@ Proofs of these properties are fairly simple and can be found in Axler.
 ---
 
 ## Riemann Integrals
-
-
 We now come to two stars of the chapter: the lower and upper Riemann integrals. 
 
 <div id="riemann-integrals"></div>
@@ -70,20 +70,26 @@ We now come to two stars of the chapter: the lower and upper Riemann integrals.
   Let $f: [a, b] \rightarrow \mathbb{R}$ be a bounded function. The <i>lower Riemann integral</i> and <i>upper Riemann integral</i>, denoted respectively by $L(f, [a, b])$ and $U(f, [a, b])$, are given by:
   
   $$
+  \begin{equation}
+  \label{eq:lu-riemann-integral}
   \begin{aligned}
   L(f, [a, b]) &= \underset{P}{\sup} \left\{ L(f, P, [a, b]) \right\} \\
   U(f, [a, b]) &= \underset{P}{\sup} \left\{ U(f, P, [a, b]) \right\}
   \end{aligned}
+  \end{equation}
   $$
 </div>
 
 We have a similar relationship between the lower and super Riemann integrals as Riemann sums:
 
 $$
+\begin{equation}
+\label{eq:integral-prop-1}
 L(f, [a, b]) \leq U(f, [a, b])
+\end{equation}
 $$
 
-Now, the main event: the Riemann integral. First, we note that a bounded function $f: [a, b] \rightarrow \mathbb{R}$ is called <strong>Riemann integral</strong> if $L(f, [a, b]) = U(f, [a, b])$. 
+Now, the main event: the Riemann integral. First, we note that a bounded function $f: [a, b] \rightarrow \mathbb{R}$ is called <strong>Riemann integral</strong> if $L(f, [a, b]) = U(f, [a, b])$.
 
 <div id="riemann-integral"></div>
 <div class="definition">
@@ -92,60 +98,115 @@ Now, the main event: the Riemann integral. First, we note that a bounded functio
   Let $f: [a, b] \rightarrow \mathbb{R}$ be Riemann integrable. Its <i>Riemann integral</i> is defined by:
 
   $$
+  \begin{equation}
+  \label{eq:riemann-integral}
   \int_a^b f(x) dx = \int_a^b f = L(f, [a, b]) = U(f, [a, b])
+  \end{equation}
   $$
 </div>
+
+<aside><p>Technically, these are <a href="https://en.wikipedia.org/wiki/Darboux_integral">Darboux integrals</a>, but they are equivalent to Riemann integrals.</p></aside>
 
 
 ### Properties
 Below we have some important results about Riemann integrals.
 
+<!-- #region axler-1-11 -->
 <div class="theorem">
-    <strong>Claim.<d-cite key="axler2025"></d-cite></strong>
-    {% tabs axler-1-11 %}
-    {% tab axler-1-11 statement %}
-    All continuous real-valued functions on all closed, bounded intervals are Riemann integrable. 
-    {% endtab %}
-    {% tab axler-1-11 proof %}
-    Proof to be completed (see 1.11 in Axler).
-    {% endtab %}
-    {% endtabs %}
+<strong>Claim.<d-cite key="axler2025"></d-cite></strong>
+{% tabs axler-1-11 %}
+{% tab axler-1-11 statement %}
+All continuous real-valued functions on all closed, bounded intervals are Riemann integrable. 
+{% endtab %}
+{% tab axler-1-11 proof %}
+Suppose that $a, b \in \mathbb{R}$ with $a < b$ and $f: [a, b] \rightarrow \mathbb{R}$ is continuous. Since $[a, b]$ is a closed interval on the reals, it is compact. Thus, by the <a href="https://en.wikipedia.org/wiki/Heine–Cantor_theorem">Heine-Cantor Theorem</a>, $f$ is <a href="/measure-theory/useful-definitions#unif-continuity">uniformly continuous</a>.
+<br>
+Fix $\epsilon > 0$. By the uniform continuity of $f$ on the reals, we have that there exists $\delta > 0$ such that:
+
+$$
+\begin{equation}
+\label{eq:assumption}
+\rvert f(s) - f(t) \rvert < \epsilon \text{ for all } s,t \in [a, b] \text{ with } \rvert s - t \rvert < \delta
+\end{equation}
+$$
+
+Choose some positive integer $n$ such that $\frac{b - a}{n} < \delta$, and construct an evenly spaced partition of $[a, b]$ as:
+
+$$
+P = \{ x_0, x_1, \dots, x_n \} \text{ such that } x_j - x_{j - 1} = \frac{b - a}{n}
+$$
+
+We then have that:
+
+$$
+\begin{aligned}
+U(f, [a, b]) - L(f, [a, b]) &\leq U(f, P, [a, b]) - L(f, P, [a, b]) & \left(\text{Eq. } \eqref{eq:lu-riemann-integral}\right) \\
+&= \sum_{j = 1}^n (x_j - x_{j-1}) \underset{x \in [x_{j - 1}, x_j]}{\sup} \left\{ f(x) \right\} - \sum_{j = 1}^n (x_j - x_{j-1}) \underset{x \in [x_{j - 1}, x_j]}{\inf} \left\{ f(x) \right\} & \left(\text{Eq. } \eqref{eq:lu-riemann-sum} \right) \\
+&= \frac{b - a}{n} \sum_{j = 1}^n \left( \underset{x \in [x_{j - 1}, x_j]}{\sup} \left\{ f(x) \right\}  - \underset{x \in [x_{j - 1}, x_j]}{\inf} \left\{ f(x) \right\}  \right) \\
+&\leq \frac{b - a}{n} \sum_{j = 1}^n \epsilon & \left(\text{Eq. } \eqref{eq:assumption}\right) \\
+&= (b - a)\epsilon
+\end{aligned}
+$$
+
+Note that Eq. \eqref{eq:integral-prop-1} states that:
+
+$$
+U(f, [a, b]) \geq  L(f, [a, b]) 
+$$
+
+However, we have just shown that, for all $\epsilon > 0$:
+
+$$
+\begin{aligned}
+U(f, [a, b]) - L(f, [a, b]) &\leq (b - a) \epsilon  \\
+U(f, [a, b]) &\leq (b - a) \epsilon + L(f, [a, b]) \\
+\overset{\epsilon \rightarrow 0}{\implies} U(f, [a, b]) &\leq L(f, [a, b])
+\end{aligned}
+$$
+
+Together, these two points imply:
+
+$$
+U(f, [a, b]) = L(f, [a, b])
+$$
+
+which implies $f$ is Riemann integrable by Eq. \eqref{eq:riemann-integral}. 
+{% endtab %}
+{% endtabs %}
 </div>
+<!-- #endregion -->
+
+
 
 <div class="theorem">
-    <strong>Claim.<d-cite key="axler2025"></d-cite></strong>
-    <br>
-    {% tabs axler-1-18 %}
-    {% tab axler-1-18 statement %}
-    Let $a, b, M \in \mathbb{R}$ with $a < b$. Let $f_1, f_2, \dots$ be a sequence of Riemann integrable functions on $[a, b]$ such that, for all positive integers $k$ and all $x \in [a, b]$:
+<strong>Claim.<d-cite key="axler2025"></d-cite></strong>
+{% tabs axler-1-18 %}
+{% tab axler-1-18 statement %}
+Let $a, b, M \in \mathbb{R}$ with $a < b$. Let $f_1, f_2, \dots$ be a sequence of Riemann integrable functions on $[a, b]$ such that, for all positive integers $k$ and all $x \in [a, b]$:
 
-    $$
-    \rvert f_k(x) \rvert \leq M
-    $$
+$$
+\rvert f_k(x) \rvert \leq M
+$$
 
-    Assume:
+Assume:
 
-    $$
-    f(x) = \underset{k \rightarrow \infty}{\lim} f_k(x)
-    $$
+$$
+f(x) = \underset{k \rightarrow \infty}{\lim} f_k(x)
+$$
 
-    exists for all $x \in [a, b]$. If $f$ is Riemann integrable on $[a, b]$ then:
+exists for all $x \in [a, b]$. If $f$ is Riemann integrable on $[a, b]$ then:
 
-    $$
-    \int_a^b f(x) dx = \underset{k \rightarrow \infty}{\lim} \int_a^b f_k(x) dx
-    $$
+$$
+\int_a^b f(x) dx = \underset{k \rightarrow \infty}{\lim} \int_a^b f_k(x) dx
+$$
 
-    {% endtab %}
-    {% tab axler-1-18 proof %}
-    Proof to be completed.
-    {% endtab %}
-    {% endtabs %}
+{% endtab %}
+{% endtabs %}
 </div>
 
 ---
 
 ## Limitations
-
 Unfortunately, for a lot of the things we want to do, the Riemann integral is insufficient. The first limitation that Axler introduces is that many functions that are "not so nice" are not Riemann integrable. 
 
 <div class="example">

@@ -270,15 +270,15 @@ jekyll-archives:
       tags: "/music/:type/:name/"
       categories: "/music/:type/:name/"
   measure-theory:
-    enable: [tags]
+    enable: [tags, categories]
     permalinks:
       tags: "/measure-theory/:type/:name/"
   stats-ml:
-    enable: [tags]
+    enable: [tags, categories]
     permalinks:
       tags: "/stats-ml/:type/:name/"
   paper-notes:
-    enable: [tags]
+    enable: [tags, categories]
     permalinks:
       tags: "/paper-notes/:type/:name/"
   

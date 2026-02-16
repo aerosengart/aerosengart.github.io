@@ -3,6 +3,10 @@
   <head>
     {% include head.liquid %}
 
+    {% assign year = page.started | date: '%Y' %}
+    {% assign tags = page.tags | join: '' %}
+    {% assign categories = page.categories | join: '' %}
+
     <!-- Distill js -->
     <script src="{{ '/assets/js/distillpub/template.v2.js' | relative_url }}"></script>
     <script src="{{ '/assets/js/distillpub/transforms.v2.js' | relative_url }}"></script>

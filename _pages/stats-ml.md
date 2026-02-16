@@ -4,6 +4,7 @@ permalink: /stats-ml/
 title: statistics & machine learning
 nav: false
 display_tags: ["primer", "models", "likelihood"]
+collection: stats-ml
 ---
 
 Similar to my notes in measure theory, I've decided to review some imporant methods and concepts in machine learning (and statistics). These notes will pull from a bunch of different sources but will mainly focus on <i>Probabilistic Machine Learning</i> by Kevin P. Murphy and <i>The Elements of Statistical Learning</i> by Hastie, Tibshirani, and Friedman with some supplementary information from <i>Introduction to Algorithms</i> by Thomas H. Cormen as well as <i>Foundations of Machine Learning</i> by Mohri, Rostamizadeh, and Talwalkar.

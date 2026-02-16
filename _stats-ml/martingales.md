@@ -51,7 +51,7 @@ Examples of $e$-processes include test martingales and test supermartingales. Re
 
 <!-- There are many ways to think about $e$-values and $e$-statistics. FILL IN THIS PART? https://en.wikipedia.org/wiki/E-values -->
 
----
+
 We now turn to ideas in stochastic processes. 
 
 <div id="random-walk"></div>

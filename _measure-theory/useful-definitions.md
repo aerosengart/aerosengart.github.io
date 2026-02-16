@@ -51,7 +51,7 @@ Sets (i.e. spaces for our purposes) can be described in a lot of different ways.
 
 <div id="complete-space"></div>
 <div class="definition">
-  <strong>Definition (Complete).<d-cite key=complete2025></d-cite></strong>
+  <strong>Definition (Complete).<d-cite key=completefield2025></d-cite></strong>
   <br>
   A metric space, $(M, d)$, is called <i>complete</i> if every <a href="#cauchy">Cauchy sequence</a> of points in $M$ has its limit in $M$. 
 
@@ -142,7 +142,7 @@ Sequences will also come up a lot, and it's important to have a good handle on h
 
 <div id="cauchy"></div>
 <div class="definition">
-  <strong>Definition (Cauchy).<d-cite key=complete_field2025></d-cite></strong>
+  <strong>Definition (Cauchy).<d-cite key=completefield2025></d-cite></strong>
   <br>
   Let $x_1, x_2, x_3, \dots$ denote a sequence defined on some metric space, $(X, d)$. The sequence is called <i>Cauchy</i> if, for any positive $r \in \mathbb{R}$, there exists a positive $N \in \mathbb{N}$ such that for all $m, n > N$:
 
