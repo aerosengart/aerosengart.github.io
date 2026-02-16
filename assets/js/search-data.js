@@ -66,6 +66,21 @@ ninja.data = [{
           description: "Riemann Integrals",
           section: "Measure-theory",handler: () => {
               window.location.href = "/measure-theory/chapter1/";
+            },},{id: "music-smtd-holiday-video",
+          title: 'SMTD Holiday Video',
+          description: "",
+          section: "Music",handler: () => {
+              window.location.href = "/music/holiday/";
+            },},{id: "music-musical-theatre-senior-entrance",
+          title: 'Musical Theatre Senior Entrance',
+          description: "",
+          section: "Music",handler: () => {
+              window.location.href = "/music/mt_grad/";
+            },},{id: "music-einstein-of-love",
+          title: 'Einstein of Love',
+          description: "",
+          section: "Music",handler: () => {
+              window.location.href = "/music/einstein/";
             },},{id: "music-just-in-time",
           title: 'Just In Time',
           description: "a big band arrangement",
