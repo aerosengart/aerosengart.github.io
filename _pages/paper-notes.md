@@ -3,7 +3,7 @@ layout: page
 permalink: /paper-notes/
 title: paper notes
 nav: false
-display_tags: ["theory", "clustering", "models"]
+#display_tags: ["theory", "clustering", "models"]
 collection: paper-notes
 ---
 

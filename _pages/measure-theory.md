@@ -1,7 +1,7 @@
 ---
 layout: page
 title: measure theory
-display_tags: ["reference"]
+#display_tags: ["reference"]
 permalink: /measure-theory/
 collection: measure-theory
 ---

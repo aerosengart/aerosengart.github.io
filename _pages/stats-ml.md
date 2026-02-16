@@ -3,7 +3,7 @@ layout: page
 permalink: /stats-ml/
 title: statistics & machine learning
 nav: false
-display_tags: ["primer", "models", "likelihood"]
+#display_tags: ["primer", "models", "likelihood"]
 collection: stats-ml
 ---
 
