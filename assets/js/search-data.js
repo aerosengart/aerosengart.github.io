@@ -56,16 +56,16 @@ ninja.data = [{
           description: "A Primer",
           section: "Measure-theory",handler: () => {
               window.location.href = "/measure-theory/measure-theory/";
-            },},{id: "measure-theory-chapter-1",
-          title: 'Chapter 1',
-          description: "Riemann Integrals",
-          section: "Measure-theory",handler: () => {
-              window.location.href = "/measure-theory/chapter1/";
             },},{id: "measure-theory-useful-definitions",
           title: 'Useful Definitions',
           description: "",
           section: "Measure-theory",handler: () => {
               window.location.href = "/measure-theory/useful-definitions/";
+            },},{id: "measure-theory-chapter-1",
+          title: 'Chapter 1',
+          description: "Riemann Integrals",
+          section: "Measure-theory",handler: () => {
+              window.location.href = "/measure-theory/chapter1/";
             },},{id: "music-just-in-time",
           title: 'Just In Time',
           description: "a big band arrangement",
@@ -141,21 +141,11 @@ ninja.data = [{
           description: "A Primer",
           section: "Stats-ml",handler: () => {
               window.location.href = "/stats-ml/estimation-theory/";
-            },},{id: "stats-ml-lasso",
-          title: 'LASSO',
-          description: "",
-          section: "Stats-ml",handler: () => {
-              window.location.href = "/stats-ml/lasso/";
             },},{id: "stats-ml-linear-regression",
           title: 'Linear Regression',
           description: "",
           section: "Stats-ml",handler: () => {
               window.location.href = "/stats-ml/regression/";
-            },},{id: "stats-ml-ridge-regression",
-          title: 'Ridge Regression',
-          description: "",
-          section: "Stats-ml",handler: () => {
-              window.location.href = "/stats-ml/ridge/";
             },},{id: "stats-ml-time-series",
           title: 'Time Series',
           description: "A Primer",
@@ -176,6 +166,11 @@ ninja.data = [{
           description: "A Primer",
           section: "Stats-ml",handler: () => {
               window.location.href = "/stats-ml/quadrature/";
+            },},{id: "stats-ml-shrinkage-in-regression",
+          title: 'Shrinkage In Regression',
+          description: "",
+          section: "Stats-ml",handler: () => {
+              window.location.href = "/stats-ml/shrinkage/";
             },},{
         id: 'social-cv',
         title: 'CV',
