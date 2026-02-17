@@ -1,7 +1,7 @@
 ---
 layout: distill
 title: Linear Regression
-description: 
+description: A Primer
 date: 2026-01-19
 tabs: true
 tags: regression models
