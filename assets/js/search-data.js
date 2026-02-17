@@ -158,7 +158,7 @@ ninja.data = [{
               window.location.href = "/stats-ml/estimation-theory/";
             },},{id: "stats-ml-linear-regression",
           title: 'Linear Regression',
-          description: "",
+          description: "A Primer",
           section: "Stats-ml",handler: () => {
               window.location.href = "/stats-ml/regression/";
             },},{id: "stats-ml-time-series",
@@ -186,6 +186,11 @@ ninja.data = [{
           description: "",
           section: "Stats-ml",handler: () => {
               window.location.href = "/stats-ml/shrinkage/";
+            },},{id: "stats-ml-support-vector-machines",
+          title: 'Support Vector Machines',
+          description: "A Primer",
+          section: "Stats-ml",handler: () => {
+              window.location.href = "/stats-ml/svm/";
             },},{
         id: 'social-cv',
         title: 'CV',
