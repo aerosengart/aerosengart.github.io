@@ -141,7 +141,7 @@ This brings us to the <i>dual</i> cone, which I have very little intuition...
 The <i>dual cone</i> is the set:
 
 $$
-C^0= \\{ \mathbf{y} \rvert \langle \mathbf{x}, \mathbf{y} \rangle \leq 0 \hspace{2mm} \forall \mathbf{x} \in C \\}
+C^0= \left\{ \mathbf{y} \min \langle \mathbf{x}, \mathbf{y} \rangle \leq 0 \hspace{2mm} \forall \mathbf{x} \in C \right\}
 $$
 
 If $C$ is a vector subspace, then $C^0$ is the orthogonal complement of $C$, and if $C$ is closed and convex, then $(C^0)^0 = C$.
@@ -153,7 +153,7 @@ $$
 \rvert \rvert \mathbf{x} - P(\mathbf{x}, C) \rvert \rvert^2 = \rvert \rvert \mathbf{x} - P(\mathbf{x}, K) \rvert \rvert^2 + \rvert \rvert P(\mathbf{x}, K) - P(\mathbf{x}, C) \rvert \rvert^2
 $$
 
-if $C$ or $K$ is a linenar space and $C \subset K$. 
+if $C$ or $K$ is a linear space and $C \subset K$. 
 
 Furthermore, if $C$ is a vector subspace, then $\mathbf{x} - P(\mathbf{x}, C) = P(\mathbf{x}, C^0)$. That is, the difference between $\mathbf{x}$ and the orthogonal projection of $\mathbf{x}$ onto $C$ is equivalent to its orthogonal projection onto the dual cone $C^0$.
 
@@ -178,7 +178,7 @@ where in the above, the inner products/norms are taken using the matrix $\mathbf
 The chi-bar-squared statistic follows a mixture of $\chi^2$ distributions:
 
 $$
-\mathbb{P}(\bar{\chi}^2 \geq c) = \sum_{i = 1}^m w_i \mathbb{P}(\chi_i^2 \geq c)
+\mathbb{P}(\bar{\chi}^2 \geq c) = \sum_{i = 0}^m w_i \mathbb{P}(\chi_i^2 \geq c)
 $$
 
 where $\chi_i^2$ is a $\chi^2$ random variable with $i$ degrees of freedom, and $w_i$ are individuals weights that sum to $1$. As is standard, we let $\chi^2_0$ be a point mass at $0$. We'll denote this mixture distribution as $\mathcal{\bar{X}}^2(\mathbf{V}, C)$, since it depends on both $\mathbf{V}$ and the cone, $C$.
