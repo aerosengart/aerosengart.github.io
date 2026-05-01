@@ -121,11 +121,21 @@ ninja.data = [{
           description: "A Primer",
           section: "Paper-notes",handler: () => {
               window.location.href = "/paper-notes/cell-deconvolution/";
-            },},{id: "paper-notes-a-score-test-for-variance-components-in-generalized-linear-models",
-          title: 'A Score Test for Variance Components in Generalized Linear Models',
+            },},{id: "paper-notes-a-note-on-gauss-hermite-quadrature",
+          title: 'A Note on Gauss-Hermite Quadrature',
           description: "",
           section: "Paper-notes",handler: () => {
-              window.location.href = "/paper-notes/score-test-lin/";
+              window.location.href = "/paper-notes/gauss-hermite/";
+            },},{id: "paper-notes-quasi-likelihood-functions-generalized-linear-models-and-the-gauss-newton-method",
+          title: 'Quasi-Likelihood Functions, Generalized Linear Models, and the Gauss-Newton Method',
+          description: "",
+          section: "Paper-notes",handler: () => {
+              window.location.href = "/paper-notes/quasi-likelihood/";
+            },},{id: "paper-notes-approximations-to-the-log-likelihood-function-in-the-nonlinear-mixed-effects-model",
+          title: 'Approximations to the Log-Likelihood Function in the Nonlinear Mixed-Effects Model',
+          description: "",
+          section: "Paper-notes",handler: () => {
+              window.location.href = "/paper-notes/approx-log-lik/";
             },},{id: "stats-ml-likelihood-and-large-sample-theory",
           title: 'Likelihood and Large-Sample Theory',
           description: "A Primer",
@@ -136,11 +146,6 @@ ninja.data = [{
           description: "A Primer",
           section: "Stats-ml",handler: () => {
               window.location.href = "/stats-ml/martingales/";
-            },},{id: "stats-ml-quasi-likelihood",
-          title: 'Quasi-Likelihood',
-          description: "A Primer",
-          section: "Stats-ml",handler: () => {
-              window.location.href = "/stats-ml/quasi-likelihood/";
             },},{id: "stats-ml-generalized-linear-models",
           title: 'Generalized Linear Models',
           description: "A Primer",
@@ -166,11 +171,6 @@ ninja.data = [{
           description: "A Primer",
           section: "Stats-ml",handler: () => {
               window.location.href = "/stats-ml/time-series/";
-            },},{id: "stats-ml-permutation-testing",
-          title: 'Permutation Testing',
-          description: "A Primer",
-          section: "Stats-ml",handler: () => {
-              window.location.href = "/stats-ml/permutation-testing/";
             },},{id: "stats-ml-decision-theory",
           title: 'Decision Theory',
           description: "A Primer",
@@ -191,6 +191,16 @@ ninja.data = [{
           description: "A Primer",
           section: "Stats-ml",handler: () => {
               window.location.href = "/stats-ml/svm/";
+            },},{id: "stats-ml-principal-components-analysis",
+          title: 'Principal Components Analysis',
+          description: "A Primer",
+          section: "Stats-ml",handler: () => {
+              window.location.href = "/stats-ml/principal-components/";
+            },},{id: "stats-ml-expectation-maximization",
+          title: 'Expectation-Maximization',
+          description: "",
+          section: "Stats-ml",handler: () => {
+              window.location.href = "/stats-ml/em/";
             },},{
         id: 'social-cv',
         title: 'CV',
