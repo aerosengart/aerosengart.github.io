@@ -12,7 +12,7 @@ toc:
         - name: Rewriting $S$
   - name: Bounds
   - name: Optimization
-bibliography: 2025-02-27-splash.bib
+bibliography: paper-notes.bib
 ---
 
 There is an exciting new framework for reference-free genomic discovery called <i>SPLASH</i> (Statistically Primary aLignment Agnostic Sequence Homing) from the Salzman Lab at Stanford<d-cite key=chaung2023></d-cite><d-cite key=baharav2024></d-cite>. It's super cool, and there are a lot of new questions that arise from their work. In this post, I'm going to be working through some of the proofs of their $p$-value bounds and asymptotic results (just for my own understanding).

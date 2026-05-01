@@ -21,7 +21,7 @@ toc:
         - name: Fixed Number of Cell Types
         - name: Confounding
         - name: Evaluation
-bibliography: 2025-11-06-cellular-deconvolution.bib
+bibliography: paper-notes.bib
 ---
 
 Cellular deconvolution is an important analytical step for experiments that rely on samples that could comprise several different cell types (e.g. bulk RNA-seq, spatial genomics, etc.). Though these experiments are more cost effective compared to single cell RNA-seq (scRNA-seq), the gene expression data that result are an average over all of the cells in the sample, and the expression profiles of cells of interest that are scarce may be masked by those are that more abundant. At its core, cellular deconvolution is the problem of teasing apart the gene expression patterns of each cell type from bulk data. 

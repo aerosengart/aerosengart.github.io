@@ -20,12 +20,7 @@ toc:
           - name: Additive Margin
           - name: Functions of CQMS
           - names: Cluster Number Dependence
-    # if a section has subsections, you can add them as follows:
-    # subsections:
-    #   - name: Example Child Subsection 1
-    #   - name: Example Child Subsection 2
-
-bibliography: 2025-01-13-impossibility-clustering.bib
+bibliography: paper-notes.bib
 ---
 
 Though the journey to this point is a bit confusing, I have recently become interesting in clustering metrics and evaluation. In this post, I'll work through a couple papers on describing how good a clustering function is based upon a set of axioms. These include Kleinberg's <i>An Impossibility Theorem for Clustering</i><d-cite key=kleinberg2002></d-cite> and Ben-David and Ackerman's <i>Measure of Clustering Quality</i><d-cite key=bendavid2008></d-cite>.

@@ -23,7 +23,7 @@ toc:
         - name: Model
         - name: Temporal Regularization
         - name: Uncertianty Quantification
-bibliography: 2025-07-14-variant-deconvolution.bib
+bibliography: paper-notes.bib
 ---
 
 In the case of a rapidly mutating virus such as SARS-CoV-2, the genetic material in a wastewater sample will be a mixture from different variants. More specifically, the sample will contain small segments of viral RNA, and these small segments will be from some unknown mixture of genomes where the mixture proportions are determined by the prevalence of the different variants in the population served by that sewer system. The goal of variant deconvolution is to estimate these proportions in order to detect the presence of a new or rising variant in an area or to aid in assessing variant fitness. 

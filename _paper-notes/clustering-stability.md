@@ -9,12 +9,7 @@ toc:
     - name: Stability (Conceptually)
     - name: Background And Notation
     - name: Results
-    # if a section has subsections, you can add them as follows:
-    # subsections:
-    #   - name: Example Child Subsection 1
-    #   - name: Example Child Subsection 2
-
-bibliography: 2025-01-31-clustering-stability.bib
+bibliography: paper-notes.bib
 ---
 
 My last post related to clustering discussed how to describe a "good" clustering algorithm. One way to measure this is by <i>stability</i>, which I'll define more rigorously later. 

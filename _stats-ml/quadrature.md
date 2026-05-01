@@ -283,7 +283,7 @@ $$
 \begin{aligned}
 L_0(x) &= 1 \\
 L_1(x) &= 1 - x \\
-L_{k + 1}(x) = \frac{(2k + 1 - x)L_k(x) - kL_{k - 1}(x)}{k + !} \text{ for } k \geq 1
+L_{k + 1}(x) &= \frac{(2k + 1 - x)L_k(x) - kL_{k - 1}(x)}{k + !} \text{ for } k \geq 1
 \end{aligned}
 $$
 
@@ -322,12 +322,12 @@ $$
 GH_n(x) = \sum_{i = 1}^n \frac{2^{n-1} n! \sqrt{\pi}}{n^2 \left[ H_{n-1}(x_i)\right]^2} f(x_i)
 $$
 
-where $\{ x_1, \dots, x_n \}$ are the roots of the $n$-th Hermite polynomial.
+where $$\{ x_1, \dots, x_n \}$$ are the roots of the $n$-th Hermite polynomial.
 
 This approximation has the following error bound:
 
 $$
-\left\rvert \int_{-\infty}^{+\infty} f(x) \exp(-x^2) dx - GH_n \right\rvert \leq \frac{n! \sqrt{\pi}}{2^n (2n)!}\underset{x \in (-\infty, +\infty)}{\max} \left\{ \rvert f^(2n)(x) \rvert \right\}
+\left\rvert \int_{-\infty}^{+\infty} f(x) \exp(-x^2) dx - GH_n \right\rvert \leq \frac{n! \sqrt{\pi}}{2^n (2n)!}\underset{x \in (-\infty, +\infty)}{\max} \left\{ \rvert f^{(2n)}(x) \rvert \right\}
 $$
 
 
@@ -414,6 +414,9 @@ $$
 $$
 
 where $m$ is the desired polynomial degree for the approximation and $\bar{x}_i$ are the roots of the $m$-th Hermite polynomial.
+
+
+
 
 
 

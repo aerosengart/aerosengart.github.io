@@ -24,7 +24,7 @@ toc:
         - name: Use
   - name: Results
   
-bibliography: 2025-02-18-score-test-one-sided.bib
+bibliography: paper-notes.bib
 ---
 
 In many cases, we may want to test the null hypothesis that a parameter is zero against a one-sided alternative (e.g. the parameter is non-negative). In this setting, we are constraining the alternative parameter space, and for some parameters (such as variance components), the value of the parameter under the null may be on the boundary. 
@@ -318,6 +318,16 @@ $$
 
 for large enough $n$ because $\lambda$ is a nuisance parameter, so we can take the "best" probability over all of its values. 
 
+This approximate $p$-value can be a bit tricky to compute because it is a bit complicated in its form. An alternative path towards a $p$-value bound comes from the following theorem from Perlman (1969).<d-cite key=perlman1969></d-cite>
+
+
+<div class="theorem">
+<strong>Theorem 6.2 (Perlman).<d-cite key=perlman1969></d-cite></strong>
+<br>
+Suppose we have $N$ independent $p$-dimensional multivariate Gaussian observations with mean $\mu$ and covariance matrix $\Sigma$. 
+</div>
+
+
 ### Use
 How do we use this test statistic in practice? This is pretty much just a question of what function, $\mathbf{U}_0$, of our data we want to pick. Silvapulle and Silvapulle explain how to construct a score-type test statistic using their general statistic.  
 
@@ -526,9 +536,9 @@ Expanding out the objective function of $\mathbf{b}$ yields:
 $$
 \begin{aligned}
 &\underset{\mathbf{b} \in \mathcal{C}}{\arg \inf} \left\{ (\mathbf{U}(\tilde{\theta}_0) - \mathbf{b})^\top \tilde{\mathcal{I}}_{\psi, \psi}^{-1}(\tilde{\theta}_0) (\mathbf{U}(\tilde{\theta}_0) - \mathbf{b}) \right\} \\
-= &\underset{\mathbf{b} \in \mathcal{C}}{\arg \inf} \left\{ \mathbf{U}^\top (\tilde{\theta}_0) \tilde{\mathcal{I}}_{\psi, \psi}^{-1}(\tilde{\theta}_0)\mathbf{U}(\tilde{\theta}_0) - \mathbf{U}^\top(\tilde{\theta}_0) \tilde{\mathbf{I}}_{\psi, \psi}^{-1}(\tilde{\theta}_0) \mathbf{b} - \mathbf{b}^\top \tilde{\mathbf{I}}_{\psi, \psi}^{-1}(\tilde{\theta}_0) \mathbf{U}(\tilde{\theta}_0) + \mathbf{b}^\top \tilde{\mathbf{I}}_{\psi, \psi}^{-1}(\tilde{\theta}_0) \mathbf{b}^\top \right\} \\ 
-= &\underset{\mathbf{b} \in \mathcal{C}}{\arg \inf} \left\{-2\mathbf{b}^\top \tilde{\mathbf{I}}_{\psi, \psi}^{-1}(\tilde{\theta}_0) \mathbf{U}(\tilde{\theta}_0) + \mathbf{b}^\top \tilde{\mathbf{I}}_{\psi, \psi}^{-1}(\tilde{\theta}_0) \mathbf{b}^\top \right\} \\  
-= &\underset{\mathbf{b} \in \mathcal{C}}{\arg \inf} \left\{ \left[ - \mathbf{U}^\top (\tilde{\theta}_0) \tilde{\mathbf{I}}_{\psi, \psi}^{-1}(\tilde{\theta}_0)\right] \mathbf{b} + \frac{1}{2} \mathbf{b}^\top \tilde{\mathbf{I}}_{\psi, \psi}^{-1}(\tilde{\theta}_0) \mathbf{b}^\top \right\}
+= &\underset{\mathbf{b} \in \mathcal{C}}{\arg \inf} \left\{ \mathbf{U}^\top (\tilde{\theta}_0) \tilde{\mathcal{I}}_{\psi, \psi}^{-1}(\tilde{\theta}_0)\mathbf{U}(\tilde{\theta}_0) - \mathbf{U}^\top(\tilde{\theta}_0) \tilde{\mathcal{I}}_{\psi, \psi}^{-1}(\tilde{\theta}_0) \mathbf{b} - \mathbf{b}^\top \tilde{\mathcal{I}}_{\psi, \psi}^{-1}(\tilde{\theta}_0) \mathbf{U}(\tilde{\theta}_0) + \mathbf{b}^\top \tilde{\mathcal{I}}_{\psi, \psi}^{-1}(\tilde{\theta}_0) \mathbf{b}^\top \right\} \\ 
+= &\underset{\mathbf{b} \in \mathcal{C}}{\arg \inf} \left\{-2\mathbf{b}^\top \tilde{\mathcal{I}}_{\psi, \psi}^{-1}(\tilde{\theta}_0) \mathbf{U}(\tilde{\theta}_0) + \mathbf{b}^\top \tilde{\mathcal{I}}_{\psi, \psi}^{-1}(\tilde{\theta}_0) \mathbf{b}^\top \right\} \\  
+= &\underset{\mathbf{b} \in \mathcal{C}}{\arg \inf} \left\{ \left[ - \mathbf{U}^\top (\tilde{\theta}_0) \tilde{\mathcal{I}}_{\psi, \psi}^{-1}(\tilde{\theta}_0)\right] \mathbf{b} + \frac{1}{2} \mathbf{b}^\top \tilde{\mathcal{I}}_{\psi, \psi}^{-1}(\tilde{\theta}_0) \mathbf{b}^\top \right\}
 \end{aligned}
 $$
 
@@ -536,8 +546,8 @@ Thus, letting:
 
 $$
 \begin{aligned}
-\mathbf{P} &= \tilde{\mathbf{I}}_{\psi, \psi}^{-1}(\tilde{\theta}_0) \\
-\mathbf{q}^\top &=  -\left(\tilde{\mathbf{I}}_{\psi, \psi}^{-1}(\tilde{\theta}_0)\mathbf{U}(\tilde{\theta}_0) \right)^\top
+\mathbf{P} &= \tilde{\mathcal{I}}_{\psi, \psi}^{-1}(\tilde{\theta}_0) \\
+\mathbf{q}^\top &=  -\left(\tilde{\mathcal{I}}_{\psi, \psi}^{-1}(\tilde{\theta}_0)\mathbf{U}(\tilde{\theta}_0) \right)^\top
 \end{aligned}
 $$
 

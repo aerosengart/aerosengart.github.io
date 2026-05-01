@@ -175,7 +175,7 @@ $$
 \end{equation}
 $$
 
-When $\mathcal{F}$ <i>is</i> an exponential family distribution, the log-likelihood and log quasi-likelihood are equal. See my <a href="/stats-ml/quasi-likelihood">post on quasi-likelihood</a> for a more in-depth discussion.
+When $\mathcal{F}$ <i>is</i> an exponential family distribution, the log-likelihood and log quasi-likelihood are equal. See my <a href="/paper-notes/quasi-likelihood">post on quasi-likelihood</a> for a more in-depth discussion.
 
 Let $f$ denote the density associated with $\mathcal{F}$, the distribution of the random effects. The unconditional quasi-likelihood is then given by integrating out the random effects from the joint quasi-likelihood:
 

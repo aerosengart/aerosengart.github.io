@@ -18,7 +18,7 @@ toc:
   - name: A Betting Perspective
     subsections:
         - name: Hedging Our Bets
-bibliography: 2025-05-21-betting-sequences.bib
+bibliography: paper-notes.bib
 ---
 
 A colleague introduced me to some recent work from Waudby-Smith and Ramdas here at Carnegie Mellon. Since I've been working on applications of concentration bounds, it certainly seems important to review their paper <i>Estimating means of bounded random variables by betting</i>, which can often achieve better bounds than the older work from Maurer and Pontil<d-cite key=maurer2009></d-cite>. Here, I'm going to use the preprint, but their work has been published in JRSSB<d-cite key=waudbysmith2022></d-cite>.
