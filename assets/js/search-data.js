@@ -136,6 +136,11 @@ ninja.data = [{
           description: "",
           section: "Paper-notes",handler: () => {
               window.location.href = "/paper-notes/approx-log-lik/";
+            },},{id: "paper-notes-a-note-on-likelihood-ratio-tests-for-models-with-latent-variables",
+          title: 'A Note on Likelihood Ratio Tests for Models with Latent Variables',
+          description: "",
+          section: "Paper-notes",handler: () => {
+              window.location.href = "/paper-notes/lrt-latent-variable/";
             },},{id: "stats-ml-likelihood-and-large-sample-theory",
           title: 'Likelihood and Large-Sample Theory',
           description: "A Primer",
