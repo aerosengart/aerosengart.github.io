@@ -192,7 +192,7 @@ $$
 This condition ensures that the shape of the null parameter space around the true parameter value behaves nicely even when on the boundary.
 
 #### Condition 6
-The following maximum likelihood estimator is consistent under $P_{\boldsymbol{\theta}^*}:
+The following maximum likelihood estimator is consistent under $P_{\boldsymbol{\theta}^*}$:
 
 $$
 \begin{aligned}
