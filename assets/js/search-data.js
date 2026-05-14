@@ -66,6 +66,11 @@ ninja.data = [{
           description: "Riemann Integrals",
           section: "Measure-theory",handler: () => {
               window.location.href = "/measure-theory/chapter1/";
+            },},{id: "measure-theory-chapter-2",
+          title: 'Chapter 2',
+          description: "Measures",
+          section: "Measure-theory",handler: () => {
+              window.location.href = "/measure-theory/chapter2/";
             },},{id: "music-smtd-holiday-video",
           title: 'SMTD Holiday Video',
           description: "",
@@ -136,6 +141,11 @@ ninja.data = [{
           description: "",
           section: "Paper-notes",handler: () => {
               window.location.href = "/paper-notes/approx-log-lik/";
+            },},{id: "paper-notes-empirical-bernstein-bounds",
+          title: 'Empirical Bernstein Bounds',
+          description: "",
+          section: "Paper-notes",handler: () => {
+              window.location.href = "/paper-notes/empir-bern-bound/";
             },},{id: "paper-notes-a-note-on-likelihood-ratio-tests-for-models-with-latent-variables",
           title: 'A Note on Likelihood Ratio Tests for Models with Latent Variables',
           description: "",
@@ -146,6 +156,11 @@ ninja.data = [{
           description: "A Primer",
           section: "Stats-ml",handler: () => {
               window.location.href = "/stats-ml/likelihood-theory/";
+            },},{id: "stats-ml-concentration-inequalities",
+          title: 'Concentration Inequalities',
+          description: "A Primer",
+          section: "Stats-ml",handler: () => {
+              window.location.href = "/stats-ml/concentration-inequalities/";
             },},{id: "stats-ml-martingales",
           title: 'Martingales',
           description: "A Primer",
