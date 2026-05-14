@@ -297,7 +297,7 @@ A restricted measure is basically the original measure but its domain is shrunke
 
 <div id="theorem-1-1-1"></div>
 <div class="theorem">
-  <strong>Theorem 1.1.1.<d-cite key=durett2019></d-cite></strong>
+  <strong>Theorem 1.1.1.<d-cite key=durrett2019></d-cite></strong>
   {% tabs theorem-1-1-1 %}
   {% tab theorem-1-1-1 statement %}
   Let $\mu$ be a measure on $(\Omega, \mathcal{F})$, and let $A_i \uparrow A$ denote $A_1 \subset A_2 \subset \dots$ with $\cup_i A_i = A$. The measure $\mu$ satisfies the following:

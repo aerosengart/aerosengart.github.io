@@ -16,7 +16,6 @@ In this post, I'll be going through Chapter 1 in Axler<d-cite key=axler2025></d-
 
 In what follows, we'll let $\mathbb{R}$ denote the <a href="../../measure/useful-definitions/#open-closed">closed</a>, <a href="../../measure/useful-definitions/#total-order">ordered field</a> of real numbers.
 
----
 
 ## Riemann Sums
 
