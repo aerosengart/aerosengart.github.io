@@ -151,11 +151,6 @@ ninja.data = [{
           description: "",
           section: "Paper-notes",handler: () => {
               window.location.href = "/paper-notes/lrt-latent-variable/";
-            },},{id: "stats-ml-likelihood-and-large-sample-theory",
-          title: 'Likelihood and Large-Sample Theory',
-          description: "A Primer",
-          section: "Stats-ml",handler: () => {
-              window.location.href = "/stats-ml/likelihood-theory/";
             },},{id: "stats-ml-concentration-inequalities",
           title: 'Concentration Inequalities',
           description: "A Primer",
@@ -221,6 +216,11 @@ ninja.data = [{
           description: "",
           section: "Stats-ml",handler: () => {
               window.location.href = "/stats-ml/em/";
+            },},{id: "stats-ml-maximum-likelihood-estimation",
+          title: 'Maximum Likelihood Estimation',
+          description: "A Primer",
+          section: "Stats-ml",handler: () => {
+              window.location.href = "/stats-ml/maximum-likelihood/";
             },},{
         id: 'social-cv',
         title: 'CV',
