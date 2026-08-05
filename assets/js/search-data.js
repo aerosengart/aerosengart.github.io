@@ -181,11 +181,6 @@ ninja.data = [{
           description: "A Primer",
           section: "Stats-ml",handler: () => {
               window.location.href = "/stats-ml/regression/";
-            },},{id: "stats-ml-time-series",
-          title: 'Time Series',
-          description: "A Primer",
-          section: "Stats-ml",handler: () => {
-              window.location.href = "/stats-ml/time-series/";
             },},{id: "stats-ml-decision-theory",
           title: 'Decision Theory',
           description: "A Primer",
@@ -216,11 +211,6 @@ ninja.data = [{
           description: "",
           section: "Stats-ml",handler: () => {
               window.location.href = "/stats-ml/em/";
-            },},{id: "stats-ml-maximum-likelihood-estimation",
-          title: 'Maximum Likelihood Estimation',
-          description: "A Primer",
-          section: "Stats-ml",handler: () => {
-              window.location.href = "/stats-ml/maximum-likelihood/";
             },},{
         id: 'social-cv',
         title: 'CV',
