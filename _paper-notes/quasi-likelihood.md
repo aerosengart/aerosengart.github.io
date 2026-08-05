@@ -12,7 +12,6 @@ toc:
     - name: Estimation
       subsection:
         - name: Weighted Least Squares
-
 bibliography: paper-notes.bib
 ---
 

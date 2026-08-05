@@ -15,7 +15,6 @@ bibliography: paper-notes.bib
 
 In this post I cover an overview paper<d-cite key=chen2020></d-cite> of using likelihood ratio tests in non-standard settings, specifically for latent variable models. I'm mostly interested in the mixed model case, so I will focus on those sections. However, the paper has broader applications.
 
----
 
 ## Background
 We will assume to have a sample of $J$-dimensional observations denoted by $\mathbf{y}_1$, $\dots$, $\mathbf{y}_n$, which are independent and identically distributed observations such that $$\mathbf{y}_i = (y_{i,1}, \dots, y_{i,J})^\top$$. The observations will have a distribution from some family parametrized by $k$-dimensional vector, $\boldsymbol{\theta}$:

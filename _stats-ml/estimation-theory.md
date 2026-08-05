@@ -27,7 +27,7 @@ toc:
     subsections:
         - name: Auxiliary Definitions
         - name: Auxiliary Results
-bibliography: 2025-06-17-estimation-theory.bib
+bibliography: stats-ml.bib
 ---
 
 

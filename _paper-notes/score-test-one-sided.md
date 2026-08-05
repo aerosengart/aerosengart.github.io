@@ -23,7 +23,7 @@ toc:
         - name: A General Test Statistic
         - name: Use
   - name: Results
-  
+
 bibliography: paper-notes.bib
 ---
 

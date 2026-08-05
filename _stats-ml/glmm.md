@@ -14,8 +14,7 @@ toc:
         - name: Penalized Quasi-Likelihood
         - name: Marginal Quasi-Likelihood
         - name: An Aside
-
-bibliography: 2025-06-04-glmm.bib
+bibliography: stats-ml.bib
 ---
 
 This post is a primer on generalized linear mixed models (GLMM) and their associated estimation procedures. Throughout this post, we perform derivatives of matrices, vectors, and scalars. We denote all of them with $\partial$ even though they may not <i>technically</i> be partial derivatives. The meaning should be clear from the context if you keep track of the dimensions of the variables. 

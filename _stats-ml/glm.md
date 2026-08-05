@@ -17,11 +17,10 @@ toc:
         - name: Model
         - name: Estimation
         - name: Uncertainty Quantification
-
-bibliography: 2025-06-03-glm.bib
+bibliography: stats-ml.bib
 ---
 
-This post is a primer on generalized linear models and their associated estimation procedures.
+This post is a primer on generalized linear models and their associated estimation procedures. We mostly follow McCullogh and Nelder (1989).<d-cite key=mccullagh1989a></d-cite>
 
 ## Set-Up
 

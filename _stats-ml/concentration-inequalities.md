@@ -152,7 +152,7 @@ We also have the following variation on Bennett's inequality from Audibert et al
   <strong>Lemma 5 (Audibert et al.<d-cite key=audibert2009></d-cite>).</strong>
   {% tabs audi-ineq %}
   {% tab audi-ineq statement %}
-  Let $X \in \mathbb{R}$ be a random variable such that $X \leq s$ for some $s \in \mathbb{R}$ almost surely. Denote $\mu := \mathbb{E}[X]$ and $s_+ := s \vee 0$. Define $X_1, \dots, X_n$ as independent and identically distributed copies of $X$. Let $\bar{U}_m := \frac{1}{m} \sum_{i = 1}^m U_i$. Then, for any $\delta > 0$ and simultaneously for all $1 \leq m \leq n$, with probability at least $ 1 - \exp(-\delta)$:
+  Let $X \in \mathbb{R}$ be a random variable such that $X \leq s$ for some $s \in \mathbb{R}$ almost surely. Denote $$\mu := \mathbb{E}[X]$$ and $$s_+ := s \vee 0$$. Define $X_1, \dots, X_n$ as independent and identically distributed copies of $X$. Let $$\bar{U}_m := \frac{1}{m} \sum_{i = 1}^m U_i$$. Then, for any $\delta > 0$ and simultaneously for all $1 \leq m \leq n$, with probability at least $ 1 - \exp(-\delta)$:
 
   $$
   \begin{aligned}

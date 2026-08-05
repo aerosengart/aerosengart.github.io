@@ -10,7 +10,7 @@ toc:
     subsections:
         - name: Properties
   - name: Martingales
-bibliography: 2025-05-20-martingales.bib
+bibliography: stats-ml.bib
 ---
 
 This post works through highlights of Aaditya Ramdas' 2018 minicourse<d-cite key=ramdas2018></d-cite> on martingales at Carnegie Mellon University with some supplemental information taken Durrett<d-cite key=durrett2019></d-cite> and some definitions from Wikipedia. Additional definitions are from Shafer et al.<d-cite key=shafer2011></d-cite> and Ramdas et al.<d-cite key=ramdas2022></d-cite>.
