@@ -211,6 +211,11 @@ ninja.data = [{
           description: "",
           section: "Stats-ml",handler: () => {
               window.location.href = "/stats-ml/em/";
+            },},{id: "stats-ml-inference-functions",
+          title: 'Inference Functions',
+          description: "A Primer",
+          section: "Stats-ml",handler: () => {
+              window.location.href = "/stats-ml/estimating-functions/";
             },},{
         id: 'social-cv',
         title: 'CV',
