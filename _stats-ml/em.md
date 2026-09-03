@@ -415,8 +415,3 @@ $$
 $$
 
 Unfortunately, quadrature results in having to compute $m^K$ sets of points because we have to apply it $K$ times. This is leading to memory issues on my computer <3 so I am going to just try sampling instead.
-
-
-
-
-

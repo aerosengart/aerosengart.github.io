@@ -20,7 +20,7 @@ toc:
 bibliography: stats-ml.bib
 ---
 
-This post is a primer on generalized linear models and their associated estimation procedures. We mostly follow McCullogh and Nelder (1989).<d-cite key=mccullagh1989a></d-cite>
+This post is a primer on generalized linear models and their associated estimation procedures. We mostly follow McCullogh and Nelder (1989).<d-cite key=mccullagh1989></d-cite>
 
 ## Set-Up
 
