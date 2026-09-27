@@ -216,6 +216,16 @@ ninja.data = [{
           description: "A Primer",
           section: "Stats-ml",handler: () => {
               window.location.href = "/stats-ml/estimating-functions/";
+            },},{id: "stats-ml-model-assessment-and-selection",
+          title: 'Model Assessment and Selection',
+          description: "A Primer",
+          section: "Stats-ml",handler: () => {
+              window.location.href = "/stats-ml/model-assessment/";
+            },},{id: "stats-ml-bootstrap",
+          title: 'Bootstrap',
+          description: "A Primer",
+          section: "Stats-ml",handler: () => {
+              window.location.href = "/stats-ml/bootstrap/";
             },},{
         id: 'social-cv',
         title: 'CV',
