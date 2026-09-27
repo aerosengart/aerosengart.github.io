@@ -207,7 +207,7 @@ By the same argument as in the previous section, we see that $\mathbf{w}_2$ shou
 ## Maximizing Variance
 We often talk about principal components analysis as projecting the data onto a space where the axes are aligned in order of the directions of maximal variation in the data. 
 
-To see why, consider the one-dimensional case, and let $\mathbf{w}_1^*$ and $\tilde{\mathbf{z}}_1^*$ be the optimal basis vector and weights. Since we centered the data, we have:
+To see why, consider the one-dimensional case, and let $$\mathbf{w}_1^*$$ and $$\tilde{\mathbf{z}}_1^*$$ be the optimal basis vector and weights. Since we centered the data, we have:
 
 $$
 \begin{aligned}
