@@ -151,6 +151,11 @@ ninja.data = [{
           description: "",
           section: "Paper-notes",handler: () => {
               window.location.href = "/paper-notes/lrt-latent-variable/";
+            },},{id: "stats-ml-definitions",
+          title: 'Definitions',
+          description: "",
+          section: "Stats-ml",handler: () => {
+              window.location.href = "/stats-ml/definitions/";
             },},{id: "stats-ml-concentration-inequalities",
           title: 'Concentration Inequalities',
           description: "A Primer",
@@ -201,11 +206,6 @@ ninja.data = [{
           description: "A Primer",
           section: "Stats-ml",handler: () => {
               window.location.href = "/stats-ml/svm/";
-            },},{id: "stats-ml-principal-components-analysis",
-          title: 'Principal Components Analysis',
-          description: "A Primer",
-          section: "Stats-ml",handler: () => {
-              window.location.href = "/stats-ml/principal-components/";
             },},{id: "stats-ml-expectation-maximization",
           title: 'Expectation-Maximization',
           description: "",
@@ -221,11 +221,16 @@ ninja.data = [{
           description: "A Primer",
           section: "Stats-ml",handler: () => {
               window.location.href = "/stats-ml/model-assessment/";
-            },},{id: "stats-ml-bootstrap",
-          title: 'Bootstrap',
+            },},{id: "stats-ml-cross-validation",
+          title: 'Cross-Validation',
           description: "A Primer",
           section: "Stats-ml",handler: () => {
-              window.location.href = "/stats-ml/bootstrap/";
+              window.location.href = "/stats-ml/cross-validation/";
+            },},{id: "stats-ml-decision-trees",
+          title: 'Decision Trees',
+          description: "A Primer",
+          section: "Stats-ml",handler: () => {
+              window.location.href = "/stats-ml/decision-trees/";
             },},{
         id: 'social-cv',
         title: 'CV',
