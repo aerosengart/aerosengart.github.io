@@ -248,6 +248,7 @@ $$
     &= \mathbb{E}\left[ f^2(x_0) - f(x_0) \mathbb{E}[\hat{f}(x_0)] + \left( \mathbb{E}[\hat{f}(x_0)] \right)^2 \right] \\
     &= f^2(x_0) - f(x_0)\mathbb{E}[\hat{f}(x_0)] + \left( \mathbb{E}[\hat{f}(x_0)] \right)^2 \\
     &= \left(f(x_0) - \mathbb{E}[\hat{f}(x_0)] \right)^2
+\end{aligned}
 $$
 
 Furthermore, $\mathbb{E}[f(x_0)]$ is also fixed, so:
