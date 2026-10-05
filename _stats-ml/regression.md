@@ -148,8 +148,6 @@ The hat matrix $\mathbf{H}$ is also called the <i>projection matrix</i> because 
 ### Statistical Estimation Perspective
 Under the additional (and commonly made) assumption that $\epsilon_i \overset{iid}{\sim} \mathcal{N}(0, \sigma^2)$, the OLS estimator can be shown to be identical to the maximum likelihood estimator. 
 
-<details>
-<summary>Proof.</summary>
 Under the Gaussianity assumption, $\mathbf{y} \rvert \mathbf{X} \sim \mathcal{N}\left(\mathbf{X} \boldsymbol{\beta}, \sigma^2 \mathbf{I}_{n \times n}\right)$. The log-likelihood function is then:
 
 $$
@@ -180,7 +178,6 @@ $$
 \boldsymbol{\beta} &= (\mathbf{X}^\top \mathbf{X})^{-1} \mathbf{X}^\top \mathbf{y}
 \end{aligned}
 $$
-</details>
 
 ---
 
